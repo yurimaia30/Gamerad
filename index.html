@@ -589,7 +589,7 @@
 /* =======================================================
    CRONOGRAMA COM AS SUAS IMAGENS LOCAIS E EXTENSÕES REAIS
 ======================================================= */
-const CURRENT_DB_VERSION = "v4.0_todas_imagens";
+const CURRENT_DB_VERSION = "v5.0_fix_syntax";
 
 const DEFAULT_SCHEDULE = [
   { 
@@ -651,7 +651,6 @@ const DEFAULT_SCHEDULE = [
     }
   },
   { 
-    { 
     id: 4, 
     discipline: "Posicionamento Radiográfico I", 
     title: "Antebraço", 
@@ -669,7 +668,6 @@ const DEFAULT_SCHEDULE = [
         { label: "Incidência 2: Antebraço em Perfil", url: "imagens/antebraco_perfil.png" }
       ]
     }
-  },
   },
   { 
     id: 5, 
@@ -856,28 +854,25 @@ const DEFAULT_SCHEDULE = [
 
 /* QUESTÕES ADAPTADAS PARA ANÁLISE PRÁTICA DAS SUAS IMAGENS LOCAIS */
 const ALL_QUESTIONS = [
-  // AULA 1: DEDOS (dedos.jpeg)
   {
     faseId: 1,
     q: "Inspecione a radiografia de Dedos na tela: na avaliação da fratura articular de Bennett, qual estrutura óssea deve obrigatoriamente estar demonstrada sem sobreposição?",
     options: [
-      "A base do primeiro metacarpo[cite: 3].",
-      "O osso navicular[cite: 3].",
-      "O quinto metacarpo[cite: 3].",
-      "O primeiro metatarsiano[cite: 3]."
+      "A base do primeiro metacarpo.",
+      "O osso navicular.",
+      "O quinto metacarpo.",
+      "O primeiro metatarsiano."
     ],
     answer: 0,
-    explanation: "A fratura de Bennett localiza-se especificamente na base intra-articular do 1º osso metacarpiano[cite: 3]."
+    explanation: "A fratura de Bennett localiza-se especificamente na base intra-articular do 1º osso metacarpiano."
   },
   {
     faseId: 1,
     q: "Na análise dos quirodáctilos demonstrados, o termo médico utilizado para indicar as extremidades dos membros mais distantes da inserção é:",
-    options: ["Distal[cite: 3].", "Proximal[cite: 3].", "Oblíquo[cite: 3].", "Tangencial[cite: 3]."],
+    options: ["Distal.", "Proximal.", "Oblíquo.", "Tangencial."],
     answer: 0,
-    explanation: "Distal refere-se à região mais afastada do ponto de inserção do membro no tronco[cite: 3]."
+    explanation: "Distal refere-se à região mais afastada do ponto de inserção do membro no tronco."
   },
-
-  // AULA 2: MÃO (mao_pa.png, mao_obliquo.jpg, mao_lateral.jpeg)
   {
     faseId: 2,
     q: "Alterne para a 'Incidência 2: Mão em Oblíqua'. Por que a separação dos dedos em leque (conforme visualizado) é um critério técnico fundamental?",
@@ -894,150 +889,134 @@ const ALL_QUESTIONS = [
     faseId: 2,
     q: "Observe a 'Incidência 1: Mão em PA'. Na avaliação padrão da idade óssea (tabela de Greulich-Pyle), qual o protocolo de incidência oficial?",
     options: [
-      "Mãos e punhos comparativa em PA[cite: 3].",
-      "Mãos e punho em oblíqua[cite: 3].",
-      "Mãos e punho em perfil[cite: 3].",
-      "AP de quadril com moderada flexão[cite: 3]."
+      "Mãos e punhos comparativa em PA.",
+      "Mãos e punho em oblíqua.",
+      "Mãos e punho em perfil.",
+      "AP de quadril com moderada flexão."
     ],
     answer: 0,
-    explanation: "O atlas de Greulich-Pyle padroniza a incidência em PA comparativa de mãos e punhos[cite: 3]."
+    explanation: "O atlas de Greulich-Pyle padroniza a incidência em PA comparativa de mãos e punhos."
   },
   {
     faseId: 2,
     q: "Alterne para a 'Incidência 3: Mão Lateral'. Qual é o fator que mais prejudica a nitidez e a definição da imagem nessa posição?",
     options: [
-      "Movimento do paciente (borramento cinético)[cite: 3].",
-      "Quilovoltagem ligeiramente acima da média[cite: 3].",
-      "A distância foco-filme de 100 cm[cite: 3].",
-      "O uso de receptor digital[cite: 3]."
+      "Movimento do paciente (borramento cinético).",
+      "Quilovoltagem ligeiramente acima da média.",
+      "A distância foco-filme de 100 cm.",
+      "O uso de receptor digital."
     ],
     answer: 0,
-    explanation: "O movimento inadvertido do paciente durante a exposição gera borramento cinético e perda de definição[cite: 3]."
+    explanation: "O movimento inadvertido do paciente durante a exposição gera borramento cinético e perda de definição."
   },
-
-  // AULA 3: PUNHO (punho_pa.jpg, punho_perfil.jpeg, punho_fratura.jpg)
   {
     faseId: 3,
     q: "Inspecione a 'Incidência 3: Pesquisa de Fratura Carpal' no visualizador. Qual o melhor método radiográfico com flexão ulnar para investigar o osso escafóide?",
     options: [
-      "PA com flexão ulnar e angulação do raio central de 10º a 15º (Método de Stecher)[cite: 3].",
-      "PA com flexão radial sem angulação do raio central[cite: 3].",
-      "Perfil absoluto com pronação forçada[cite: 3].",
-      "PA com flexão ulnar e angulação caudal de 45°[cite: 3]."
+      "PA com flexão ulnar e angulação do raio central de 10º a 15º (Método de Stecher).",
+      "PA com flexão radial sem angulação do raio central.",
+      "Perfil absoluto com pronação forçada.",
+      "PA com flexão ulnar e angulação caudal de 45°."
     ],
     answer: 0,
-    explanation: "O desvio ulnar com inclinação do raio central de 10° a 15° abre os espaços e projeta o escafóide sem sobreposição[cite: 3]."
+    explanation: "O desvio ulnar com inclinação do raio central de 10° a 15° abre os espaços e projeta o escafóide sem sobreposição."
   },
   {
     faseId: 3,
     q: "Na rotina de punho em PA e Perfil demonstrada, as incidências de Stecher e Pierquin destinam-se ao estudo de quais ossos respectivamente?",
     options: [
-      "Escafóide e cotovelo[cite: 3].",
-      "Úmero e cotovelo[cite: 3].",
-      "Escafóide e joelho[cite: 3].",
-      "Ossos nasais e cotovelo[cite: 3]."
+      "Escafóide e cotovelo.",
+      "Úmero e cotovelo.",
+      "Escafóide e joelho.",
+      "Ossos nasais e cotovelo."
     ],
     answer: 0,
-    explanation: "Stecher estuda especificamente o escafóide carpal e Pierquin avalia a articulação do cotovelo[cite: 3]."
+    explanation: "Stecher estuda especificamente o escafóide carpal e Pierquin avalia a articulação do cotovelo."
   },
-
-  // AULA 4: ANTEBRAÇO (antebraço_ap.png, antebraço_perfil.png)
   {
     faseId: 4,
     q: "Observe a 'Incidência 1: Antebraço em AP'. Por que a mão deve obrigatoriamente permanecer em supinação anatômica nesta incidência?",
     options: [
-      "Porque a pronação gira o rádio sobre a ulna, causando sobreposição óssea[cite: 3].",
+      "Porque a pronação gira o rádio sobre a ulna, causando sobreposição óssea.",
       "Para aproximar o rádio do plano coronal de forma invertida.",
       "Porque o paciente não consegue fletir o cotovelo.",
       "Para diminuir a quilovoltagem necessária na exposição."
     ],
     answer: 0,
-    explanation: "A supinação mantém o rádio e a ulna rigorosamente paralelos, impedindo que se cruzem[cite: 3]."
+    explanation: "A supinação mantém o rádio e a ulna rigorosamente paralelos, impedindo que se cruzem."
   },
   {
     faseId: 4,
     q: "Alterne para a 'Incidência 2: Antebraço em Perfil'. Ao final do movimento de supinação, como se posiciona a face anterior da mão?",
     options: [
-      "Face anterior da mão voltada para a frente[cite: 3].",
-      "Dorso da mão voltado para o plano mediano[cite: 3].",
-      "Palma da mão direcionada para trás[cite: 3].",
-      "Face posterior voltada para a frente[cite: 3]."
+      "Face anterior da mão voltada para a frente.",
+      "Dorso da mão voltado para o plano mediano.",
+      "Palma da mão direcionada para trás.",
+      "Face posterior voltada para a frente."
     ],
     answer: 0,
-    explanation: "Na posição de supinação completa, a face anterior da mão (palma) fica voltada para frente[cite: 3]."
+    explanation: "Na posição de supinação completa, a face anterior da mão (palma) fica voltada para frente."
   },
-
-  // AULA 5: COTOVELO (cotovelo_perfil.png)
   {
     faseId: 5,
     q: "Inspecione a radiografia de Cotovelo em Perfil: para obter um perfil verdadeiro rigoroso da articulação, qual o critério de posicionamento obrigatório?",
     options: [
-      "Braço e antebraço fletidos a 90º, apoiados no mesmo plano horizontal, sem rotação[cite: 3].",
-      "Braço fletido a 180º estendido no plano vertical[cite: 3].",
-      "Braço fletido a 45º sobre o chassis com rotação interna forçada[cite: 3].",
-      "Antebraço em pronação máxima de 30º[cite: 3]."
+      "Braço e antebraço fletidos a 90º, apoiados no mesmo plano horizontal, sem rotação.",
+      "Braço fletido a 180º estendido no plano vertical.",
+      "Braço fletido a 45º sobre o chassis com rotação interna forçada.",
+      "Antebraço em pronação máxima de 30º."
     ],
     answer: 0,
-    explanation: "A flexão do cotovelo a 90° com úmero e antebraço no mesmo plano horizontal garante o perfil verdadeiro[cite: 3]."
+    explanation: "A flexão do cotovelo a 90° com úmero e antebraço no mesmo plano horizontal garante o perfil verdadeiro."
   },
-
-  // AULA 6: ÚMERO (umero.jpeg)
   {
     faseId: 6,
     q: "Na realização do exame de Úmero na estativa vertical, a radiação que provém da ampola em sentido reto sem variação angular corresponde a:",
     options: [
-      "Raio central perpendicular em sentido horizontal[cite: 3].",
-      "Raio central angulado em sentido vertical[cite: 3].",
-      "Raio central perpendicular em sentido caudal[cite: 3].",
-      "Raio central em sentido podálico[cite: 3]."
+      "Raio central perpendicular em sentido horizontal.",
+      "Raio central angulado em sentido vertical.",
+      "Raio central perpendicular em sentido caudal.",
+      "Raio central em sentido podálico."
     ],
     answer: 0,
-    explanation: "Na estativa vertical (mural bucky), o raio central é emitido em trajetória horizontal e perpendicular[cite: 3]."
+    explanation: "Na estativa vertical (mural bucky), o raio central é emitido em trajetória horizontal e perpendicular."
   },
-
-  // AULA 7: CINTURA ESCAPULAR - ROTINA (ombro.jpeg)
   {
     faseId: 7,
     q: "Examine a radiografia de Ombro. Na incidência oblíqua com angulação de 45° no sentido caudal, qual termo anatômico é sinônimo do direcionamento do feixe?",
     options: [
-      "Angulado em sentido podálico[cite: 3].",
-      "Angulado em sentido cefálico[cite: 3].",
-      "Perpendicular em sentido vertical[cite: 3].",
-      "Perpendicular em sentido lateral[cite: 3]."
+      "Angulado em sentido podálico.",
+      "Angulado em sentido cefálico.",
+      "Perpendicular em sentido vertical.",
+      "Perpendicular em sentido lateral."
     ],
     answer: 0,
-    explanation: "Caudal e podálico são termos equivalentes que indicam inclinação do raio em direção aos pés[cite: 3]."
+    explanation: "Caudal e podálico são termos equivalentes que indicam inclinação do raio em direção aos pés."
   },
-
-  // AULA 8: CINTURA ESCAPULAR - ESPECIAL (escapula.jpeg)
   {
     faseId: 8,
     q: "Na análise da incidência de Escápula, quando o feixe incide na região anterior direita com o corpo obliquado a 45°, saindo na região posterior, a incidência é:",
     options: [
-      "Incidência oblíqua anterior direita (OAD)[cite: 3].",
-      "Posição oblíqua posterior direita (OPD)[cite: 3].",
-      "Incidência látero-lateral estrita[cite: 3].",
-      "Incidência axial posterior[cite: 3]."
+      "Incidência oblíqua anterior direita (OAD).",
+      "Posição oblíqua posterior direita (OPD).",
+      "Incidência látero-lateral estrita.",
+      "Incidência axial posterior."
     ],
     answer: 0,
-    explanation: "O nome da incidência é definido pela face anatômica em que o feixe penetra no paciente[cite: 3]."
+    explanation: "O nome da incidência é definido pela face anatômica em que o feixe penetra no paciente."
   },
-
-  // AULA 9: FUNDAMENTOS
   {
     faseId: 9,
     q: "Sobre as regras geométricas e técnicas radiográficas, assinale a afirmação INCORRETA:",
     options: [
-      "Em decúbito lateral direito o paciente coloca seu lado esquerdo mais próximo do filme[cite: 3].",
-      "Na incidência em AP a região anterior do paciente está direcionada para o tubo de raios-X[cite: 3].",
-      "Em perfil esquerdo o paciente encontra-se com seu lado esquerdo mais próximo ao filme[cite: 3].",
-      "Em decúbito o paciente encontra-se deitado[cite: 3]."
+      "Em decúbito lateral direito o paciente coloca seu lado esquerdo mais próximo do filme.",
+      "Na incidência em AP a região anterior do paciente está direcionada para o tubo de raios-X.",
+      "Em perfil esquerdo o paciente encontra-se com seu lado esquerdo mais próximo ao filme.",
+      "Em decúbito o paciente encontra-se deitado."
     ],
     answer: 0,
-    explanation: "No decúbito lateral direito é o lado direito do corpo que fica apoiado e próximo ao filme[cite: 3]."
+    explanation: "No decúbito lateral direito é o lado direito do corpo que fica apoiado e próximo ao filme."
   },
-
-  // AULA 10: FÊMUR E JOELHO (femur_fratura.jpg, joelho_perfil.jpg)
   {
     faseId: 10,
     q: "Examine a 'Incidência 1: Fêmur Fratura' na estação de imagem. O que a identificação clara de traço de fratura com desvio requer no protocolo radiográfico?",
@@ -1054,30 +1033,26 @@ const ALL_QUESTIONS = [
     faseId: 10,
     q: "Alterne para a 'Incidência 2: Joelho em Perfil'. Quando o paciente deita sobre o lado esquerdo com o raio perpendicular ao plano coronal, corresponde a:",
     options: [
-      "Incidência lateral esquerda (perfil esquerdo)[cite: 3].",
-      "Decúbito dorsal em AP[cite: 3].",
-      "Posição oblíqua anterior direita[cite: 3].",
-      "Incidência lateral direita[cite: 3]."
+      "Incidência lateral esquerda (perfil esquerdo).",
+      "Decúbito dorsal em AP.",
+      "Posição oblíqua anterior direita.",
+      "Incidência lateral direita."
     ],
     answer: 0,
-    explanation: "O apoio do lado esquerdo com raio atingindo o plano coronal configura o perfil/lateral esquerdo[cite: 3]."
+    explanation: "O apoio do lado esquerdo com raio atingindo o plano coronal configura o perfil/lateral esquerdo."
   },
-
-  // AULA 11: JOELHO ESPECIAL (joelho_perfil.jpg)
   {
     faseId: 11,
     q: "Qual plano anatômico divide o corpo verticalmente em metades cranial (superior) e caudal (inferior)?",
     options: [
-      "Plano Transversal (Horizontal)[cite: 3].",
-      "Plano Sagital mediano[cite: 3].",
-      "Plano Coronal frontal[cite: 3].",
-      "Plano Parassagital[cite: 3]."
+      "Plano Transversal (Horizontal).",
+      "Plano Sagital mediano.",
+      "Plano Coronal frontal.",
+      "Plano Parassagital."
     ],
     answer: 0,
-    explanation: "O plano transversal corta o corpo horizontalmente em metades superior e inferior[cite: 3]."
+    explanation: "O plano transversal corta o corpo horizontalmente em metades superior e inferior."
   },
-
-  // AULA 12: PERNA (perna.webp)
   {
     faseId: 12,
     q: "Inspecione a radiografia de Perna no visualizador. Qual é a regra técnica primária para o estudo dos ossos da perna (tíbia e fíbula)?",
@@ -1090,8 +1065,6 @@ const ALL_QUESTIONS = [
     answer: 0,
     explanation: "Na radiografia de perna é imperativo demonstrar ambas as articulações (joelho e tornozelo) no receptor."
   },
-
-  // AULA 13: CALCÂNEO (calcaneo.webp)
   {
     faseId: 13,
     q: "Inspecione a radiografia de Calcâneo. Além da incidência em perfil demonstrada, qual projeção complementar axial clássica é indispensável?",
@@ -1104,23 +1077,21 @@ const ALL_QUESTIONS = [
     answer: 0,
     explanation: "A projeção axial plantodorsal a 40° avalia a tuberosidade do calcâneo e a articulação subtalar."
   },
-
-  // AULA 14: ARTELHOS (artelhos.jpeg)
   {
     faseId: 14,
     q: "Examine a imagem de Artelhos no visor. Por que a incidência em AP dos artelhos utiliza raio central angulado em 10° a 15° posteriormente (em direção ao calcâneo)?",
     options: [
-      "Para abrir com precisão os espaços articulares interfalângicos e metatarsofalângicos[cite: 3].",
+      "Para abrir com precisão os espaços articulares interfalângicos e metatarsofalângicos.",
       "Apenas para sobrepor as falanges médias e proximais.",
       "Para compensar a falta de filme radiográfico adequado.",
       "Para aumentar a dose de radiação aplicada."
     ],
     answer: 0,
-    explanation: "A angulação acompanha a curvatura anatômica dos pododáctilos, abrindo as fendas articulares[cite: 3]."
+    explanation: "A angulação acompanha a curvatura anatômica dos pododáctilos, abrindo as fendas articulares."
   }
 ];
 
-// Atualizador de versão local do navegador
+// Atualizador de versão do banco para garantir que não use cache quebrado
 if (localStorage.getItem('db_version') !== CURRENT_DB_VERSION) {
   localStorage.setItem('schedule', JSON.stringify(DEFAULT_SCHEDULE));
   localStorage.setItem('db_version', CURRENT_DB_VERSION);
@@ -1625,7 +1596,7 @@ function openQuizStation() {
         "Raio tangencial horizontal rasante."
       ],
       answer: 0,
-      explanation: "A rotina elementar de posicionamento mantém o feixe perpendicular ao centro anatômico estudado[cite: 3]."
+      explanation: "A rotina elementar de posicionamento mantém o feixe perpendicular ao centro anatômico estudado."
     }];
   }
 
