@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Documentos do Curso Técnico em Radiologia</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+      color: #222;
+      background-color: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #fff;
+      padding: 30px;
+      margin-bottom: 40px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    h1, h2, h3 {
+      color: #1a365d;
+      margin-top: 0;
+    }
+    .header-box {
+      border: 1px solid #ccc;
+      padding: 12px;
+      margin-bottom: 20px;
+      background-color: #fafafa;
+    }
+    .header-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #f0f4f8;
+      font-weight: bold;
+    }
+    tr:nth-child(even) {
+      background-color: #fcfcfc;
+    }
+    .gabarito-table {
+      width: auto;
+      min-width: 250px;
+      margin-top: 15px;
+    }
+    .gabarito-table th, .gabarito-table td {
+      text-align: center;
+      padding: 6px 14px;
+    }
+    .question {
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #eee;
+    }
+    .question p {
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+    .question ul {
+      list-style-type: lower-alpha;
+      margin: 0;
+      padding-left: 24px;
+    }
+    .question li {
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ==================== ARQUIVO 1 ==================== -->
+  <section class="card" id="arquivo-1">
+    <h2>Cronograma Semanal</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Aula</th>
+          <th>Data</th>
+          <th>Atividade Prática Programada (Conteúdo Detalhado)</th>
+          <th>Carga Horária</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1ª</td>
+          <td>/</td>
+          <td>Dedos - Posicionamentos de Rotina e Especiais</td>
+          <td>3h/2h</td>
+        </tr>
+        <tr>
+          <td>2ª</td>
+          <td>/</td>
+          <td>Prática de Posicionamento e Incidências: Mão</td>
+          <td>3h/2h</td>
+        </tr>
+        <tr>
+          <td>3ª</td>
+          <td>/</td>
+          <td>Prática de Posicionamento e Incidências: Punho</td>
+          <td>3h/2h</td>
+        </tr>
+        <tr>
+          <td>4ª</td>
+          <td>/</td>
+          <td>Prática de Posicionamento e Incidências: Antebraço</td>
+          <td>3h/2h</td>
+        </tr>
+        <tr>
+          <td>5ª</td>
+          <td>/</td>
+          <td>Incidências de Cotovelo - Posicionamentos Especiais</td>
+          <td>3h/2h</td>
+        </tr>
+        <tr>
+          <td>6ª</td>
+          <td>/</td>
+          <td>Prática de Posicionamento e Incidências: Úmero</td>
+          <td>3h/2h</td>
+        </tr>
+        <tr>
+          <td>7ª</td>
+          <td>/</td>
+          <td>Prática de Posicionamento e Incidências de rotina: Cintura Escapular</td>
+          <td>3h/2h</td>
+        </tr>
+        <tr>
+          <td>8ª</td>
+          <td>/</td>
+          <td>Prática de Posicionamentos especiais: Cintura Escapular</td>
+          <td>3h/2h</td>
+        </tr>
+        <tr>
+          <td>9ª</td>
+          <td>/</td>
+          <td>Atividade Prática 1</td>
+          <td>3h/2h</td>
+        </tr>
+        <tr>
+          <td>10ª</td>
+          <td>/</td>
+          <td>Incidências de Fêmur; Posicionamentos de Rotina - Incidências de Articulação de Joelho</td>
+          <td>3h/2h</td>
+        </tr>
+        <tr>
+          <td>11ª</td>
+          <td>/</td>
+          <td>Posicionamentos Especiais - Incidências de Articulação de Joelho</td>
+          <td>3h/2h</td>
+        </tr>
+        <tr>
+          <td>12ª</td>
+          <td>/</td>
+          <td>Incidências de Patela; Incidências de Perna; Incidências de Tornozelo - Posicionamentos de Rotina.</td>
+          <td>3h/2h</td>
+        </tr>
+        <tr>
+          <td>13ª</td>
+          <td>/</td>
+          <td>Incidências de Tornozelo – Posicionamento especial; Incidências de Calcâneo; Incidências de Pé - Posicionamentos de Rotina.</td>
+          <td>3h/2h</td>
+        </tr>
+        <tr>
+          <td>14ª</td>
+          <td>/</td>
+          <td>Incidências de Tornozelo – Posicionamento especial; Incidências de Artelhos</td>
+          <td>3h/2h</td>
+        </tr>
+        <tr>
+          <td>15ª</td>
+          <td>/</td>
+          <td>Exame Teórico</td>
+          <td>3h/2h</td>
+        </tr>
+        <tr>
+          <td>16ª</td>
+          <td>/</td>
+          <td>Exame Final Prático</td>
+          <td>2h</td>
+        </tr>
+        <tr style="font-weight: bold; background-color: #edf2f7;">
+          <td colspan="3">TOTAL</td>
+          <td>47/32 horas</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ==================== ARQUIVO 2 ==================== -->
+  <section class="card" id="arquivo-2">
+    <h2>Avaliação da Aprendizagem: Posicionamento Radiográfico III</h2>
+    
+    <div class="header-box">
+      <div class="header-row">
+        <span><strong>Estudante:</strong> ____________________________________</span>
+        <span><strong>Nota:</strong> _______</span>
+      </div>
+      <div class="header-row">
+        <span><strong>Turma:</strong> ________</span>
+        <span><strong>Disciplina:</strong> Posicionamento Radiográfico III</span>
+      </div>
+      <div class="header-row">
+        <span><strong>Instrutor:</strong> ____________________________________</span>
+        <span><strong>Data:</strong> ___/___/______</span>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>1. Qual a finalidade de angular o raio central cranial na incidência de coluna cervical frente AP?</p>
+      <ul>
+        <li>Abrir a articulação do atlas e axis</li>
+        <li>Abrir as articulações entre C3 e C7.</li>
+        <li>Abrir as articulações zigoapofisárias.</li>
+        <li>NDA</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>2. Qual linha deveremos deixar paralela ao raio central para realizarmos a incidência de coluna cervical frente?</p>
+      <ul>
+        <li>Mento – occipital.</li>
+        <li>Acântio-meatal</li>
+        <li>Orbitomeatal</li>
+        <li>PHA</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>3. Qual linha deveremos deixar perpendicular à mesa para realizarmos a incidência de coluna cervical frente atlas e axis boca aberta?</p>
+      <ul>
+        <li>Mento-occipital.</li>
+        <li>Acântio-meatal.</li>
+        <li>Orbitomeatal.</li>
+        <li>PHA.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>4. Qual a angulação do raio central na incidência de coluna cervical transoral?</p>
+      <ul>
+        <li>Perpendicular.</li>
+        <li>Paralela.</li>
+        <li>Angulada caudal.</li>
+        <li>Angulada cranial.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>5. Coluna cervical com mastigação corresponde à:</p>
+      <ul>
+        <li>Técnica de Judkins.</li>
+        <li>Técnica de Ottonello.</li>
+        <li>Técnica de Aker.</li>
+        <li>Técnica de Hoffman.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>6. Nas incidências de coluna cervical oblíquas, estudamos principalmente:</p>
+      <ul>
+        <li>Forames de conjugação.</li>
+        <li>Corpo vertebral.</li>
+        <li>Espaço interdiscal.</li>
+        <li>Espondilolistese.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>7. Onde entra o raio central na incidência de coluna cervicodorsal perfil?</p>
+      <ul>
+        <li>Perpendicular C7-T1.</li>
+        <li>Angulado caudal C7-T1.</li>
+        <li>Angulado cranial C7-T1.</li>
+        <li>Paralelo C7-T1.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>8. Nas incidências de coluna lombar AP para pacientes com cifose acentuada torácica, qual o raio central utilizado?</p>
+      <ul>
+        <li>Perpendicular no centro da coluna lombar.</li>
+        <li>Angulado caudal no centro da coluna lombar.</li>
+        <li>Angulado cranial no centro da coluna lombar.</li>
+        <li>NDA.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>9. A incidência radiográfica conhecida como transoral visa estudar a:</p>
+      <ul>
+        <li>Articulação temporomandibular.</li>
+        <li>Articulação atlantoidoccipital.</li>
+        <li>Articulação atlantoidaxial.</li>
+        <li>Articulação zigoapofisária.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>10. Na incidência de coluna lombar sacra transição L5 S1 perfil, qual o raio central utilizado?</p>
+      <ul>
+        <li>4 cm abaixo da crista ilíaca, 5 a 10° caudal.</li>
+        <li>4 cm abaixo da crista ilíaca, 5 a 10° cranial.</li>
+        <li>4 cm acima da crista ilíaca, 5 a 10° caudal.</li>
+        <li>4 cm acima da crista ilíaca, 5 a 10° cranial.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>11. Na incidência sacrococcígea perfil, qual o raio central utilizado?</p>
+      <ul>
+        <li>Perpendicular 10 cm abaixo da crista ilíaca.</li>
+        <li>Angulado caudal 10°.</li>
+        <li>Angulado cranial 10°.</li>
+        <li>NDA.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>12. Para estudo de escoliose vertebral, quais incidências são mais importantes?</p>
+      <ul>
+        <li>Coluna vertebral AP, ortostático.</li>
+        <li>Coluna vertebral AP – P, ortostático.</li>
+        <li>Coluna vertebral AP – P – oblíquas, ortostático.</li>
+        <li>Coluna vertebral AP – perfil flexão e extensão, ortostático.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>13. Na incidência de coluna sacral AP, com os mmii fletidos, qual a angulação do raio central?</p>
+      <ul>
+        <li>20° caudal.</li>
+        <li>20° cranial.</li>
+        <li>40° caudal.</li>
+        <li>40° cranial.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>14. Na incidência de coluna cóccix AP, qual a angulação do raio central?</p>
+      <ul>
+        <li>Perpendicular.</li>
+        <li>10° caudal.</li>
+        <li>10° cranial.</li>
+        <li>NDA.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>15. Pensando que o atendimento ao politraumatizado requer alguns cuidados, e que traumas na região do occipital são de uma atenção especial, assinale a alternativa que melhor caracterize uma rotina para tal região.</p>
+      <ul>
+        <li>Crânio F + P + Hirtz.</li>
+        <li>Crânio F + P + face perfil.</li>
+        <li>Crânio F + P + Towne.</li>
+        <li>Crânio F.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>16. A incidência básica para estudo da base do crânio é?</p>
+      <ul>
+        <li>Stenvers.</li>
+        <li>Schuller.</li>
+        <li>Hirtz.</li>
+        <li>Watrs.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>17. A incidência de Haas é uma alternativa a pacientes que:</p>
+      <ul>
+        <li>Não podem permanecer em pé sem apoio.</li>
+        <li>Não podem abduzir o braço o suficiente.</li>
+        <li>Não podem fletir o pescoço.</li>
+        <li>Não podem permanecer deitados sobre a mesa de Bucky.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>18. A incidência na Reverchon é útil para análise da região:</p>
+      <ul>
+        <li>Temporal.</li>
+        <li>Occipital.</li>
+        <li>Parietal.</li>
+        <li>Orbital.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>19. A incidência de crânio pela qual se estudam os clinoides posteriores e anteriores da sela turca é:</p>
+      <ul>
+        <li>Reverchon.</li>
+        <li>Perfil.</li>
+        <li>Hirtz.</li>
+        <li>Mento-nasal.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>20. A incidência que demonstra melhor os seios esfenoides e etmoides é?</p>
+      <ul>
+        <li>Hirtz.</li>
+        <li>Caldwel.</li>
+        <li>Waters.</li>
+        <li>Mayer.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>21. Na incidência transorbitária, o raio central deve ser dirigido para:</p>
+      <ul>
+        <li>Bregma.</li>
+        <li>Glabela.</li>
+        <li>Occipital.</li>
+        <li>Lambda.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>22. O arco zigomático é um exame radiográfico cujo posicionamento destina-se a verificar:</p>
+      <ul>
+        <li>O osso zigomático, o arco zigomático, o osso temporal e parte do osso frontal.</li>
+        <li>O osso zigomático e o arco zigomático.</li>
+        <li>O osso zigomático, o arco zigomático e o osso temporal.</li>
+        <li>O osso zigomático e parte do osso frontal.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>23. Quais as incidências consideradas de rotina para o estudo radiográfico da Coluna Cervical?</p>
+      <ul>
+        <li>PA e Perfil</li>
+        <li>AP transoral e Perfil</li>
+        <li>AP e Perfil</li>
+        <li>AP Axial e Perfil</li>
+        <li>AP de mastigação e Perfil</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>24. A incidência de rheese é usada para o estudo do(a):</p>
+      <ul>
+        <li>Sela túrsica.</li>
+        <li>Forame óptico.</li>
+        <li>Processo odontóide.</li>
+        <li>Articulação temporomandibular.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>25. Por que o perfil de coluna cervical deve ser feito em teleradiografia?</p>
+      <ul>
+        <li>Para compensar a diminuição da diatância objeto-filme.</li>
+        <li>Para compensar o aumento da distância objeto-filme.</li>
+        <li>Para diminuir a dose de radiação aplicada no paciente.</li>
+        <li>Para mostrar melhor os foramens de conjugação.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>26. Na projeção de waters para avaliação dos ossos da face:</p>
+      <ul>
+        <li>O raio central deve ser orientado paralelamente a linha órbitomeatal.</li>
+        <li>O raio central deve ser orientado perpendicularmente a linha órbitomeatal.</li>
+        <li>O raio central deve ser orientado paralelamente a linha tragus-mentoniana.</li>
+        <li>O raio central deverá incidir na glabela.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>27. Na posição oblíqua anterior da coluna cervical, as estruturas mais bem demonstradas são:</p>
+      <ul>
+        <li>Processo odontóide e corpo de C2.</li>
+        <li>Forames intrevertebrais e pedículos mais próximos do filme.</li>
+        <li>Massas laterais de C1 e espaço zigapofisário de C1 e C2.</li>
+        <li>Espaço entre os pedículos e o processo espinhosa.</li>
+        <li>Pedículos e processo odontóide.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>28. Na radiografia AP de coluna torácica, o decúbito dorsal com a cabeça na extremidade anódica da mesma tem como tem como objetivo:</p>
+      <ul>
+        <li>Aumentar a área de exposição.</li>
+        <li>Reduzir a curvatura torácica.</li>
+        <li>Obter densidade mais uniforme de T1 a T12.</li>
+        <li>Proporcionar maior conforto ao paciente.</li>
+        <li>Facilitar a imobilização do paciente.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>29. Na incidência de Waters (parietoacantil), as cristas petrosas deverão estar projetadas:</p>
+      <ul>
+        <li>Abaixo dos seios maxilares.</li>
+        <li>Acima das células etmoidais.</li>
+        <li>Acima do seio frontal.</li>
+        <li>No terço médio das órbitas.</li>
+        <li>Sobre os seios maxilares.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>30. Nas posições laterais com hiperflexão e hiperextensão de coluna cervical, é INCORRETO afirmar que:</p>
+      <ul>
+        <li>O paciente deve prender a respiração em expiração completa.</li>
+        <li>O raio central é perpendicular ao filme, direcionado horizontalmente, para a área de C4.</li>
+        <li>Na parahiperflexão, o queixo deve estar abaixado, até que toque o tórax ou até onde o paciente consiga tolerar.</li>
+        <li>Visualizamos patologias do esterno, incluindo fraturas e processos inflamatórios.</li>
+        <li>Devemos colimar os quatro lados de interesse, garantindo que tanto as vértebras cervicais superiores quanto as inferioresestejam incluídas.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>31. Em relação à rotina de coluna lombar:</p>
+      <ul>
+        <li>As incidências básicas são AP, PA axial do sacro e oblíquas.</li>
+        <li>Na incidência AP axial de L5 a S1, o raio central deve ser sempre angulado em 70º, e o raio central deve entrar ao nível da articulação coxo-femural centralizado na linha média.</li>
+        <li>É necessário fazer inspirações profundas, seguidas de expirações profundas durante o exame.</li>
+        <li>Na incidência AP, o paciente deve ficar em ortostase, apoiando todo o seu peso sobre o lado direito do corpo.</li>
+        <li>Devemos visualizar em uma incidência lateral de coluna lombar as vértebras de T12 até S1.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>32. Em qual osso do crânio, a sela turca está localizada?</p>
+      <ul>
+        <li>Occipital.</li>
+        <li>Frontal.</li>
+        <li>Etmoide.</li>
+        <li>Esfenoide.</li>
+        <li>Parietal.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>33. Em relação à avaliação radiográfica da coluna cervical, qual a opção que corresponde ao posicionamento CORRETO para a avaliação do processo odontoide?</p>
+      <ul>
+        <li>Oblíqua esquerda.</li>
+        <li>Incidência AP com boca fechada.</li>
+        <li>Incidência AP com boca aberta.</li>
+        <li>Oblíqua direita.</li>
+        <li>Incidência PA com boca fechada.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>34. Qual a melhor rotina radiográfica para escoliose da coluna vertebral?</p>
+    </div>
+
+    <h3>Gabarito (Posicionamento Radiográfico III)</h3>
+    <table class="gabarito-table">
+      <thead>
+        <tr><th>Questão</th><th>Resposta</th><th>Questão</th><th>Resposta</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>b</td><td>18</td><td>b</td></tr>
+        <tr><td>2</td><td>a</td><td>19</td><td>b</td></tr>
+        <tr><td>3</td><td>b</td><td>20</td><td>a</td></tr>
+        <tr><td>4</td><td>a</td><td>21</td><td>b</td></tr>
+        <tr><td>5</td><td>b</td><td>22</td><td>a</td></tr>
+        <tr><td>6</td><td>a</td><td>23</td><td>d</td></tr>
+        <tr><td>7</td><td>a</td><td>24</td><td>b</td></tr>
+        <tr><td>8</td><td>a</td><td>25</td><td>b</td></tr>
+        <tr><td>9</td><td>c</td><td>26</td><td>c</td></tr>
+        <tr><td>10</td><td>a</td><td>27</td><td>b</td></tr>
+        <tr><td>11</td><td>a</td><td>28</td><td>c</td></tr>
+        <tr><td>12</td><td>b</td><td>29</td><td>a</td></tr>
+        <tr><td>13</td><td>b</td><td>30</td><td>d</td></tr>
+        <tr><td>14</td><td>b</td><td>31</td><td>e</td></tr>
+        <tr><td>15</td><td>c</td><td>32</td><td>d</td></tr>
+        <tr><td>16</td><td>c</td><td>33</td><td>c</td></tr>
+        <tr><td>17</td><td>c</td><td>-</td><td>-</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ==================== ARQUIVO 3 (PARTE 1 - RAD I) ==================== -->
+  <section class="card" id="arquivo-3">
+    <h2>Avaliação – Posicionamento Radiográfico I</h2>
+    
+    <div class="header-box">
+      <div class="header-row">
+        <span><strong>Professor:</strong> ____________________________________</span>
+        <span><strong>Nota:</strong> _______</span>
+      </div>
+      <div class="header-row">
+        <span><strong>Aluno(a):</strong> ____________________________________</span>
+        <span><strong>Turma:</strong> ________</span>
+        <span><strong>Data:</strong> ___/___/______</span>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>01. Assinale a alternativa INCORRETA:</p>
+      <ul>
+        <li>Na incidência ântero-posterior, a região anterior do paciente está direcionada para a ampola.</li>
+        <li>Em perfil esquerdo, o paciente encontra-se com seu lado esquerdo mais próximo ao filme.</li>
+        <li>Em decúbito lateral direito, o paciente coloca seu lado esquerdo mais próximo do filme.</li>
+        <li>Em OAD, o paciente encontra-se com sua região anterior direita mais próxima do filme.</li>
+        <li>Na incidência póstero-anterior à região anterior do paciente está mais próxima do filme.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>02. Para realização da incidência obliqua para estudo do ombro o RC está a 45° graus no sentido caudal em direção à face medial da articulação. O termo utilizado para o direcionamento do RC indica que este:</p>
+      <ul>
+        <li>É perpendicular em sentido vertical.</li>
+        <li>É angulado em sentido cefálico.</li>
+        <li>É perpendicular em sentido horizontal.</li>
+        <li>Deve entrar na face medial da estrutura não importando o sentido.</li>
+        <li>É angulado em sentido podálico.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>03. Paciente deitado sobre o lado esquerdo do corpo com o RC perpendicular ao plano coronal corresponde à:</p>
+      <ul>
+        <li>Incidência lateral direita.</li>
+        <li>Decúbito esquerdo com alinhamento do PMS.</li>
+        <li>Incidência lateral esquerda.</li>
+        <li>Posicionamento anterior direito.</li>
+        <li>Decúbito esquerdo com alinhamento do plano coronal.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>04. O indivíduo na posição anatômica com sua região dorsal direcionada para a ampola de raios-x estará realizando uma incidência:</p>
+      <ul>
+        <li>Antero – posterior.</li>
+        <li>Latero – medial.</li>
+        <li>Obliqua posterior.</li>
+        <li>Medial – lateral.</li>
+        <li>Póstero – anterior.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>05. A radiação que provém da ampola em sentido reto sem variação de ângulo incidindo na estativa corresponde ao:</p>
+      <ul>
+        <li>RC perpendicular em sentido caudal.</li>
+        <li>RC angulado em sentido vertical.</li>
+        <li>RC perpendicular em sentido horizontal.</li>
+        <li>RC perpendicular em sentido supino.</li>
+        <li>RC perpendicular em sentido cefálico.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>06. Em uma radiografia, o termo médico utilizado para indicar a posição em que os membros estejam distantes do corpo é:</p>
+      <ul>
+        <li>Proximal.</li>
+        <li>Oblíquo.</li>
+        <li>Tangencial.</li>
+        <li>Lateral.</li>
+        <li>Distal.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>07. A Supinação corresponde a um movimento traduzido por:</p>
+      <ul>
+        <li>Deslocamento lateral com afastamento do PMS</li>
+        <li>Abdução movimento lateral de afastamento do PMS</li>
+        <li>Rotação externa do antebraço e da mão que fica com sua face anterior voltada para frente</li>
+        <li>Deslocamento medial com aproximação do PMS</li>
+        <li>Rotação interna do antebraço e da mão que fica com sua face anterior voltada para trás.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>08. O chassi posicionado sobre a mesa de exame ou estativa apresentando as bordas superiores e inferiores menores que as bordas laterais está sendo utilizado em um sentido:</p>
+      <ul>
+        <li>Perpendicular vertical.</li>
+        <li>Médio-lateral.</li>
+        <li>Transversal.</li>
+        <li>Perpendicular horizontal.</li>
+        <li>Longitudinal.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>09. As grades antidifusoras utilizadas em estruturas com espessuras maiores que 10 cm, tem por finalidade:</p>
+      <ul>
+        <li>Facilitar o manuseio do filme radiográfico.</li>
+        <li>Delimitar o campo de incidência do RC.</li>
+        <li>Limitar a radiação secundária proveniente do paciente.</li>
+        <li>Proteger o paciente dos feixes de menor intensidade.</li>
+        <li>NDA.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>10. A ampola de raios-x apresenta uma variação de ângulo de forma que esta fica posicionada acima da área estudada com a radiação direcionada no sentido caudal. Neste caso podemos considerar que o sentido do RC será:</p>
+      <ul>
+        <li>Perpendicular podálico.</li>
+        <li>Angulado cefálico.</li>
+        <li>Perpendicular horizontal.</li>
+        <li>Perpendicular reto.</li>
+        <li>Angulado podálico.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>11. O indivíduo na posição anatômica com a região posterior de frente para a ampola de raios-x estará realizando uma incidência:</p>
+      <ul>
+        <li>Póstero – anterior (PA).</li>
+        <li>Látero – medial.</li>
+        <li>Obliqua posterior.</li>
+        <li>Antero – posterior (AP).</li>
+        <li>NDA.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>12. A radiação que provém da ampola em sentido reto sem variação de ângulo incidindo na mesa de exame ou diretamente sobre o RI (receptor de imagens) corresponde ao:</p>
+      <ul>
+        <li>RC perpendicular em sentido horizontal.</li>
+        <li>RC perpendicular em sentido caudal.</li>
+        <li>RC perpendicular em sentido lateral.</li>
+        <li>RC perpendicular em sentido vertical.</li>
+        <li>RC perpendicular em sentido cefálico.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>13. A DFOFI corresponde à distância entre o ponto focal (ampola) e o RI (receptor de imagem) e sua função é proporcionar uma imagem mais próxima da real possível. Sobre a DFOFI está correta apenas a alternativa:</p>
+      <ul>
+        <li>Quanto maior a DFOFI menor será ampliação da imagem.</li>
+        <li>Quanto menor a DFOFI maior será a ampliação da imagem.</li>
+        <li>Quanto maior a DFOFI maior será a ampliação da imagem.</li>
+        <li>A DFOFI não interfere no tamanho da imagem.</li>
+        <li>NDA.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>14. O PMS é um plano anatômico de secção que divide o corpo por uma linha imaginária em metade direita e esquerda e que atravessa os planos de delimitação no sentido:</p>
+      <ul>
+        <li>látero-lateral.</li>
+        <li>médio-lateral.</li>
+        <li>antero-posterior.</li>
+        <li>supero-inferior.</li>
+        <li>póstero-anterior.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>15. Decúbito em OPE (obliqua posterior esquerda) significa que o paciente está:</p>
+      <ul>
+        <li>Deitado sobre o lado esquerdo posterior aproximadamente com angulação de 45°.</li>
+        <li>Deitado sobre o lado direito posterior aproximadamente com angulação de 45°.</li>
+        <li>Deitado sobre o lado esquerdo anterior aproximadamente com angulação de 90°.</li>
+        <li>Deitado sobre o lado direito anterior aproximadamente com angulação de 90°.</li>
+        <li>Deitado sobre o lado esquerdo sem angulação.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>16. Qual a função das grades antidifusoras?</p>
+      <ul>
+        <li>Absorver os raios-x parasitas.</li>
+        <li>Absorver os raios-x primários.</li>
+        <li>Proteger o paciente durante o exame.</li>
+        <li>Absorver os raios-x secundários.</li>
+        <li>NDA.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>17. A descrição: “raio central incide na região anterior direita com PMS obliquado a 45° graus, saindo na região posterior” corresponde à:</p>
+      <ul>
+        <li>Incidência obliqua anterior direita.</li>
+        <li>Posição obliqua anterior direita.</li>
+        <li>Incidência obliqua posterior direita.</li>
+        <li>Posição obliqua posterior direita.</li>
+        <li>NDA.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>18. Os chassis são caixas protetoras dos filmes radiográficos, e possuem diferentes faces e sentidos. Podemos afirmar que o mesmo se encontra no sentido longitudinal quando apresenta:</p>
+      <ul>
+        <li>As bordas laterais em paralelo.</li>
+        <li>As bordas superiores e inferiores maiores que as bordas laterais.</li>
+        <li>As bordas superiores e inferiores com mesmo tamanho.</li>
+        <li>As bordas superiores e inferiores menores que as bordas laterais.</li>
+        <li>As bordas superiores e inferiores em paralelo.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>19. Quando se faz uma radiografia deve-se identifica-la quanto à posição que o paciente adotou quando de sua realização. Em uma radiografia antero-posterior da coluna torácica em um idoso de 79 anos os raios-x devem incidir:</p>
+      <ul>
+        <li>Na região anterior do paciente.</li>
+        <li>Na região lateral direita do paciente.</li>
+        <li>Na região posterior do paciente.</li>
+        <li>Na região lateral esquerda do paciente.</li>
+        <li>Não existe um local especifico.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>20. A pronação corresponde a um movimento traduzido por:</p>
+      <ul>
+        <li>Deslocamento lateral com afastamento do PMS.</li>
+        <li>Rotação lateral do antebraço e da mão que fica com sua face anterior voltada para frente.</li>
+        <li>Deslocamento lateral em angulação ao PMS.</li>
+        <li>Rotação interna do antebraço e da mão que fica com sua face anterior voltada para trás.</li>
+        <li>Deslocamento medial com aproximação do PMS.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>21. Deitado sobre a região posterior do corpo corresponde a um decúbito:</p>
+      <ul>
+        <li>Lateral.</li>
+        <li>Dorsal.</li>
+        <li>Obliquo posterior.</li>
+        <li>Ventral.</li>
+        <li>Obliquo anterior.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>22. O plano que divide o corpo verticalmente em duas partes, superior (cranial) e inferior (caudal) é o:</p>
+      <ul>
+        <li>Parassagital.</li>
+        <li>Frontal mediano.</li>
+        <li>Sagital mediano.</li>
+        <li>Coronal transversal.</li>
+        <li>Transversal.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>23. Na supinação o final do movimento realizado é indicado por:</p>
+      <ul>
+        <li>Palma da mão direcionada para o PMS.</li>
+        <li>Face anterior da mão voltada para frente.</li>
+        <li>Dorso da mão voltado para o plano mediano.</li>
+        <li>Palma da mão direcionada para o plano coronal.</li>
+        <li>Face posterior da mão voltada para frente.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>24. Paciente obliquado com a região posterior voltada para o tubo ou ampola de raios-x com o lado direito mais afastado do filme corresponde à incidência:</p>
+      <ul>
+        <li>OAD.</li>
+        <li>AXIAL DIREITA.</li>
+        <li>OPE.</li>
+        <li>OPD.</li>
+        <li>OAE.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>25. Assinale a alternativa errada:</p>
+      <ul>
+        <li>Na incidência em AP à região anterior do paciente encontra-se direcionada ao tubo de raios-x.</li>
+        <li>Em decúbito lateral direito o paciente coloca seu lado esquerdo mais próximo do filme.</li>
+        <li>Na OAD o paciente está angulado com a região anterior direita mais próxima do filme.</li>
+        <li>Em perfil esquerdo, o paciente encontra-se com seu lado esquerdo mais próximo do filme.</li>
+        <li>Em posição de decúbito, o paciente encontra-se deitado.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>26. Quando o paciente está deitado sobre seu lado esquerdo e o RC é perpendicular vertical ao plano coronal corresponde a um:</p>
+      <ul>
+        <li>Decúbito lateral esquerdo com raios horizontais em póstero-anterior.</li>
+        <li>Perfil Direito.</li>
+        <li>Decúbito lateral esquerdo com raios horizontais em ântero-posterior.</li>
+        <li>Perfil Esquerdo.</li>
+        <li>NDA.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>27. Em um exame radiográfico, o objetivo de se utilizar uma maior distância objeto foco filme está relacionado ao fato de que ocorre:</p>
+      <ul>
+        <li>Uma redução do tempo de exame.</li>
+        <li>Uma ampliação mínima da imagem em estudo.</li>
+        <li>Uma redução da radiação secundária.</li>
+        <li>Uma ampliação maior da imagem em estudo.</li>
+        <li>NDA.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>28. A radiação que provém da ampola em sentido reto sem variação de ângulo incidindo na mesa de exame ou diretamente sobre o RI (receptor de imagens) corresponde ao:</p>
+      <ul>
+        <li>RC perpendicular em sentido horizontal.</li>
+        <li>RC perpendicular em sentido caudal.</li>
+        <li>RC perpendicular em sentido lateral.</li>
+        <li>RC perpendicular em sentido vertical.</li>
+        <li>RC perpendicular em sentido cefálico.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>29. Os chassis são caixas protetoras dos filmes radiográficos, e possuem diferentes faces e sentidos. Podemos afirmar que o mesmo se encontra no sentido longitudinal quando apresenta:</p>
+      <ul>
+        <li>As bordas laterais em paralelo.</li>
+        <li>As bordas superiores e inferiores menores que as bordas laterais.</li>
+        <li>As bordas superiores e inferiores com mesmo tamanho.</li>
+        <li>As bordas superiores e inferiores maiores que as bordas laterais.</li>
+        <li>As bordas superiores e inferiores em paralelo.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>30. A pronação corresponde a um movimento traduzido por:</p>
+      <ul>
+        <li>Deslocamento lateral com afastamento do PMS.</li>
+        <li>Rotação lateral do antebraço e da mão que fica com sua face anterior voltada para frente.</li>
+        <li>Deslocamento lateral em angulação ao PMS.</li>
+        <li>Rotação interna do antebraço e da mão que fica com sua face anterior voltada para trás.</li>
+        <li>Deslocamento medial com aproximação do PMS.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>31. As incidências de Stecher e Pierquiu estudam, respectivamente, os seguintes tipos de ossos: (Prefeitura Municipal do Rio de Janeiro-02).</p>
+      <ul>
+        <li>Úmero e cotovelo.</li>
+        <li>Escafóide e joelho.</li>
+        <li>Escafóide e cotovelo.</li>
+        <li>Ossos nasais e cotovelo.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>32. Na avaliação da idade óssea pela tabela de Greulich-Pyle, a incidência a ser realizada é: (Prefeitura Municipal do Rio de Janeiro-02).</p>
+      <ul>
+        <li>Mãos e punhos comparativa em PA.</li>
+        <li>AP de quadril com moderada flexão.</li>
+        <li>Mãos e punho em oblíqua.</li>
+        <li>Mãos e punho em perfil.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>33. Por causa da fratura de Bennett, é obrigatório aparecer nas incidências obtidas: (UNIRIO-02).</p>
+      <ul>
+        <li>O navicular.</li>
+        <li>O escafoide.</li>
+        <li>O quinto metacarpo.</li>
+        <li>O primeiro metacarpo.</li>
+        <li>O primeiro metatarsiano.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>34. O fator que mais contribui para a perda de definição da imagem em um exame de mão é: (UNIRIO-02).</p>
+      <ul>
+        <li>Movimento.</li>
+        <li>Quilovoltagem.</li>
+        <li>O uso de écran rápido.</li>
+        <li>A distância foco-objeto.</li>
+        <li>Tamanho do ponto focal.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>35. Das incidências relacionadas, a melhor para a avaliação do escafóide é PA com flexão: (Prefeitura Municipal de Mogi das Cruzes-02).</p>
+      <ul>
+        <li>Ulnar e angulação do raio central de 10º a 15º.</li>
+        <li>Radial e angulação do raio central de 10 a 15º.</li>
+        <li>Ulnar e angulação proximal do raio central de 30º a 35º.</li>
+        <li>Radial e angulação proximal do raio central de 30º a 35º.</li>
+        <li>Radial e angulação distal do raio central de 30º a 35º.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>36. Para se ter incidência em perfil absoluto do cotovelo, é necessário que o (Prefeitura Municipal de Petrópolis-02):</p>
+      <ul>
+        <li>Braço esteja fletido a 90º, apoiado sobre o chassis, com o úmero, o antebraço e a mão no mesmo plano horizontal, sem rotação.</li>
+        <li>Antebraço esteja fletido a 90º, apoiado sobre o chassis, com o úmero, o antebraço e a mão no mesmo plano vertical, sem rotação.</li>
+        <li>Braço esteja apoiado 45º sobre o chassis, com úmero, antebraço e a mão no mesmo plano horizontal.</li>
+        <li>Braço esteja fletido a 180º, apoiado sobre o chassis, com o úmero, o antebraço e a mão no plano oblíquo.</li>
+        <li>Braço esteja fletido a 90º, apoiado sobre o chassis, com o úmero, o antebraço e mão no mesmo plano coronal.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>37. Os dois ossos do carpo que podem ser evidenciados em técnicas especiais são: (Prefeitura Municipal de Arraial do Cabo-03).</p>
+      <ul>
+        <li>Escafóide e grande osso.</li>
+        <li>Trapézio e grande osso.</li>
+        <li>Ganchoso e trapézio.</li>
+        <li>Escafóide e pisiforme.</li>
+        <li>Escafóide e ganchoso.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>38. Na avaliação da idade óssea pela técnica de Greulich-Pyle, deve-se fazer radiografia de: (Prefeitura Municipal de Arraial do Cabo-03).</p>
+      <ul>
+        <li>Joelhos e cotovelos.</li>
+        <li>Punhos e joelhos.</li>
+        <li>Mãos e punhos.</li>
+        <li>Crânio e cotovelos.</li>
+        <li>Mãos e joelhos.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>39. O filme radiográfico é uma folha a base de:</p>
+      <ul>
+        <li>Celulose.</li>
+        <li>Poliéster.</li>
+        <li>Gelatina.</li>
+        <li>Fósforo.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>40. Os cristais de prata usados na emulsão do filme radiográfico convencional são compostos de bromo e:</p>
+      <ul>
+        <li>Prata.</li>
+        <li>Iodo.</li>
+        <li>Bário.</li>
+        <li>Fósforo.</li>
+      </ul>
+    </div>
+
+    <h3>Gabarito (Posicionamento Radiográfico I)</h3>
+    <table class="gabarito-table">
+      <thead>
+        <tr><th>Questão</th><th>Resposta</th><th>Questão</th><th>Resposta</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>c</td><td>21</td><td>b</td></tr>
+        <tr><td>2</td><td>e</td><td>22</td><td>e</td></tr>
+        <tr><td>3</td><td>c</td><td>23</td><td>b</td></tr>
+        <tr><td>4</td><td>e</td><td>24</td><td>e</td></tr>
+        <tr><td>5</td><td>c</td><td>25</td><td>b</td></tr>
+        <tr><td>6</td><td>e</td><td>26</td><td>d</td></tr>
+        <tr><td>7</td><td>c</td><td>27</td><td>b</td></tr>
+        <tr><td>8</td><td>e</td><td>28</td><td>d</td></tr>
+        <tr><td>9</td><td>c</td><td>29</td><td>b</td></tr>
+        <tr><td>10</td><td>e</td><td>30</td><td>d</td></tr>
+        <tr><td>11</td><td>a</td><td>31</td><td>c</td></tr>
+        <tr><td>12</td><td>d</td><td>32</td><td>a</td></tr>
+        <tr><td>13</td><td>a</td><td>33</td><td>d</td></tr>
+        <tr><td>14</td><td>d</td><td>34</td><td>a</td></tr>
+        <tr><td>15</td><td>a</td><td>35</td><td>a</td></tr>
+        <tr><td>16</td><td>d</td><td>36</td><td>a</td></tr>
+        <tr><td>17</td><td>a</td><td>37</td><td>d</td></tr>
+        <tr><td>18</td><td>d</td><td>38</td><td>c</td></tr>
+        <tr><td>19</td><td>a</td><td>39</td><td>a</td></tr>
+        <tr><td>20</td><td>d</td><td>40</td><td>a</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ==================== ARQUIVO 4 (PARTE 2 - RAD II) ==================== -->
+  <section class="card" id="arquivo-4">
+    <h2>Avaliação – Posicionamento Radiográfico II</h2>
+    
+    <div class="header-box">
+      <div class="header-row">
+        <span><strong>Professor:</strong> ____________________________________</span>
+        <span><strong>Nota:</strong> _______</span>
+      </div>
+      <div class="header-row">
+        <span><strong>Aluno(a):</strong> ____________________________________</span>
+        <span><strong>Turma:</strong> ________</span>
+        <span><strong>Data:</strong> ___/___/______</span>
+      </div>
+    </div>
+
+    <div class="question">
+      <p>01. Em relação à incidência decúbito lateral de abdome:</p>
+      <ul>
+        <li>O paciente deve estar em ortostase, com os joelhos fletidos 30 graus.</li>
+        <li>O paciente deve estar deitado de lado sobre almofada radiotransparente, com joelhos fletidos, um sobre o outro, para estabilizar.</li>
+        <li>O raio central deve estar direcionado à borda do filme a, pelo menos, 2 cm da crista ilíaca.</li>
+        <li>O paciente deve estar em decúbito ventral sobre almofada.</li>
+        <li>O raio central deve estar direcionado à clavícula.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>02. Na incidência póstero-anterior de tórax, visualizamos:</p>
+      <ul>
+        <li>Pulmões, rins e baço.</li>
+        <li>Pulmões, esôfago e rins.</li>
+        <li>Pulmões, ângulos costofrênicos e a traqueia cheia de ar.</li>
+        <li>Pulmões, esôfago completo e diafragma.</li>
+        <li>Pulmões, diafragma e rim esquerdo.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>03. Qual o ponto de reparo anatômico preferido para a localização do raio central em uma radiografia do tórax em PA?</p>
+      <ul>
+        <li>Rebordo costal.</li>
+        <li>Vértebra proeminente (T1).</li>
+        <li>Crista ilíaca.</li>
+        <li>Espinha da escápula.</li>
+        <li>Esterno.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>04. Para a realização de uma radiografia de tórax em PA, deve-se utilizar:</p>
+      <ul>
+        <li>Alta miliamperagem.</li>
+        <li>Baixa quilovoltagem.</li>
+        <li>Grade e alta quilovoltagem.</li>
+        <li>Grade e alto contraste.</li>
+        <li>Longo tempo de exposição.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>05. A incidência lordótica é indicada para:</p>
+      <ul>
+        <li>Avaliar a junção esterno-clavicular.</li>
+        <li>Avaliar a clavícula.</li>
+        <li>Avaliar lesões dos ápices pulmonares.</li>
+        <li>Avaliar a transição cérvico-torácica da coluna.</li>
+        <li>Nenhuma das alternativas anteriores está correta.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>06. Quais as incidências indicadas para o estudo radiológico do esterno?</p>
+      <ul>
+        <li>PA + Perfil E.</li>
+        <li>AP + Perfil D.</li>
+        <li>Perfil.</li>
+        <li>Oblíquas anteriores e Perfil.</li>
+        <li>NDA.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>07. Com relação à técnica de “Air Gap”, assinale a alternativa incorreta.</p>
+      <ul>
+        <li>Esta técnica consiste em se afastar o filme do paciente, criando um espaço de ar entre eles.</li>
+        <li>Esta técnica tem como objetivo diminuir a quantidade de radiação espalhada pelo paciente, melhorando assim o contraste radiográfico.</li>
+        <li>Esta técnica produz ampliação da imagem radiográfica.</li>
+        <li>Esta técnica ocasiona a perda de detalhes causada pelo aumento da penumbra.</li>
+        <li>Esta técnica é indicada para radiografia de tórax, de pessoas altas e magras.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>08. Qual a técnica indicada para avaliação de fraturas ou luxações na região do fêmur proximal em situações traumáticas de quadril, quando a perna afetada NÃO pode ser movida?</p>
+      <ul>
+        <li>Método de Judet.</li>
+        <li>Método de Danelius-Miller.</li>
+        <li>Método de Cleaves modificado.</li>
+        <li>Método de Clements-Nakayama.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>09. A técnica Air Gap ou colchão de ar é uma variação de técnica radiográfica empregada sobretudo em exames de tórax. Assinale o objetivo dessa técnica.</p>
+      <ul>
+        <li>Aumentar a distância objeto-filme para eliminar as radiações secundárias.</li>
+        <li>Aumentar a distância objeto-filme para aumentar o contraste.</li>
+        <li>Diminuir a distância tubo-filme para eliminar as radiações secundárias.</li>
+        <li>Diminuir a distância objeto-filme para aumentar o contraste.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>10. Assinale a providência técnica que deve ser tomada para se realizar uma radiografia de um osso longo em uma paciente idosa com osteoporose.</p>
+      <ul>
+        <li>Diminuir o tempo de exposição.</li>
+        <li>Utilizar o foco fino.</li>
+        <li>Aumentar a miliamperagem segundo.</li>
+        <li>Reduzir a quilovoltagem.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>11. A incisura angular é o elemento anatômico que se localiza no(a):</p>
+      <ul>
+        <li>Clavícula.</li>
+        <li>Cotovelo.</li>
+        <li>Ombro.</li>
+        <li>Manúbrio esternal.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>12. Quando Solicitado tórax para estudo de pneumotórax, devemos como rotina realizar:</p>
+      <ul>
+        <li>Frente e perfil.</li>
+        <li>Frente, perfil e oblíquas.</li>
+        <li>Frente em expiração e inspiração com contraste.</li>
+        <li>Frente em expiração e inspiração.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>13. Todas as alternativas a seguir são indicações de radiografias do abdome em que se devem reduzir os fatores de exposição, EXCETO:</p>
+      <ul>
+        <li>Ascite.</li>
+        <li>Pneumoperitônio.</li>
+        <li>Perfuração intestinal.</li>
+        <li>Obstrução intestinal.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>14. Todas as alternativas a seguir são incidências que fazem parte da rotina de investigação radiológica do abdome agudo, EXCETO:</p>
+      <ul>
+        <li>AP em decúbito dorsal.</li>
+        <li>AP em decúbito ventral.</li>
+        <li>Abdome em ortostasia.</li>
+        <li>PA do tórax.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>15. Assinale a alternativa INCORRETA em relação ao estudo radiológico do tórax.</p>
+      <ul>
+        <li>Numa radiografia do tórax em PA com boa qualidade técnica, devemos ser capazes de ver, pelo menos, contornos sutis das costelas e das vértebras médias e superiores, por meio da sombra do coração.</li>
+        <li>Em pacientes idosos, deve ser utilizado um posicionamento mais baixo do raio central (T6-T7), por sua menor capacidade de inspiração.</li>
+        <li>Em algumas situações, como na suspeita de pneumotórax, pode ser necessária a realização de radiografias em inspiração e expiração máximas.</li>
+        <li>Uma kVp mais alta e uma mAs menor são necessárias para as crianças, usando-se um tempo de exposição o mais curto possível.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>16. Em uma radiografia do tórax, em qual das alternativas a seguir é indicado aumentar os fatores de exposição?</p>
+      <ul>
+        <li>Asma brônquica.</li>
+        <li>Atelectasia pulmonar.</li>
+        <li>Enfisema pulmonar.</li>
+        <li>Pneumotórax.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>17. Em relação à incidência de laurel é INCORRETO afirmar que:</p>
+      <ul>
+        <li>A radiografia pode ser realizada em decúbito lateral direito ou esquerdo.</li>
+        <li>Para investigar a possibilidade de líquido na cavidade pleural esquerda, o exame deve ser feito em decúbito lateral direito.</li>
+        <li>Para investigar a possibilidade de pequenos volumes de ar na cavidade pleural esquerda, o exame deve ser feito em decúbito lateral direito.</li>
+        <li>Devem ser evidenciados completamente ambos os pulmões e ambos os ângulos costofrênicos, além das bordas laterais das costelas.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>18. Assinale a alternativa CORRETA em relação ao estudo radiológico do tórax.</p>
+      <ul>
+        <li>Em uma radiografia PA do tórax de boa qualidade devem ser visualizados, no mínimo, dez arcos costais posteriores projetados na área dos pulmões, acima dos hemidiafragmas.</li>
+        <li>A técnica correta para realização de telerradiografia do tórax deve utilizar alta quilovoltagem e alto mAs.</li>
+        <li>Como regra geral, numa radiografia do tórax, o uso de um kVp alta (acima de 100) exige o uso concomitante de grades, que tem de ser sempre do tipo móvel.</li>
+        <li>A incisura jugular, ou manubrial, é um ponto de referência importante no posicionamento do raio central em radiografia AP do tórax, correspondente ao nível da nona ou décima vértebras dorsais.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>19. Em relação ao estudo radiológico do tórax e a ampliação da silhueta cardíaca, assinale a alternativa INCORRETA.</p>
+      <ul>
+        <li>O fenômeno físico que determina a ampliação da silhueta cardíaca em PA é denominado divergência.</li>
+        <li>Quando realizado em AP causa uma maior ampliação da silhueta do coração.</li>
+        <li>Quando realizado em AP causa uma menor ampliação da silhueta do coração.</li>
+        <li>Radiografia de tórax em PA, realizada com distancia foco-filme inferior à recomendada, por exemplo de 30 cm, aumenta o fenômeno da divergência, distorcendo o volume correto do coração.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>20. A incidência de fleischner estuda, principalmente:</p>
+      <ul>
+        <li>Ápice pulmonar.</li>
+        <li>Língula.</li>
+        <li>Base dos pulmões.</li>
+        <li>Mediastino.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>21. No estudo radiológico das articulações sacroilíacas devemos realizar as incidências em:</p>
+      <ul>
+        <li>AP, perfil e oblíquas.</li>
+        <li>AP, oblíquas e Ferguson.</li>
+        <li>AP, oblíquas e Louenstein.</li>
+        <li>AP, perfil e Ferguson.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>22. Melhor imagem radiológica é obtida com:</p>
+      <ul>
+        <li>Foco grosso, DFF grande, RC perpendicular.</li>
+        <li>Foco fino, DFF pequena, RC perpendicular.</li>
+        <li>Foco fino, DFF grande, RC perpendicular.</li>
+        <li>Foco fino, DFF grande, RC angulado.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>23. Onde se comunica o ducto acessório pancreático, quando existente?</p>
+      <ul>
+        <li>Primeira porção do duodeno.</li>
+        <li>Bulbo duodenal.</li>
+        <li>Segunda porção do duodeno.</li>
+        <li>Terceira porção do duodeno.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>24. O canal de Wirsung atualmente é chamado de:</p>
+      <ul>
+        <li>Ducto colédoco.</li>
+        <li>Ducto cístico.</li>
+        <li>Ducto hepático comum.</li>
+        <li>Ducto pancreático principal.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>25. O músculo que mais se visibiliza em uma radiografia de abdome simples em AP é:</p>
+      <ul>
+        <li>Reto do abdome.</li>
+        <li>Deltoide.</li>
+        <li>Trapézio.</li>
+        <li>Psoas.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>26. Para se obter a melhor radiografia na radiologia é preciso:</p>
+      <ul>
+        <li>Diminuir a DFF, aumentar a DFO e aumentar a DOF.</li>
+        <li>Aumentar a DFF, aumentar a DFO e diminuir a DOF.</li>
+        <li>Aumentar a DFF, diminuir a DFO e diminuir a DOF.</li>
+        <li>Diminuir a DFF, diminuir a DFO e aumentar a DOF.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>27. A incidência de Louenstein é específica para a articulação:</p>
+      <ul>
+        <li>Escapulumeral.</li>
+        <li>Esternoclavicular.</li>
+        <li>Tibiotársica.</li>
+        <li>Coxofemoral.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>28. A radiografia panorâmica da pelve em posição ortostática estuca principalmente a pesquisa de:</p>
+      <ul>
+        <li>Subluxação coxofemoral.</li>
+        <li>Fratura dos acetábulos.</li>
+        <li>Instabilidade sacroilíaca.</li>
+        <li>Desnível das cristas ilíacas.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>29. A incidência de Hjelm-Laurell é indicada para o estudo de:</p>
+      <ul>
+        <li>Derrame pleural.</li>
+        <li>Pneumotórax.</li>
+        <li>Pneumomediastino.</li>
+        <li>Lesões em ápice pulmonar.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>30. A técnica radiológica mais indicada para a realização de uma radiografia de tórax para um paciente com enfisema pulmonar é:</p>
+      <ul>
+        <li>Aumentar em média 10 kV.</li>
+        <li>Aumentar o mAs.</li>
+        <li>Diminuir em média 10 kV.</li>
+        <li>Diminuir a inspiração.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>31. Para uma radiografia de tórax em uma criança que esteja chorando, deve-se:</p>
+      <ul>
+        <li>Aumentar a escala MA para redução do tempo de exposição.</li>
+        <li>Solicitar ao acompanhante que segure firmemente a criança.</li>
+        <li>Aumentar o DFF.</li>
+        <li>Não realizar a radiografia, evitando dose desnecessária.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>32. A incidência de bacia Lowenstein é idêntica à:</p>
+      <ul>
+        <li>Bacia rã.</li>
+        <li>Bacia frog leg.</li>
+        <li>Bacia in let.</li>
+        <li>Bacia Van Rosen.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>33. Paciente em DDH, com o PMS da pelve sobre a LCM, mmii totalmente estendidos em rotação Ferguson, fazendo uma abdução de 45°. Qual bacia estamos citando?</p>
+      <ul>
+        <li>Bacia rã.</li>
+        <li>Bacia frog leg.</li>
+        <li>Bacia in let.</li>
+        <li>Bacia Van Rosen.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>34. Na incidência de alar obturatriz AP, com o lado direito afastado do filme, visibilizaremos o(a):</p>
+      <ul>
+        <li>Forame obturado esquerdo.</li>
+        <li>Sacroilíaca direita.</li>
+        <li>Sacroilíaca esquerda.</li>
+        <li>Púbis.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>35. Nas incidências de pelve, quando existe necessidade de sobrepor os forames obturados, o que deve ser feito?</p>
+      <ul>
+        <li>Angular o raio central caudal.</li>
+        <li>Angular o raio central cranial.</li>
+        <li>Obliquar o PMS.</li>
+        <li>Fazer a manobra rã.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>36. Nas incidências de pelve, quando existe necessidade de angular o raio central cranial, estudaremos o(a):</p>
+      <ul>
+        <li>Forame obturado aberto.</li>
+        <li>Forame obturado fechado.</li>
+        <li>Articulação sacroilíaca fechada.</li>
+        <li>Articulação coxofemoral.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>37. Nas incidências de pelve, o que devemos fazer para deixarmos o acetábulo em perfil?</p>
+      <ul>
+        <li>Angular o raio central cranial.</li>
+        <li>Angular o raio central caudal.</li>
+        <li>Rotacionar o PMS.</li>
+        <li>Posição rã.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>38. A que corresponde uma incidência de abdome agudo?</p>
+      <ul>
+        <li>Abdome simples.</li>
+        <li>Abdome ortostático.</li>
+        <li>Abdome DDH e ortostático.</li>
+        <li>Abdome DDH, ortostático e cúpulas.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>39. Onde entra o raio central na incidência de abdome cúpulas?</p>
+      <ul>
+        <li>Perpendicular no apêndice xifóide.</li>
+        <li>Perpendicular no apêndice vermiforme.</li>
+        <li>Angulado caudal.</li>
+        <li>Angulado cranial.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>40. Qual é a finalidade de realizar uma incidência de abdome em posição ortostática?</p>
+      <ul>
+        <li>Estudar nível aéreo.</li>
+        <li>Estudar nível líquido.</li>
+        <li>Estudar pneumotórax.</li>
+        <li>Estudar aerobilia.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>41. Em qual região encontramos aerobilia?</p>
+      <ul>
+        <li>Ducto pancreático.</li>
+        <li>Colédoco.</li>
+        <li>Duodeno.</li>
+        <li>Ducto bilidigestivo.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>42. Qual é a indicação para realizarmos a incidência de abdome cúpulas?</p>
+      <ul>
+        <li>Estudar pneumoperitônio.</li>
+        <li>Estudar nível líquido.</li>
+        <li>Estudar pneumotórax.</li>
+        <li>Estudar aerobilia.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>43. Qual incidência com que o raio central entra perpendicularmente na LCE, na face lateral do abdome?</p>
+      <ul>
+        <li>Abdome simples.</li>
+        <li>Abdome agudo.</li>
+        <li>Abdome decúbito lateral com raios horizontais.</li>
+        <li>Abdome decúbito dorsal (lateral esquerda-direita).</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>44. Qual a finalidade de realizar incidências de tórax em posição ortostática?</p>
+      <ul>
+        <li>Expandir as cúpulas diafragmáticas.</li>
+        <li>Expandir os pulmões.</li>
+        <li>Pneumotórax.</li>
+        <li>Derrame pleural.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>45. Qual a finalidade de realizar a incidência de tórax Hjelm-Laurell?</p>
+      <ul>
+        <li>Expandir as cúpulas diafragmáticas.</li>
+        <li>Expandir os pulmões.</li>
+        <li>Pneumotórax.</li>
+        <li>Derrame pleural.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>46. Na incidência de tórax Hjelm-Laurell, qual o lado a ser estudado?</p>
+      <ul>
+        <li>O mais próximo do filme.</li>
+        <li>O mais distante do filme.</li>
+        <li>Lado mais próximo do colchão.</li>
+        <li>Lado mais distante do colchão.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>47. Para estudo de pneumotórax, quais incidências deveremos realizar?</p>
+      <ul>
+        <li>Tórax PA em DD.</li>
+        <li>Tórax frente, perfil e apicolordótico.</li>
+        <li>Tórax PA, apneia inspiratória.</li>
+        <li>Tórax PA, apneia inspiratória e expiratória.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>48. Quando solicitado pelo médico uma radiografia de tórax perfil, qual lado deve ficar mais próximo da LCE?</p>
+      <ul>
+        <li>Direito.</li>
+        <li>Esquerdo.</li>
+        <li>Bilateral comparativo.</li>
+        <li>A critério do tecnólogo ou técnico.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>49. Paciente internado com tosse, submetido a realizar raios X diagnóstico. Qual a finalidade de realizar uma incidência de tórax perfil direito?</p>
+      <ul>
+        <li>Diminuir a ampliação do coração.</li>
+        <li>Aumentar a ampliação do coração.</li>
+        <li>Diminuir a ampliação do hemitórax direito, aumentando a nitidez.</li>
+        <li>Ampliar o hemitórax direito, aumentando a nitidez.</li>
+      </ul>
+    </div>
+
+    <div class="question">
+      <p>50. Qual a melhor posição para realizarmos uma radiografia de tórax em um paciente com cifose acentuada?</p>
+      <ul>
+        <li>DD AP.</li>
+        <li>DD PA.</li>
+        <li>Ortostático PA.</li>
+        <li>Ortostático AP.</li>
+      </ul>
+    </div>
+
+    <h3>Gabarito (Posicionamento Radiográfico II)</h3>
+    <table class="gabarito-table">
+      <thead>
+        <tr><th>Questão</th><th>Resposta</th><th>Questão</th><th>Resposta</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>B</td><td>26</td><td>B</td></tr>
+        <tr><td>2</td><td>C</td><td>27</td><td>D</td></tr>
+        <tr><td>3</td><td>B</td><td>28</td><td>D</td></tr>
+        <tr><td>4</td><td>C</td><td>29</td><td>A</td></tr>
+        <tr><td>5</td><td>C</td><td>30</td><td>C</td></tr>
+        <tr><td>6</td><td>D</td><td>31</td><td>A</td></tr>
+        <tr><td>7</td><td>E</td><td>32</td><td>A</td></tr>
+        <tr><td>8</td><td>B</td><td>33</td><td>D</td></tr>
+        <tr><td>9</td><td>A</td><td>34</td><td>B</td></tr>
+        <tr><td>10</td><td>D</td><td>35</td><td>A</td></tr>
+        <tr><td>11</td><td>D</td><td>36</td><td>A</td></tr>
+        <tr><td>12</td><td>D</td><td>37</td><td>C</td></tr>
+        <tr><td>13</td><td>A</td><td>38</td><td>D</td></tr>
+        <tr><td>14</td><td>B</td><td>39</td><td>A</td></tr>
+        <tr><td>15</td><td>B</td><td>40</td><td>B</td></tr>
+        <tr><td>16</td><td>B</td><td>41</td><td>B</td></tr>
+        <tr><td>17</td><td>B</td><td>42</td><td>A</td></tr>
+        <tr><td>18</td><td>A</td><td>43</td><td>D</td></tr>
+        <tr><td>19</td><td>C</td><td>44</td><td>D</td></tr>
+        <tr><td>20</td><td>A</td><td>45</td><td>D</td></tr>
+        <tr><td>21</td><td>B</td><td>46</td><td>C</td></tr>
+        <tr><td>22</td><td>C</td><td>47</td><td>D</td></tr>
+        <tr><td>23</td><td>C</td><td>48</td><td>B</td></tr>
+        <tr><td>24</td><td>D</td><td>49</td><td>C</td></tr>
+        <tr><td>25</td><td>D</td><td>50</td><td>D</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SGA - Radiologia Gamificada | Grau Educacional Mossoró</title>
+<style>
+  :root {
+    --primary: #1976d2;
+    --primary-dark: #102a43;
+    --accent: #00838f;
+    --bg-grad: linear-gradient(135deg, #102a43, #243b53);
+    --card-bg: #ffffff;
+    --success: #27ae60;
+    --danger: #e74c3c;
+    --warning: #f39c12;
+    --text-color: #102a43;
+    --text-muted: #627d98;
+    --border-color: #bcccdc;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg-grad);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    background: rgba(16, 42, 67, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 2px solid #00838f;
+    color: white;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .header-brand { display: flex; flex-direction: column; }
+  .header-brand h2 { margin: 0; font-size: 1.25rem; color: #ffffff; display: flex; align-items: center; gap: 8px; }
+  .header-brand .institution { font-size: 0.85rem; color: #4dd0e1; font-weight: 600; letter-spacing: 0.5px; }
+  .header-brand .author-tag { font-size: 0.75rem; color: #9fb3c8; margin-top: 2px; }
+  .user-badge { display: flex; align-items: center; gap: 12px; font-size: 0.9rem; }
+  .container { max-width: 1100px; margin: auto; padding: 24px; width: 100%; flex: 1; }
+  .card {
+    background: var(--card-bg);
+    border-radius: 18px;
+    padding: 28px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+    margin-bottom: 24px;
+  }
+  .hidden { display: none !important; }
+  h1, h2, h3 { color: var(--primary-dark); margin-top: 0; }
+  .subtitle { color: var(--text-muted); line-height: 1.5; margin-bottom: 20px; }
+  input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    font-size: 0.95rem;
+    margin-top: 6px;
+    margin-bottom: 16px;
+  }
+  input:focus, select:focus { border-color: var(--primary); outline: none; }
+  label { font-weight: bold; font-size: 0.85rem; color: var(--primary-dark); }
+  button {
+    border: 0;
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    font-weight: 600;
+    background: var(--primary);
+    color: white;
+    transition: 0.2s;
+  }
+  button:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  button.secondary { background: #627d98; }
+  button.danger { background: var(--danger); }
+  button.success { background: var(--success); }
+  button.sm { padding: 6px 12px; font-size: 0.8rem; border-radius: 6px; }
+  button.outline { background: transparent; border: 2px solid #4dd0e1; color: #4dd0e1; }
+  button.outline:hover { background: rgba(77, 208, 225, 0.1); }
+
+  .tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #e6e8eb; padding-bottom: 10px; flex-wrap: wrap; }
+  .tab-btn { background: #f0f4f8; color: var(--text-color); border: none; }
+  .tab-btn.active { background: var(--primary); color: white; }
+
+  .grid-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .stat-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+  }
+  .stat-box .val { font-size: 2rem; font-weight: bold; color: var(--primary); }
+  .stat-box .desc { font-size: 0.85rem; color: var(--text-muted); }
+
+  .timeline-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .schedule-item {
+    border: 2px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 18px;
+    position: relative;
+    background: #f8fafc;
+  }
+  .schedule-item.unlocked { border-color: var(--primary); background: #ffffff; }
+  .schedule-item.done { border-color: var(--success); background: #f0fdf4; }
+  .schedule-item .status {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-weight: bold;
+  }
+  .status.open { background: #e0f2fe; color: #0284c7; }
+  .status.locked { background: #f1f5f9; color: #94a3b8; }
+  .status.completed { background: #dcfce7; color: #15803d; }
+
+  table { width: 100%; border-collapse: collapse; margin-top: 14px; }
+  th, td { padding: 12px; text-align: left; border-bottom: 1px solid #e2e8f0; font-size: 0.9rem; }
+  th { background: #f1f5f9; color: var(--primary-dark); }
+
+  .topbar { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 15px; }
+  .badge { background: #eaf2f8; padding: 8px 12px; border-radius: 8px; font-weight: bold; font-size: 0.9rem; }
+  .option { display: block; width: 100%; text-align: left; margin: 8px 0; background: #f8fafc; color: var(--text-color); border: 2px solid var(--border-color); }
+  .option.correct { background: #d9f7e8; border-color: var(--success); }
+  .option.wrong { background: #fde2e2; border-color: var(--danger); }
+  .feedback { padding: 14px; border-radius: 10px; margin-top: 14px; }
+  .feedback.ok { background: #e9f8ef; border-left: 5px solid var(--success); }
+  .feedback.no { background: #fff0f0; border-left: 5px solid var(--danger); }
+
+  footer {
+    text-align: center;
+    padding: 16px;
+    color: #829ab1;
+    font-size: 0.85rem;
+  }
+</style>
+</head>
+<body>
+
+<header id="mainHeader">
+  <div class="header-brand">
+    <h2>☢️ Sistema de Posicionamento Radiográfico</h2>
+    <span class="institution">Grau Educacional • Unidade Mossoró</span>
+    <span class="author-tag">Desenvolvido por: <b>Yuri Maia</b></span>
+  </div>
+  <div class="user-badge" id="headerAuthArea">
+    <span id="headerUser" class="hidden">Conectado: Visitante</span>
+    <button id="logoutBtn" class="outline hidden" style="padding:6px 12px;font-size:0.8rem;" onclick="logout()">Sair</button>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- LOGIN -->
+  <section id="loginScreen" class="card" style="max-width:480px; margin: 40px auto;">
+    <div style="text-align:center; margin-bottom: 20px;">
+      <span style="font-size:0.85rem; font-weight:bold; color:var(--accent); text-transform:uppercase; letter-spacing:1px;">
+        Grau Educacional • Mossoró/RN
+      </span>
+      <h1 style="margin-top:5px; margin-bottom:8px;">Portal Radiológico</h1>
+      <p class="subtitle" style="margin-bottom:5px;">Acesso Integrado Gamificado e Acadêmico</p>
+      <small style="color:var(--text-muted);">Desenvolvido por Yuri Maia</small>
+    </div>
+
+    <div>
+      <label>Perfil de Acesso</label>
+      <select id="loginRole" onchange="toggleLoginInputs()">
+        <option value="admin">Administrador Geral</option>
+        <option value="teacher">Professor</option>
+        <option value="student">Aluno</option>
+      </select>
+    </div>
+    
+    <div id="loginUserField">
+      <label id="loginUserLabel">Usuário do Administrador</label>
+      <input type="text" id="loginUsername" value="admin" placeholder="Informe sua credencial">
+    </div>
+
+    <div id="loginPasswordField">
+      <label>Senha de Administrador</label>
+      <input type="password" id="loginPassword" placeholder="Digite sua senha">
+    </div>
+
+    <button style="width: 100%; margin-top:10px;" onclick="handleLogin()">Entrar no Sistema</button>
+    
+    <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px; margin-top:20px; font-size:0.8rem; color:#627d98;">
+      <b>Credenciais Iniciais Padrão:</b><br>
+      • <b>Admin:</b> Usuário: <code>admin</code> | Senha: <code>admin123</code><br>
+      • <b>Professor:</b> Matrícula: <code>prof10</code><br>
+      • <b>Aluno:</b> Matrícula: <code>aluno101</code>
+    </div>
+  </section>
+
+  <!-- PAINEL DO ADMINISTRADOR -->
+  <section id="adminScreen" class="card hidden">
+    <h1>Painel de Controle do Administrador</h1>
+    <p class="subtitle">Gestão acadêmica de disciplinas, turmas, discentes, docentes e segurança.</p>
+    
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchAdminTab('cad-classes', this)">Gerenciar Turmas</button>
+      <button class="tab-btn" onclick="switchAdminTab('cad-student', this)">Cadastrar Aluno</button>
+      <button class="tab-btn" onclick="switchAdminTab('cad-teacher', this)">Cadastrar Professor</button>
+      <button class="tab-btn" onclick="switchAdminTab('list-users', this)">Quadro Geral</button>
+      <button class="tab-btn" onclick="switchAdminTab('admin-security', this)">🔒 Segurança / Senha</button>
+    </div>
+
+    <!-- Gestão de Turmas -->
+    <div id="cad-classes" class="admin-tab">
+      <h3 id="classFormTitle">Cadastrar Nova Turma</h3>
+      <input type="hidden" id="editingClassId" value="">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div>
+          <label>Disciplina Pertencente</label>
+          <select id="classDiscipline">
+            <option value="Posicionamento Radiográfico I">Posicionamento Radiográfico I</option>
+            <option value="Posicionamento Radiográfico II">Posicionamento Radiográfico II</option>
+            <option value="Posicionamento Radiográfico III">Posicionamento Radiográfico III</option>
+          </select>
+        </div>
+        <div>
+          <label>Código da Turma</label>
+          <input type="text" id="classCode" placeholder="Ex: RAD1-2026.1M">
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 12px;">
+        <div>
+          <label>Nome / Identificação</label>
+          <input type="text" id="className" placeholder="Ex: Turma Manhã 2026.1">
+        </div>
+        <div>
+          <label>Turno</label>
+          <select id="classShift">
+            <option value="Manhã">Manhã</option>
+            <option value="Tarde">Tarde</option>
+            <option value="Noite">Noite</option>
+            <option value="Sábado">Sábado</option>
+          </select>
+        </div>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <button id="saveClassBtn" onclick="saveClass()">Salvar Turma</button>
+        <button id="cancelClassEditBtn" class="secondary hidden" onclick="cancelClassEdit()">Cancelar Edição</button>
+      </div>
+
+      <h3 style="margin-top: 30px;">Turmas Cadastradas no Sistema</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Nome</th>
+            <th>Disciplina</th>
+            <th>Turno</th>
+            <th>Alunos</th>
+            <th style="width: 150px;">Ações</th>
+          </tr>
+        </thead>
+        <tbody id="classesTableBody"></tbody>
+      </table>
+    </div>
+
+    <!-- Cadastro Aluno -->
+    <div id="cad-student" class="admin-tab hidden">
+      <h3>Novo Aluno</h3>
+      <label>Nome Completo do Aluno</label>
+      <input type="text" id="studentRegName" placeholder="Ex: Lucas Ferreira Maia">
+      <label>Matrícula do Aluno</label>
+      <input type="text" id="studentRegId" placeholder="Ex: aluno103">
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div>
+          <label>Disciplina</label>
+          <select id="studentDiscipline" onchange="filterStudentClasses()">
+            <option value="Posicionamento Radiográfico I">Posicionamento Radiográfico I</option>
+            <option value="Posicionamento Radiográfico II">Posicionamento Radiográfico II</option>
+            <option value="Posicionamento Radiográfico III">Posicionamento Radiográfico III</option>
+          </select>
+        </div>
+        <div>
+          <label>Turma Vinculada</label>
+          <select id="studentRegClass"></select>
+        </div>
+      </div>
+
+      <button onclick="saveStudent()">Cadastrar Aluno</button>
+    </div>
+
+    <!-- Cadastro Professor -->
+    <div id="cad-teacher" class="admin-tab hidden">
+      <h3>Novo Professor</h3>
+      <label>Nome Completo</label>
+      <input type="text" id="teacherName" placeholder="Ex: Yuri Maia">
+      <label>Matrícula / ID Docente</label>
+      <input type="text" id="teacherId" placeholder="Ex: prof20">
+      <label>Disciplina Ministrada</label>
+      <select id="teacherCourse">
+        <option value="Posicionamento Radiográfico I">Posicionamento Radiográfico I</option>
+        <option value="Posicionamento Radiográfico II">Posicionamento Radiográfico II</option>
+        <option value="Posicionamento Radiográfico III">Posicionamento Radiográfico III</option>
+      </select>
+      <button onclick="saveTeacher()">Cadastrar Professor</button>
+    </div>
+
+    <!-- Quadro Geral -->
+    <div id="list-users" class="admin-tab hidden">
+      <h3>Quadro Geral de Usuários</h3>
+      <table>
+        <thead>
+          <tr><th>Tipo</th><th>Nome</th><th>Matrícula/ID</th><th>Disciplina</th><th>Turma / Detalhe</th></tr>
+        </thead>
+        <tbody id="userTableBody"></tbody>
+      </table>
+    </div>
+
+    <!-- Alteração de Senha -->
+    <div id="admin-security" class="admin-tab hidden" style="max-width: 500px;">
+      <h3>Alterar Senha do Administrador</h3>
+      <label>Senha Atual</label>
+      <input type="password" id="currentAdminPass" placeholder="Digite a senha atual">
+      <label>Nova Senha</label>
+      <input type="password" id="newAdminPass" placeholder="Digite a nova senha">
+      <label>Confirmar Nova Senha</label>
+      <input type="password" id="confirmNewAdminPass" placeholder="Confirme a nova senha">
+      <button onclick="changeAdminPassword()">Atualizar Senha</button>
+    </div>
+  </section>
+
+  <!-- PAINEL DO PROFESSOR -->
+  <section id="teacherScreen" class="card hidden">
+    <h1>Dashboard do Docente</h1>
+    <p class="subtitle" id="teacherCourseBadge">Controle de liberação em sala de aula e métricas de desempenho.</p>
+
+    <!-- LIBERAÇÃO EM SALA DE AULA -->
+    <div style="background: #eaf2f8; border: 2px solid #b8daff; border-radius: 14px; padding: 20px; margin-bottom: 25px;">
+      <h3 style="margin-top:0; color:#0c5460;">🔓 Controle de Liberação dos Módulos em Sala de Aula</h3>
+      <p style="font-size:0.88rem; color:#486581; margin-bottom:15px;">
+        Clique nos botões abaixo para <b>Liberar</b> ou <b>Bloquear</b> o acesso dos alunos às questões de cada aula prática durante a sua aula.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Aula / Fase</th>
+            <th>Conteúdo do Cronograma</th>
+            <th>Status Atual</th>
+            <th style="width: 170px;">Ação do Professor</th>
+          </tr>
+        </thead>
+        <tbody id="teacherModuleControlBody"></tbody>
+      </table>
+    </div>
+    
+    <div class="grid-stats">
+      <div class="stat-box">
+        <div class="val" id="totalStudentsCount">0</div>
+        <div class="desc">Alunos Matriculados</div>
+      </div>
+      <div class="stat-box">
+        <div class="val" id="averageScore">0%</div>
+        <div class="desc">Taxa Média de Acerto</div>
+      </div>
+      <div class="stat-box">
+        <div class="val" id="criticalTopic" style="color:var(--danger); font-size:1.35rem;">Nenhum</div>
+        <div class="desc">Maior Dificuldade da Turma</div>
+      </div>
+    </div>
+
+    <h3>Desempenho por Módulo / Assunto</h3>
+    <table>
+      <thead>
+        <tr><th>Assunto (Fase)</th><th>Total Respondidas</th><th>Erros Acumulados</th><th>Índice de Erro</th></tr>
+      </thead>
+      <tbody id="difficultyTableBody"></tbody>
+    </table>
+
+    <h3 style="margin-top:25px;">Progresso Individual dos Alunos</h3>
+    <table>
+      <thead>
+        <tr><th>Matrícula</th><th>Aluno</th><th>Turma</th><th>Módulos Feitos</th><th>Pontos</th><th>Status</th></tr>
+      </thead>
+      <tbody id="studentProgressBody"></tbody>
+    </table>
+  </section>
+
+  <!-- PAINEL DO ALUNO -->
+  <section id="studentScreen" class="card hidden">
+    <div style="margin-bottom: 15px;">
+      <h1 style="margin-bottom:4px;">Cronograma de Aulas Práticas</h1>
+      <p class="subtitle" id="studentCourseTitle" style="margin-bottom:5px;"></p>
+      <small style="color:#0284c7; font-weight:600;">⚠️ Os exercícios de cada aula são desbloqueados pelo professor em sala de aula.</small>
+    </div>
+    <div class="timeline-grid" id="timelineGrid"></div>
+  </section>
+
+  <!-- TELA DO JOGO / QUIZ -->
+  <section id="quizScreen" class="card hidden">
+    <div class="topbar">
+      <div class="badge">👨‍🎓 Aluno: <span id="quizPlayer"></span></div>
+      <div class="badge">⭐ Pontos: <span id="quizScore">0</span></div>
+      <div class="badge">❤️ Vidas: <span id="quizLives">3</span></div>
+    </div>
+
+    <div class="subtitle" id="quizFaseTitle" style="font-weight:bold; color:var(--primary);"></div>
+    <div id="quizQuestion" style="font-size:1.15rem; font-weight:600; margin:15px 0; line-height:1.4;"></div>
+    <div id="quizOptions"></div>
+    <div id="quizFeedback" class="feedback hidden"></div>
+
+    <div style="margin-top:20px; text-align:right;">
+      <button id="quizNextBtn" class="hidden" onclick="nextQuestion()">Próxima Questão →</button>
+      <button id="quizBackBtn" class="secondary" onclick="exitQuiz()">Voltar ao Cronograma</button>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  Grau Educacional • Mossoró/RN | Desenvolvido por Yuri Maia &copy; 2026
+</footer>
+
+<script>
+/* =======================================================
+   CRONOGRAMA OFICIAL E BANCO DE QUESTÕES DISTRIBUÍDO
+======================================================= */
+const DEFAULT_SCHEDULE = [
+  { id: 1, discipline: "Posicionamento Radiográfico I", title: "Dedos", desc: "Dedos - Posicionamentos de Rotina e Especiais", unlockedByTeacher: true },
+  { id: 2, discipline: "Posicionamento Radiográfico I", title: "Mão", desc: "Prática de Posicionamento e Incidências: Mão", unlockedByTeacher: false },
+  { id: 3, discipline: "Posicionamento Radiográfico I", title: "Punho", desc: "Prática de Posicionamento e Incidências: Punho", unlockedByTeacher: false },
+  { id: 4, discipline: "Posicionamento Radiográfico I", title: "Antebraço", desc: "Prática de Posicionamento e Incidências: Antebraço", unlockedByTeacher: false },
+  { id: 5, discipline: "Posicionamento Radiográfico I", title: "Cotovelo", desc: "Incidências de Cotovelo - Posicionamentos Especiais", unlockedByTeacher: false },
+  { id: 6, discipline: "Posicionamento Radiográfico I", title: "Úmero", desc: "Prática de Posicionamento e Incidências: Úmero", unlockedByTeacher: false },
+  { id: 7, discipline: "Posicionamento Radiográfico I", title: "Cintura Escapular - Rotina", desc: "Prática de Posicionamento e Incidências de rotina: Cintura Escapular", unlockedByTeacher: false },
+  { id: 8, discipline: "Posicionamento Radiográfico I", title: "Cintura Escapular - Especial", desc: "Prática de Posicionamentos especiais: Cintura Escapular", unlockedByTeacher: false },
+  { id: 9, discipline: "Posicionamento Radiográfico I", title: "Revisão Geral e Fundamentos", desc: "Atividade Prática 1: Revisão Técnica e Posicionamentos", unlockedByTeacher: false },
+  { id: 10, discipline: "Posicionamento Radiográfico I", title: "Fêmur e Joelho (Rotina)", desc: "Incidências de Fêmur; Posicionamentos de Rotina - Incidências de Articulação de Joelho", unlockedByTeacher: false },
+  { id: 11, discipline: "Posicionamento Radiográfico I", title: "Joelho (Especiais)", desc: "Posicionamentos Especiais - Incidências de Articulação de Joelho", unlockedByTeacher: false },
+  { id: 12, discipline: "Posicionamento Radiográfico I", title: "Patela, Perna e Tornozelo", desc: "Incidências de Patela; Perna; Tornozelo - Posicionamentos de Rotina", unlockedByTeacher: false },
+  { id: 13, discipline: "Posicionamento Radiográfico I", title: "Tornozelo, Calcâneo e Pé", desc: "Incidências de Tornozelo Especial, Calcâneo e Pé Rotina", unlockedByTeacher: false },
+  { id: 14, discipline: "Posicionamento Radiográfico I", title: "Artelhos e Tornozelo Especial", desc: "Incidências de Tornozelo Especial e Incidências de Artelhos", unlockedByTeacher: false }
+];
+
+/* 40 Questões da Avaliação Oficial mapeadas nas aulas do cronograma */
+const ALL_QUESTIONS = [
+  // AULA 1: DEDOS
+  {
+    faseId: 1,
+    q: "Por causa da fratura de Bennett, é obrigatório aparecer nas incidências radiográficas obtidas:",
+    options: ["O navicular.", "O escafoide.", "O quinto metacarpo.", "O primeiro metacarpo.", "O primeiro metatarsiano."],
+    answer: 3,
+    explanation: "A fratura de Bennett ocorre especificamente na base do primeiro osso metacarpo."
+  },
+  {
+    faseId: 1,
+    q: "Em uma radiografia, o termo médico utilizado para indicar a posição em que os membros estejam distantes do corpo é:",
+    options: ["Proximal.", "Oblíquo.", "Tangencial.", "Lateral.", "Distal."],
+    answer: 4,
+    explanation: "Distal designa estruturas mais afastadas da raiz de inserção do membro ou tronco."
+  },
+
+  // AULA 2: MÃO
+  {
+    faseId: 2,
+    q: "Na avaliação da idade óssea pela tabela de Greulich-Pyle, a incidência a ser realizada é:",
+    options: ["Mãos e punhos comparativa em PA.", "AP de quadril com moderada flexão.", "Mãos e punho em oblíqua.", "Mãos e punho em perfil."],
+    answer: 0,
+    explanation: "O método de Greulich-Pyle padroniza a radiografia de mãos e punhos em PA comparativa."
+  },
+  {
+    faseId: 2,
+    q: "O fator que mais contribui para a perda de definição da imagem em um exame de mão é:",
+    options: ["Movimento.", "Quilovoltagem.", "O uso de écran rápido.", "A distância foco-objeto.", "Tamanho do ponto focal."],
+    answer: 0,
+    explanation: "O borramento cinético provocado pelo movimento do paciente é o principal fator de degradação da definição."
+  },
+  {
+    faseId: 2,
+    q: "Na avaliação da idade óssea pela técnica de Greulich-Pyle, deve-se fazer radiografia de:",
+    options: ["Joelhos e cotovelos.", "Punhos e joelhos.", "Mãos e punhos.", "Crânio e cotovelos.", "Mãos e joelhos."],
+    answer: 2,
+    explanation: "O protocolo avalia a sequência cronológica dos centros de ossificação da mão e punho."
+  },
+
+  // AULA 3: PUNHO
+  {
+    faseId: 3,
+    q: "As incidências de Stecher e Pierquin estudam, respectivamente, os seguintes tipos de ossos:",
+    options: ["Úmero e cotovelo.", "Escafóide e joelho.", "Escafóide e cotovelo.", "Ossos nasais e cotovelo."],
+    answer: 2,
+    explanation: "Stecher é o método clássico para escafóide e Pierquin estuda a articulação do cotovelo."
+  },
+  {
+    faseId: 3,
+    q: "Das incidências relacionadas, a melhor para a avaliação do escafóide é PA com flexão:",
+    options: ["Ulnar e angulação do raio central de 10º a 15º.", "Radial e angulação do raio central de 10 a 15º.", "Ulnar e angulação proximal do raio central de 30º a 35º.", "Radial e angulação proximal do raio central de 30º a 35º.", "Radial e angulação distal do raio central de 30º a 35º."],
+    answer: 0,
+    explanation: "O desvio ulnar com angulação cefálica do RC (10°-15°) alonga e isola o osso escafóide."
+  },
+  {
+    faseId: 3,
+    q: "Os dois ossos do carpo que podem ser evidenciados em técnicas especiais são:",
+    options: ["Escafóide e grande osso.", "Trapézio e grande osso.", "Ganchoso e trapézio.", "Escafóide e pisiforme.", "Escafóide e ganchoso."],
+    answer: 3,
+    explanation: "Incidências específicas com desvios e angulações projetam livremente o escafóide e o pisiforme."
+  },
+
+  // AULA 4: ANTEBRAÇO
+  {
+    faseId: 4,
+    q: "A pronação corresponde a um movimento traduzido por:",
+    options: [
+      "Deslocamento lateral com afastamento do PMS.",
+      "Rotação lateral do antebraço e da mão que fica com sua face anterior voltada para frente.",
+      "Deslocamento lateral em angulação ao PMS.",
+      "Rotação interna do antebraço e da mão que fica com sua face anterior voltada para trás.",
+      "Deslocamento medial com aproximação do PMS."
+    ],
+    answer: 3,
+    explanation: "A pronação gira o rádio sobre a ulna medialmente, direcionando a palma para trás/baixo."
+  },
+  {
+    faseId: 4,
+    q: "A Supinação corresponde a um movimento traduzido por:",
+    options: [
+      "Deslocamento lateral com afastamento do PMS.",
+      "Abdução movimento lateral de afastamento do PMS.",
+      "Rotação externa do antebraço e da mão que fica com sua face anterior voltada para frente.",
+      "Deslocamento medial com aproximação do PMS.",
+      "Rotação interna do antebraço e da mão que fica com sua face anterior voltada para trás."
+    ],
+    answer: 2,
+    explanation: "A supinação coloca o antebraço em posição anatômica com os ossos paralelos e palma para frente."
+  },
+  {
+    faseId: 4,
+    q: "Na supinação o final do movimento realizado é indicado por:",
+    options: ["Palma da mão direcionada para o PMS.", "Face anterior da mão voltada para frente.", "Dorso da mão voltado para o plano mediano.", "Palma da mão direcionada para o plano coronal.", "Face posterior da mão voltada para frente."],
+    answer: 1,
+    explanation: "Ao término do movimento de supinação, a face anterior da mão projeta-se anteriormente."
+  },
+
+  // AULA 5: COTOVELO
+  {
+    faseId: 5,
+    q: "Para se ter incidência em perfil absoluto do cotovelo, é necessário que o:",
+    options: [
+      "Braço esteja fletido a 90º, apoiado sobre o chassis, com o úmero, o antebraço e a mão no mesmo plano horizontal, sem rotação.",
+      "Antebraço esteja fletido a 90º, apoiado sobre o chassis, com o úmero, o antebraço e a mão no mesmo plano vertical, sem rotação.",
+      "Braço esteja apoiado 45º sobre o chassis, com úmero, antebraço e a mão no mesmo plano horizontal.",
+      "Braço esteja fletido a 180º, apoiado sobre o chassis, com o úmero, o antebraço e a mão no plano oblíquo.",
+      "Braço esteja fletido a 90º, apoiado sobre o chassis, com o úmero, o antebraço e mão no mesmo plano coronal."
+    ],
+    answer: 0,
+    explanation: "Flexão exata a 90° com ombro, cotovelo e punho no mesmo plano horizontal garantem o perfil verdadeiro."
+  },
+
+  // AULA 6: ÚMERO
+  {
+    faseId: 6,
+    q: "A radiação que provém da ampola em sentido reto sem variação de ângulo incidindo na estativa corresponde ao:",
+    options: ["RC perpendicular em sentido caudal.", "RC angulado em sentido vertical.", "RC perpendicular em sentido horizontal.", "RC perpendicular em sentido supino.", "RC perpendicular em sentido cefálico."],
+    answer: 2,
+    explanation: "Na estativa vertical (bucky mural), o raio central sai reto e horizontal."
+  },
+  {
+    faseId: 6,
+    q: "O indivíduo na posição anatômica com sua região dorsal direcionada para a ampola de raios-x estará realizando uma incidência:",
+    options: ["Antero – posterior.", "Latero – medial.", "Obliqua posterior.", "Medial – lateral.", "Póstero – anterior."],
+    answer: 4,
+    explanation: "Se o dorso (costas) está voltado para o tubo, o feixe entra na região posterior e sai na anterior (PA)."
+  },
+
+  // AULA 7: CINTURA ESCAPULAR - ROTINA
+  {
+    faseId: 7,
+    q: "Para realização da incidência obliqua para estudo do ombro o RC está a 45° no sentido caudal em direção à face medial da articulação. O termo indica que este:",
+    options: ["É perpendicular em sentido vertical.", "É angulado em sentido cefálico.", "É perpendicular em sentido horizontal.", "Deve entrar na face medial da estrutura não importando o sentido.", "É angulado em sentido podálico."],
+    answer: 4,
+    explanation: "Caudal e podálico são termos equivalentes que indicam direcionamento em direção aos pés."
+  },
+  {
+    faseId: 7,
+    q: "O chassi posicionado sobre a mesa de exame apresentando as bordas superiores e inferiores menores que as bordas laterais está no sentido:",
+    options: ["Perpendicular vertical.", "Médio-lateral.", "Transversal.", "Perpendicular horizontal.", "Longitudinal."],
+    answer: 4,
+    explanation: "No formato longitudinal a maior dimensão do chassi acompanha o maior comprimento do corpo."
+  },
+
+  // AULA 8: CINTURA ESCAPULAR - ESPECIAIS
+  {
+    faseId: 8,
+    q: "A ampola de raios-x apresenta uma variação de ângulo de forma que fica posicionada acima da área com radiação direcionada no sentido caudal. O RC será:",
+    options: ["Perpendicular podálico.", "Angulado cefálico.", "Perpendicular horizontal.", "Perpendicular reto.", "Angulado podálico."],
+    answer: 4,
+    explanation: "A inclinação para baixo em direção aos pés denomina-se angulação podálica/caudal."
+  },
+  {
+    faseId: 8,
+    q: "A descrição: 'raio central incide na região anterior direita com PMS obliquado a 45° graus, saindo na região posterior' corresponde à:",
+    options: ["Incidência obliqua anterior direita.", "Posição obliqua anterior direita.", "Incidência obliqua posterior direita.", "Posição obliqua posterior direita.", "NDA."],
+    answer: 0,
+    explanation: "A incidência recebe o nome da região anatômica de entrada do feixe central de radiação."
+  },
+
+  // AULA 9: REVISÃO GERAL E FUNDAMENTOS
+  {
+    faseId: 9,
+    q: "Assinale a alternativa INCORRETA:",
+    options: [
+      "Na incidência ântero-posterior, a região anterior do paciente está direcionada para a ampola.",
+      "Em perfil esquerdo, o paciente encontra-se com seu lado esquerdo mais próximo ao filme.",
+      "Em decúbito lateral direito, o paciente coloca seu lado esquerdo mais próximo do filme.",
+      "Em OAD, o paciente encontra-se com sua região anterior direita mais próxima do filme.",
+      "Na incidência póstero-anterior à região anterior do paciente está mais próxima do filme."
+    ],
+    answer: 2,
+    explanation: "No decúbito lateral direito, é o lado direito que repousa sobre a mesa e fica mais próximo ao filme."
+  },
+  {
+    faseId: 9,
+    q: "Sobre a DFOFI (Distância Foco-Receptor) está correta apenas a alternativa:",
+    options: [
+      "Quanto maior a DFOFI menor será ampliação da imagem.",
+      "Quanto menor a DFOFI maior será a ampliação da imagem.",
+      "Quanto maior a DFOFI maior será a ampliação da imagem.",
+      "A DFOFI não interfere no tamanho da imagem.",
+      "NDA."
+    ],
+    answer: 0,
+    explanation: "O aumento da distância tubo-filme reduz a divergência geométrica dos raios e a ampliação."
+  },
+  {
+    faseId: 9,
+    q: "As grades antidifusoras utilizadas em estruturas com espessuras maiores que 10 cm, têm por finalidade:",
+    options: [
+      "Facilitar o manuseio do filme radiográfico.",
+      "Delimitar o campo de incidência do RC.",
+      "Limitar a radiação secundária proveniente do paciente.",
+      "Proteger o paciente dos feixes de menor intensidade.",
+      "NDA."
+    ],
+    answer: 2,
+    explanation: "A grade absorve fótons de radiação espalhada/secundária gerados no paciente, melhorando o contraste."
+  },
+  {
+    faseId: 9,
+    q: "O filme radiográfico convencional é uma folha com base de:",
+    options: ["Celulose.", "Poliéster.", "Gelatina.", "Fósforo."],
+    answer: 1,
+    explanation: "A base moderna dos filmes radiográficos médicos convencionais é constituída de poliéster."
+  },
+  {
+    faseId: 9,
+    q: "Os cristais de haleto de prata usados na emulsão do filme radiográfico convencional são compostos de bromo e:",
+    options: ["Prata.", "Iodo.", "Bário.", "Fósforo."],
+    answer: 0,
+    explanation: "A emulsão fotossensível é formada principalmente por brometo de prata (e traços de iodeto de prata)."
+  },
+
+  // AULAS 10 a 14: MEMBROS INFERIORES E ARTELHOS
+  {
+    faseId: 10,
+    q: "Paciente deitado sobre o lado esquerdo do corpo com o RC perpendicular ao plano coronal corresponde à:",
+    options: ["Incidência lateral direita.", "Decúbito esquerdo com alinhamento do PMS.", "Incidência lateral esquerda.", "Posicionamento anterior direito.", "Decúbito esquerdo com alinhamento do plano coronal."],
+    answer: 2,
+    explanation: "O paciente apoia o lado esquerdo com o raio atingindo o plano coronal, configurando incidência lateral esquerda."
+  },
+  {
+    faseId: 11,
+    q: "O plano anatômico que divide o corpo em porção superior (cranial) e inferior (caudal) é denominado:",
+    options: ["Parassagital.", "Frontal mediano.", "Sagital mediano.", "Coronal transversal.", "Transversal."],
+    answer: 4,
+    explanation: "O plano transversal (axial) realiza o corte horizontal dividindo em porções superior e inferior."
+  },
+  {
+    faseId: 12,
+    q: "Deitado sobre a região posterior do corpo corresponde a qual tipo de decúbito?",
+    options: ["Lateral.", "Dorsal.", "Oblíquo posterior.", "Ventral.", "Oblíquo anterior."],
+    answer: 1,
+    explanation: "O apoio dorsal sobre a maca caracteriza o decúbito dorsal (posição supina)."
+  },
+  {
+    faseId: 13,
+    q: "Quando o paciente está em decúbito lateral esquerdo e o feixe de raios é emitido horizontalmente em AP, trata-se de:",
+    options: [
+      "Decúbito lateral esquerdo com raios horizontais em póstero-anterior.",
+      "Perfil Direito.",
+      "Decúbito lateral esquerdo com raios horizontais em ântero-posterior.",
+      "Perfil Esquerdo.",
+      "NDA."
+    ],
+    answer: 2,
+    explanation: "Posicionamento adotado frequentemente em rotinas de abdome agudo com raios horizontais."
+  },
+  {
+    faseId: 14,
+    q: "Em relação ao pé e artelhos, por que a incidência em AP com angulação cefálica de 10° a 15° é empregada na rotina?",
+    options: [
+      "Para abrir as articulações társicas e metatarsianas paralelas ao feixe.",
+      "Para aumentar a dose de radiação no calcanhar.",
+      "Para fechar os espaços intermetatársicos.",
+      "Não há justificativa técnica."
+    ],
+    answer: 0,
+    explanation: "A inclinação do feixe central compensa o arco longitudinal do pé e projeta as articulações abertas."
+  }
+];
+
+let state = {
+  currentUser: null,
+  adminPassword: localStorage.getItem('adminPassword') || 'admin123',
+  classes: JSON.parse(localStorage.getItem('classes')) || [
+    { code: "RAD1-2026.1M", name: "Turma Manhã", discipline: "Posicionamento Radiográfico I", shift: "Manhã" },
+    { code: "RAD1-2026.1N", name: "Turma Noite", discipline: "Posicionamento Radiográfico I", shift: "Noite" }
+  ],
+  schedule: JSON.parse(localStorage.getItem('schedule')) || DEFAULT_SCHEDULE,
+  teachers: JSON.parse(localStorage.getItem('teachers')) || [
+    { id: "prof10", name: "Prof. Yuri Maia", course: "Posicionamento Radiográfico I" }
+  ],
+  students: JSON.parse(localStorage.getItem('students')) || [
+    { id: "aluno101", name: "Carlos Eduardo", discipline: "Posicionamento Radiográfico I", class: "RAD1-2026.1M", completedFases: [], score: 0 },
+    { id: "aluno102", name: "Ana Beatriz", discipline: "Posicionamento Radiográfico I", class: "RAD1-2026.1M", completedFases: [], score: 0 }
+  ],
+  stats: JSON.parse(localStorage.getItem('stats')) || {},
+  currentQuizList: [],
+  quizIdx: 0,
+  quizFase: null,
+  sessionScore: 0,
+  sessionLives: 3
+};
+
+function saveDatabase() {
+  localStorage.setItem('adminPassword', state.adminPassword);
+  localStorage.setItem('classes', JSON.stringify(state.classes));
+  localStorage.setItem('schedule', JSON.stringify(state.schedule));
+  localStorage.setItem('teachers', JSON.stringify(state.teachers));
+  localStorage.setItem('students', JSON.stringify(state.students));
+  localStorage.setItem('stats', JSON.stringify(state.stats));
+}
+
+/* =======================================================
+   AUTENTICAÇÃO
+======================================================= */
+function toggleLoginInputs() {
+  const role = document.getElementById("loginRole").value;
+  const userLabel = document.getElementById("loginUserLabel");
+  const userInput = document.getElementById("loginUsername");
+  const passField = document.getElementById("loginPasswordField");
+
+  if(role === 'admin') {
+    userLabel.textContent = "Usuário do Administrador";
+    userInput.value = "admin";
+    passField.classList.remove("hidden");
+  } else if(role === 'teacher') {
+    userLabel.textContent = "Matrícula do Professor";
+    userInput.value = "prof10";
+    passField.classList.add("hidden");
+  } else {
+    userLabel.textContent = "Matrícula do Aluno";
+    userInput.value = "aluno101";
+    passField.classList.add("hidden");
+  }
+}
+
+function handleLogin() {
+  const role = document.getElementById("loginRole").value;
+  const user = document.getElementById("loginUsername").value.trim();
+  const pass = document.getElementById("loginPassword").value;
+
+  if (role === 'admin') {
+    if(user.toLowerCase() !== 'admin') return alert("Usuário de admin incorreto! (Use: admin)");
+    if(pass !== state.adminPassword) return alert("Senha incorreta! (Padrão: admin123)");
+    state.currentUser = { role: 'admin', name: 'Administrador' };
+    initAdminPanel();
+  } else if (role === 'teacher') {
+    const prof = state.teachers.find(t => t.id === user);
+    if(prof) {
+      state.currentUser = { ...prof, role: 'teacher' };
+      initTeacherPanel();
+    } else {
+      return alert("Professor não encontrado! Utilize a matrícula cadastrada.");
+    }
+  } else if (role === 'student') {
+    const al = state.students.find(s => s.id === user);
+    if(al) {
+      state.currentUser = { ...al, role: 'student' };
+      initStudentPanel();
+    } else {
+      return alert("Matrícula de aluno não encontrada no sistema!");
+    }
+  }
+
+  document.getElementById("loginScreen").classList.add("hidden");
+  document.getElementById("headerUser").classList.remove("hidden");
+  document.getElementById("logoutBtn").classList.remove("hidden");
+  document.getElementById("headerUser").textContent = `${state.currentUser.name} (${role.toUpperCase()})`;
+}
+
+function logout() {
+  state.currentUser = null;
+  document.querySelectorAll('.container > section').forEach(s => s.classList.add('hidden'));
+  document.getElementById("loginScreen").classList.remove("hidden");
+  document.getElementById("headerUser").classList.add("hidden");
+  document.getElementById("logoutBtn").classList.add("hidden");
+  document.getElementById("loginPassword").value = "";
+}
+
+/* =======================================================
+   ADMINISTRADOR
+======================================================= */
+function initAdminPanel() {
+  document.getElementById("adminScreen").classList.remove("hidden");
+  renderClassesTable();
+  filterStudentClasses();
+  renderUserTable();
+}
+
+function switchAdminTab(tabId, btn) {
+  document.querySelectorAll('.admin-tab').forEach(el => el.classList.add('hidden'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.remove('hidden');
+  btn.classList.add('active');
+  if(tabId === 'list-users') renderUserTable();
+  if(tabId === 'cad-classes') renderClassesTable();
+  if(tabId === 'cad-student') filterStudentClasses();
+}
+
+function changeAdminPassword() {
+  const cur = document.getElementById("currentAdminPass").value;
+  const nPass = document.getElementById("newAdminPass").value;
+  const conf = document.getElementById("confirmNewAdminPass").value;
+
+  if (cur !== state.adminPassword) return alert("A senha atual está incorreta!");
+  if (!nPass || nPass.length < 4) return alert("A nova senha deve ter no mínimo 4 caracteres!");
+  if (nPass !== conf) return alert("A confirmação da senha não coincide!");
+
+  state.adminPassword = nPass;
+  saveDatabase();
+  alert("Senha atualizada com sucesso!");
+  document.getElementById("currentAdminPass").value = "";
+  document.getElementById("newAdminPass").value = "";
+  document.getElementById("confirmNewAdminPass").value = "";
+}
+
+function renderClassesTable() {
+  const tbody = document.getElementById("classesTableBody");
+  tbody.innerHTML = "";
+  state.classes.forEach(c => {
+    const totalStudents = state.students.filter(s => s.class === c.code).length;
+    tbody.innerHTML += `
+      <tr>
+        <td><b>${c.code}</b></td>
+        <td>${c.name}</td>
+        <td><span style="font-weight:600; color:var(--primary);">${c.discipline}</span></td>
+        <td>${c.shift}</td>
+        <td>${totalStudents} aluno(s)</td>
+        <td>
+          <button class="sm secondary" onclick="editClass('${c.code}')">Editar</button>
+          <button class="sm danger" onclick="deleteClass('${c.code}')">Excluir</button>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+function saveClass() {
+  const discipline = document.getElementById("classDiscipline").value;
+  const code = document.getElementById("classCode").value.trim().toUpperCase();
+  const name = document.getElementById("className").value.trim();
+  const shift = document.getElementById("classShift").value;
+  const editingId = document.getElementById("editingClassId").value;
+
+  if(!code || !name) return alert("Preencha o Código e o Nome da Turma!");
+
+  if(editingId) {
+    const index = state.classes.findIndex(c => c.code === editingId);
+    if(index !== -1) {
+      if (editingId !== code) {
+        state.students.forEach(s => { if(s.class === editingId) s.class = code; });
+      }
+      state.classes[index] = { code, name, discipline, shift };
+      alert("Turma atualizada!");
+    }
+  } else {
+    if(state.classes.some(c => c.code === code)) return alert("Código de turma já cadastrado!");
+    state.classes.push({ code, name, discipline, shift });
+    alert("Turma adicionada com sucesso!");
+  }
+
+  cancelClassEdit();
+  saveDatabase();
+  renderClassesTable();
+  filterStudentClasses();
+}
+
+function editClass(code) {
+  const c = state.classes.find(item => item.code === code);
+  if(!c) return;
+  document.getElementById("classFormTitle").textContent = `Editar Turma: ${c.code}`;
+  document.getElementById("editingClassId").value = c.code;
+  document.getElementById("classDiscipline").value = c.discipline;
+  document.getElementById("classCode").value = c.code;
+  document.getElementById("className").value = c.name;
+  document.getElementById("classShift").value = c.shift;
+  document.getElementById("saveClassBtn").textContent = "Salvar Alterações";
+  document.getElementById("cancelClassEditBtn").classList.remove("hidden");
+}
+
+function cancelClassEdit() {
+  document.getElementById("classFormTitle").textContent = "Cadastrar Nova Turma";
+  document.getElementById("editingClassId").value = "";
+  document.getElementById("classCode").value = "";
+  document.getElementById("className").value = "";
+  document.getElementById("classShift").value = "Manhã";
+  document.getElementById("saveClassBtn").textContent = "Salvar Turma";
+  document.getElementById("cancelClassEditBtn").classList.add("hidden");
+}
+
+function deleteClass(code) {
+  if(!confirm(`Deseja excluir a turma ${code}?`)) return;
+  state.classes = state.classes.filter(c => c.code !== code);
+  saveDatabase();
+  renderClassesTable();
+  filterStudentClasses();
+}
+
+function filterStudentClasses() {
+  const selectedDiscipline = document.getElementById("studentDiscipline").value;
+  const selectClass = document.getElementById("studentRegClass");
+  selectClass.innerHTML = "";
+  const filtered = state.classes.filter(c => c.discipline === selectedDiscipline);
+
+  if (filtered.length === 0) {
+    const opt = document.createElement("option");
+    opt.value = "";
+    opt.textContent = "Nenhuma turma cadastrada para esta disciplina.";
+    selectClass.appendChild(opt);
+    return;
+  }
+  filtered.forEach(c => {
+    const opt = document.createElement("option");
+    opt.value = c.code;
+    opt.textContent = `${c.code} - ${c.name} (${c.shift})`;
+    selectClass.appendChild(opt);
+  });
+}
+
+function saveStudent() {
+  const name = document.getElementById("studentRegName").value.trim();
+  const id = document.getElementById("studentRegId").value.trim();
+  const discipline = document.getElementById("studentDiscipline").value;
+  const cClass = document.getElementById("studentRegClass").value;
+
+  if(!name || !id) return alert("Preencha nome e matrícula do aluno!");
+  if(!cClass) return alert("Selecione uma turma válida para a disciplina!");
+  if(state.students.some(s => s.id === id)) return alert("Já existe aluno com esta matrícula!");
+
+  state.students.push({ id, name, discipline, class: cClass, completedFases: [], score: 0 });
+  saveDatabase();
+  alert("Aluno cadastrado com sucesso!");
+  document.getElementById("studentRegName").value = "";
+  document.getElementById("studentRegId").value = "";
+}
+
+function saveTeacher() {
+  const name = document.getElementById("teacherName").value.trim();
+  const id = document.getElementById("teacherId").value.trim();
+  const course = document.getElementById("teacherCourse").value;
+
+  if(!name || !id) return alert("Preencha todos os campos do professor!");
+  if(state.teachers.some(t => t.id === id)) return alert("Matrícula docente já existe!");
+
+  state.teachers.push({ id, name, course });
+  saveDatabase();
+  alert("Professor cadastrado com sucesso!");
+  document.getElementById("teacherName").value = "";
+  document.getElementById("teacherId").value = "";
+}
+
+function renderUserTable() {
+  const tbody = document.getElementById("userTableBody");
+  tbody.innerHTML = "";
+  state.teachers.forEach(t => {
+    tbody.innerHTML += `<tr><td><b style="color:var(--accent)">Docente</b></td><td>${t.name}</td><td>${t.id}</td><td><b>${t.course}</b></td><td>Docente Responsável</td></tr>`;
+  });
+  state.students.forEach(s => {
+    const tObj = state.classes.find(c => c.code === s.class);
+    tbody.innerHTML += `<tr><td><b style="color:var(--primary)">Discente</b></td><td>${s.name}</td><td>${s.id}</td><td><b>${s.discipline}</b></td><td>${tObj ? tObj.name : s.class}</td></tr>`;
+  });
+}
+
+/* =======================================================
+   PROFESSOR (DASHBOARD & LIBERAÇÃO DE MÓDULOS)
+======================================================= */
+function initTeacherPanel() {
+  document.getElementById("teacherScreen").classList.remove("hidden");
+  document.getElementById("teacherCourseBadge").textContent = `Disciplina: ${state.currentUser.course}`;
+
+  renderTeacherModuleControl();
+
+  const enrolled = state.students.filter(s => (s.discipline || "Posicionamento Radiográfico I") === state.currentUser.course);
+  document.getElementById("totalStudentsCount").textContent = enrolled.length;
+
+  const dBody = document.getElementById("difficultyTableBody");
+  dBody.innerHTML = "";
+  let highestFailRate = -1;
+  let criticalSubject = "Nenhum";
+  let totalAllQuestions = 0;
+  let totalAllWrongs = 0;
+
+  for (let topic in state.stats) {
+    const data = state.stats[topic];
+    const failRate = data.answered ? Math.round((data.wrong / data.answered) * 100) : 0;
+    totalAllQuestions += data.answered;
+    totalAllWrongs += data.wrong;
+
+    if (failRate > highestFailRate && data.answered > 0) {
+      highestFailRate = failRate;
+      criticalSubject = topic;
+    }
+
+    dBody.innerHTML += `
+      <tr>
+        <td><b>${topic}</b></td>
+        <td>${data.answered}</td>
+        <td style="color:var(--danger)">${data.wrong}</td>
+        <td><span style="font-weight:bold; color:${failRate > 40 ? 'var(--danger)' : 'var(--success)'}">${failRate}%</span></td>
+      </tr>`;
+  }
+
+  document.getElementById("criticalTopic").textContent = `${criticalSubject} (${highestFailRate}%)`;
+  const generalAvg = totalAllQuestions ? Math.round(((totalAllQuestions - totalAllWrongs) / totalAllQuestions) * 100) : 100;
+  document.getElementById("averageScore").textContent = `${generalAvg}%`;
+
+  const sBody = document.getElementById("studentProgressBody");
+  sBody.innerHTML = "";
+  enrolled.forEach(s => {
+    const turmaInfo = state.classes.find(c => c.code === s.class)?.name || s.class;
+    sBody.innerHTML += `
+      <tr>
+        <td>${s.id}</td>
+        <td><b>${s.name}</b></td>
+        <td>${turmaInfo}</td>
+        <td>${s.completedFases.length} módulo(s)</td>
+        <td><b>${s.score} pts</b></td>
+        <td><span style="color:${s.completedFases.length >= 3 ? 'var(--success)' : 'var(--warning)'}; font-weight:bold;">${s.completedFases.length >= 3 ? 'Avançado' : 'Em Andamento'}</span></td>
+      </tr>`;
+  });
+}
+
+function renderTeacherModuleControl() {
+  const tbody = document.getElementById("teacherModuleControlBody");
+  tbody.innerHTML = "";
+
+  const courseSchedule = state.schedule.filter(s => s.discipline === state.currentUser.course);
+
+  courseSchedule.forEach(m => {
+    const isUnlocked = m.unlockedByTeacher;
+    tbody.innerHTML += `
+      <tr>
+        <td><b>Aula ${m.id}ª</b></td>
+        <td><b>${m.title}</b><br><small style="color:#627d98;">${m.desc}</small></td>
+        <td>
+          <span style="padding:4px 8px; border-radius:6px; font-weight:bold; font-size:0.8rem; background:${isUnlocked ? '#dcfce7' : '#fee2e2'}; color:${isUnlocked ? '#15803d' : '#991b1b'};">
+            ${isUnlocked ? '🔓 Liberado para os Alunos' : '🔒 Bloqueado'}
+          </span>
+        </td>
+        <td>
+          <button class="sm ${isUnlocked ? 'danger' : 'success'}" onclick="toggleModuleLock(${m.id})">
+            ${isUnlocked ? 'Bloquear Módulo' : 'Liberar para a Turma'}
+          </button>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+function toggleModuleLock(moduleId) {
+  const mod = state.schedule.find(m => m.id === moduleId && m.discipline === state.currentUser.course);
+  if(!mod) return;
+  mod.unlockedByTeacher = !mod.unlockedByTeacher;
+  saveDatabase();
+  renderTeacherModuleControl();
+}
+
+/* =======================================================
+   ALUNO (CRONOGRAMA E LIBERAÇÃO PELO PROFESSOR)
+======================================================= */
+function initStudentPanel() {
+  document.getElementById("studentScreen").classList.remove("hidden");
+  const disc = state.currentUser.discipline || "Posicionamento Radiográfico I";
+  document.getElementById("studentCourseTitle").textContent = `Disciplina: ${disc}`;
+  renderStudentTimeline(disc);
+}
+
+function renderStudentTimeline(discipline) {
+  const container = document.getElementById("timelineGrid");
+  container.innerHTML = "";
+
+  const discSchedule = state.schedule.filter(s => s.discipline === discipline);
+
+  discSchedule.forEach(item => {
+    const isUnlocked = item.unlockedByTeacher === true;
+    const isCompleted = state.currentUser.completedFases.includes(item.id);
+
+    let statusClass = "locked";
+    let statusText = "🔒 Aguardando Professor";
+    if (isCompleted) {
+      statusClass = "completed";
+      statusText = "✓ Concluído";
+    } else if (isUnlocked) {
+      statusClass = "open";
+      statusText = "🔓 Liberado em Sala";
+    }
+
+    const card = document.createElement("div");
+    card.className = `schedule-item ${isCompleted ? 'done' : isUnlocked ? 'unlocked' : ''}`;
+    card.innerHTML = `
+      <span class="status ${statusClass}">${statusText}</span>
+      <h3 style="margin-bottom:6px;">Aula ${item.id}ª: ${item.title}</h3>
+      <p style="font-size:0.85rem; color:#486581; min-height:45px;">${item.desc}</p>
+      <button style="width:100%; margin-top:10px;" 
+        ${!isUnlocked ? 'disabled style="background:#cbd5e1;cursor:not-allowed;"' : ''}
+        onclick="openQuizForFase(${item.id})">
+        ${!isUnlocked ? 'Aguardando Liberação' : isCompleted ? 'Refazer Exercícios' : 'Responder Questões'}
+      </button>
+    `;
+    container.appendChild(card);
+  });
+}
+
+/* =======================================================
+   QUIZ E BANCO DE QUESTÕES
+======================================================= */
+function openQuizForFase(faseId) {
+  const faseData = state.schedule.find(s => s.id === faseId);
+  state.quizFase = faseData;
+  state.currentQuizList = ALL_QUESTIONS.filter(q => q.faseId === faseId);
+
+  if (state.currentQuizList.length === 0) {
+    state.currentQuizList = [{
+      faseId: faseId,
+      q: `Exercício prático de fixação para a aula prática de ${faseData.title}: qual o alinhamento principal do feixe de raios?`,
+      options: [
+        "Raio central perpendicular incidindo no centro da estrutura.",
+        "Angulação caudal de 45° obrigatória.",
+        "Angulação cefálica de 35°.",
+        "Raio tangencial horizontal rasante."
+      ],
+      answer: 0,
+      explanation: "A rotina elementar de posicionamento mantém o raio central perpendicular direcionado ao ponto de interesse anatômico."
+    }];
+  }
+
+  state.quizIdx = 0;
+  state.sessionScore = 0;
+  state.sessionLives = 3;
+
+  document.getElementById("studentScreen").classList.add("hidden");
+  document.getElementById("quizScreen").classList.remove("hidden");
+  document.getElementById("quizPlayer").textContent = state.currentUser.name;
+  renderCurrentQuestion();
+}
+
+function renderCurrentQuestion() {
+  const currentQ = state.currentQuizList[state.quizIdx];
+  document.getElementById("quizFaseTitle").textContent = `Aula ${state.quizFase.id}ª: ${state.quizFase.title} (Questão ${state.quizIdx + 1} de ${state.currentQuizList.length})`;
+  document.getElementById("quizQuestion").textContent = currentQ.q;
+  document.getElementById("quizScore").textContent = state.sessionScore;
+  document.getElementById("quizLives").textContent = state.sessionLives;
+
+  const optBox = document.getElementById("quizOptions");
+  optBox.innerHTML = "";
+
+  currentQ.options.forEach((optText, i) => {
+    const btn = document.createElement("button");
+    btn.className = "option";
+    btn.textContent = `${String.fromCharCode(65 + i)}) ${optText}`;
+    btn.onclick = () => handleAnswer(i, btn);
+    optBox.appendChild(btn);
+  });
+
+  document.getElementById("quizFeedback").className = "feedback hidden";
+  document.getElementById("quizNextBtn").classList.add("hidden");
+}
+
+function handleAnswer(choiceIdx, btnElem) {
+  const currentQ = state.currentQuizList[state.quizIdx];
+  const allBtns = document.querySelectorAll(".option");
+  allBtns.forEach(b => b.disabled = true);
+
+  const topicName = state.quizFase.title;
+  if (!state.stats[topicName]) {
+    state.stats[topicName] = { answered: 0, wrong: 0 };
+  }
+  state.stats[topicName].answered += 1;
+
+  const fb = document.getElementById("quizFeedback");
+  fb.classList.remove("hidden");
+
+  if (choiceIdx === currentQ.answer) {
+    state.sessionScore += 10;
+    btnElem.classList.add("correct");
+    fb.className = "feedback ok";
+    fb.innerHTML = `<strong>Correto!</strong> ${currentQ.explanation}`;
+  } else {
+    state.sessionLives -= 1;
+    state.stats[topicName].wrong += 1;
+    btnElem.classList.add("wrong");
+    allBtns[currentQ.answer].classList.add("correct");
+    fb.className = "feedback no";
+    fb.innerHTML = `<strong>Atenção:</strong> ${currentQ.explanation}`;
+  }
+
+  saveDatabase();
+  document.getElementById("quizScore").textContent = state.sessionScore;
+  document.getElementById("quizLives").textContent = state.sessionLives;
+  document.getElementById("quizNextBtn").classList.remove("hidden");
+}
+
+function nextQuestion() {
+  if (state.sessionLives <= 0 || state.quizIdx >= state.currentQuizList.length - 1) {
+    finishQuizFase();
+    return;
+  }
+  state.quizIdx++;
+  renderCurrentQuestion();
+}
+
+function finishQuizFase() {
+  alert(`Aula prática concluída! Pontuação acumulada: ${state.sessionScore}`);
+  const stIndex = state.students.findIndex(s => s.id === state.currentUser.id);
+  if (stIndex !== -1) {
+    if (!state.students[stIndex].completedFases.includes(state.quizFase.id)) {
+      state.students[stIndex].completedFases.push(state.quizFase.id);
+    }
+    state.students[stIndex].score += state.sessionScore;
+    state.currentUser = state.students[stIndex];
+    saveDatabase();
+  }
+  exitQuiz();
+}
+
+function exitQuiz() {
+  document.getElementById("quizScreen").classList.add("hidden");
+  initStudentPanel();
+}
+</script>
+</body>
+</html>
