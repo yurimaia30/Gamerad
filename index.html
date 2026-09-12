@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SGA - Simulador Prático Radiológico | Grau Educacional Mossoró</title>
 <style>
   :root {
     --primary: #1976d2;
@@ -136,6 +137,86 @@
   th, td { padding: 12px; text-align: left; border-bottom: 1px solid #e2e8f0; font-size: 0.9rem; }
   th { background: #f1f5f9; color: var(--primary-dark); }
 
+  /* FICHA DO PACIENTE */
+  .patient-card {
+    background: #f0f4f8;
+    border: 2px dashed #9fb3c8;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .req-box {
+    background: #ffffff;
+    border-left: 5px solid var(--accent);
+    padding: 14px;
+    border-radius: 8px;
+    margin-bottom: 18px;
+  }
+
+  /* ESTAÇÃO RADIOLÓGICA */
+  .viewer-container {
+    background: #000000;
+    border-radius: 12px;
+    border: 2px solid #334e68;
+    overflow: hidden;
+    margin: 18px 0;
+  }
+  .viewer-incidences {
+    background: #0b1d3a;
+    padding: 8px 14px;
+    display: flex;
+    gap: 8px;
+    border-bottom: 1px solid #1e3a5f;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .incidence-btn {
+    background: #1e3a5f;
+    color: #bcccdc;
+    border: 1px solid #334e68;
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .incidence-btn.active {
+    background: var(--accent);
+    color: #ffffff;
+    border-color: #4dd0e1;
+    font-weight: bold;
+  }
+  .viewer-toolbar {
+    background: #102a43;
+    padding: 10px 14px;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    flex-wrap: wrap;
+    color: #bcccdc;
+    font-size: 0.85rem;
+  }
+  .viewer-toolbar label { color: #f0f4f8; margin: 0; display: flex; align-items: center; gap: 6px; }
+  .viewer-toolbar input[type="range"] {
+    margin: 0; width: 85px; accent-color: var(--accent);
+  }
+  .viewer-viewport {
+    height: 440px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background: radial-gradient(circle, #1a1a1a 0%, #000000 100%);
+    position: relative;
+  }
+  .viewer-viewport img {
+    max-height: 92%;
+    max-width: 92%;
+    object-fit: contain;
+    transition: transform 0.1s ease-out;
+    user-select: none;
+    pointer-events: none;
+  }
+
   .topbar { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 15px; }
   .badge { background: #eaf2f8; padding: 8px 12px; border-radius: 8px; font-weight: bold; font-size: 0.9rem; }
   .option { display: block; width: 100%; text-align: left; margin: 8px 0; background: #f8fafc; color: var(--text-color); border: 2px solid var(--border-color); }
@@ -157,7 +238,7 @@
 
 <header id="mainHeader">
   <div class="header-brand">
-    <h2>☢️ Sistema de Posicionamento Radiográfico</h2>
+    <h2>☢️ Sistema de Posicionamento e Prática Radiográfica</h2>
     <span class="institution">Grau Educacional • Unidade Mossoró</span>
     <span class="author-tag">Desenvolvido por: <b>Yuri Maia</b></span>
   </div>
@@ -176,7 +257,7 @@
         Grau Educacional • Mossoró/RN
       </span>
       <h1 style="margin-top:5px; margin-bottom:8px;">Portal Radiológico</h1>
-      <p class="subtitle" style="margin-bottom:5px;">Acesso Integrado Gamificado e Acadêmico</p>
+      <p class="subtitle" style="margin-bottom:5px;">Simulador de Atendimento e Posicionamento Radiográfico</p>
       <small style="color:var(--text-muted);">Desenvolvido por Yuri Maia</small>
     </div>
 
@@ -202,27 +283,26 @@
     <button style="width: 100%; margin-top:10px;" onclick="handleLogin()">Entrar no Sistema</button>
     
     <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px; margin-top:20px; font-size:0.8rem; color:#627d98;">
-      <b>Credenciais Iniciais Padrão:</b><br>
-      • <b>Admin:</b> Usuário: <code>admin</code> | Senha: <code>admin123</code><br>
-      • <b>Professor:</b> Matrícula: <code>prof10</code><br>
-      • <b>Aluno:</b> Matrícula: <code>aluno101</code>
+      <b>Acessos de Teste:</b><br>
+      • <b>Admin:</b> admin (senha: <code>admin123</code>)<br>
+      • <b>Professor:</b> prof10<br>
+      • <b>Aluno:</b> aluno101
     </div>
   </section>
 
-  <!-- PAINEL DO ADMINISTRADOR -->
+  <!-- PAINEL ADMINISTRADOR -->
   <section id="adminScreen" class="card hidden">
     <h1>Painel de Controle do Administrador</h1>
-    <p class="subtitle">Gestão acadêmica de disciplinas, turmas, discentes, docentes e segurança.</p>
+    <p class="subtitle">Gestão de turmas, alunos, docentes e credenciais.</p>
     
     <div class="tabs">
       <button class="tab-btn active" onclick="switchAdminTab('cad-classes', this)">Gerenciar Turmas</button>
       <button class="tab-btn" onclick="switchAdminTab('cad-student', this)">Cadastrar Aluno</button>
       <button class="tab-btn" onclick="switchAdminTab('cad-teacher', this)">Cadastrar Professor</button>
       <button class="tab-btn" onclick="switchAdminTab('list-users', this)">Quadro Geral</button>
-      <button class="tab-btn" onclick="switchAdminTab('admin-security', this)">🔒 Segurança / Senha</button>
+      <button class="tab-btn" onclick="switchAdminTab('admin-security', this)">🔒 Senha / Segurança</button>
     </div>
 
-    <!-- Gestão de Turmas -->
     <div id="cad-classes" class="admin-tab">
       <h3 id="classFormTitle">Cadastrar Nova Turma</h3>
       <input type="hidden" id="editingClassId" value="">
@@ -242,7 +322,7 @@
       </div>
       <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 12px;">
         <div>
-          <label>Nome / Identificação</label>
+          <label>Identificação / Nome</label>
           <input type="text" id="className" placeholder="Ex: Turma Manhã 2026.1">
         </div>
         <div>
@@ -276,7 +356,6 @@
       </table>
     </div>
 
-    <!-- Cadastro Aluno -->
     <div id="cad-student" class="admin-tab hidden">
       <h3>Novo Aluno</h3>
       <label>Nome Completo do Aluno</label>
@@ -302,7 +381,6 @@
       <button onclick="saveStudent()">Cadastrar Aluno</button>
     </div>
 
-    <!-- Cadastro Professor -->
     <div id="cad-teacher" class="admin-tab hidden">
       <h3>Novo Professor</h3>
       <label>Nome Completo</label>
@@ -318,18 +396,16 @@
       <button onclick="saveTeacher()">Cadastrar Professor</button>
     </div>
 
-    <!-- Quadro Geral -->
     <div id="list-users" class="admin-tab hidden">
       <h3>Quadro Geral de Usuários</h3>
       <table>
         <thead>
-          <tr><th>Tipo</th><th>Nome</th><th>Matrícula/ID</th><th>Disciplina</th><th>Turma / Detalhe</th></tr>
+          <tr><th>Tipo</th><th>Nome</th><th>Matrícula/ID</th><th>Disciplina</th><th>Turma / Detalhes</th></tr>
         </thead>
         <tbody id="userTableBody"></tbody>
       </table>
     </div>
 
-    <!-- Alteração de Senha -->
     <div id="admin-security" class="admin-tab hidden" style="max-width: 500px;">
       <h3>Alterar Senha do Administrador</h3>
       <label>Senha Atual</label>
@@ -345,21 +421,21 @@
   <!-- PAINEL DO PROFESSOR -->
   <section id="teacherScreen" class="card hidden">
     <h1>Dashboard do Docente</h1>
-    <p class="subtitle" id="teacherCourseBadge">Controle de liberação em sala de aula e métricas de desempenho.</p>
+    <p class="subtitle" id="teacherCourseBadge">Controle de liberação em sala de aula e acompanhamento pedagógico.</p>
 
-    <!-- LIBERAÇÃO EM SALA DE AULA -->
     <div style="background: #eaf2f8; border: 2px solid #b8daff; border-radius: 14px; padding: 20px; margin-bottom: 25px;">
       <h3 style="margin-top:0; color:#0c5460;">🔓 Controle de Liberação dos Módulos em Sala de Aula</h3>
       <p style="font-size:0.88rem; color:#486581; margin-bottom:15px;">
-        Clique nos botões abaixo para <b>Liberar</b> ou <b>Bloquear</b> o acesso dos alunos às questões de cada aula prática durante a sua aula.
+        Clique nos botões abaixo para <b>Liberar</b> ou <b>Bloquear</b> o acesso dos alunos aos atendimentos práticos em tempo real.
       </p>
       <table>
         <thead>
           <tr>
             <th>Aula / Fase</th>
             <th>Conteúdo do Cronograma</th>
+            <th>Incidências Vinculadas</th>
             <th>Status Atual</th>
-            <th style="width: 170px;">Ação do Professor</th>
+            <th style="width: 160px;">Ação</th>
           </tr>
         </thead>
         <tbody id="teacherModuleControlBody"></tbody>
@@ -392,7 +468,7 @@
     <h3 style="margin-top:25px;">Progresso Individual dos Alunos</h3>
     <table>
       <thead>
-        <tr><th>Matrícula</th><th>Aluno</th><th>Turma</th><th>Módulos Feitos</th><th>Pontos</th><th>Status</th></tr>
+        <tr><th>Matrícula</th><th>Aluno</th><th>Turma</th><th>Atendimentos Feitos</th><th>Pontos</th><th>Status</th></tr>
       </thead>
       <tbody id="studentProgressBody"></tbody>
     </table>
@@ -401,29 +477,105 @@
   <!-- PAINEL DO ALUNO -->
   <section id="studentScreen" class="card hidden">
     <div style="margin-bottom: 15px;">
-      <h1 style="margin-bottom:4px;">Cronograma de Aulas Práticas</h1>
+      <h1 style="margin-bottom:4px;">Cronograma de Aulas e Atendimentos Práticos</h1>
       <p class="subtitle" id="studentCourseTitle" style="margin-bottom:5px;"></p>
-      <small style="color:#0284c7; font-weight:600;">⚠️ Os exercícios de cada aula são desbloqueados pelo professor em sala de aula.</small>
+      <small style="color:#0284c7; font-weight:600;">⚠️ Analise as radiografias na estação de imagem antes de responder às questões de cada paciente.</small>
     </div>
     <div class="timeline-grid" id="timelineGrid"></div>
   </section>
 
-  <!-- TELA DO JOGO / QUIZ -->
+  <!-- ETAPA 1: FICHA DE CADASTRO DO PACIENTE -->
+  <section id="patientRegScreen" class="card hidden">
+    <div class="topbar">
+      <div class="badge">🏥 Módulo Prático: <span id="regModTitle"></span></div>
+      <div class="badge">👨‍🎓 Operador: <span id="regStudentName"></span></div>
+    </div>
+
+    <h2>📋 Ficha de Atendimento e Admissão Radiológica</h2>
+    <p class="subtitle">Faça o acolhimento do paciente conferindo o pedido médico e confirmando a ficha para liberação da sala de Raio-X.</p>
+
+    <div class="req-box">
+      <h4 style="margin:0 0 6px 0; color:var(--primary-dark);">📄 Solicitação Médica / Guia de Encaminhamento:</h4>
+      <p id="reqDescription" style="margin:0; font-size:0.95rem; color:#243b53; line-height:1.4;"></p>
+    </div>
+
+    <div class="patient-card">
+      <div style="display:grid; grid-template-columns: 2fr 1fr; gap:14px;">
+        <div>
+          <label>Nome Completo do Paciente</label>
+          <input type="text" id="patientNameInput" readonly style="background:#e2e8f0; cursor:not-allowed;">
+        </div>
+        <div>
+          <label>Nº Prontuário / Registro</label>
+          <input type="text" id="patientRecordInput" readonly style="background:#e2e8f0; cursor:not-allowed;">
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:14px;">
+        <div>
+          <label>Idade do Paciente</label>
+          <input type="text" id="patientAgeInput" placeholder="Ex: 34 anos">
+        </div>
+        <div>
+          <label>Sexo Biológico</label>
+          <select id="patientSexInput">
+            <option value="M">Masculino</option>
+            <option value="F">Feminino</option>
+          </select>
+        </div>
+        <div>
+          <label>Região Anatômica Solicitada</label>
+          <input type="text" id="patientRegionInput" readonly style="background:#e2e8f0; cursor:not-allowed;">
+        </div>
+      </div>
+
+      <label>Anamnese e Triagem Rápida (Sintomas / Queixa Principal)</label>
+      <textarea id="patientAnamnesisInput" rows="2" placeholder="Descreva dor, trauma, tempo de evolução ou suspeita clínica informada pelo paciente..."></textarea>
+    </div>
+
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <button class="secondary" onclick="exitPatientScreen()">← Cancelar e Voltar</button>
+      <button class="success" onclick="confirmPatientAndProceed()">✓ Confirmar Cadastro e Realizar Raio-X →</button>
+    </div>
+  </section>
+
+  <!-- ETAPA 2 & 3: ESTAÇÃO RADIOLÓGICA E QUIZ -->
   <section id="quizScreen" class="card hidden">
     <div class="topbar">
       <div class="badge">👨‍🎓 Aluno: <span id="quizPlayer"></span></div>
+      <div class="badge">👤 Paciente: <span id="quizPatientBadge"></span></div>
       <div class="badge">⭐ Pontos: <span id="quizScore">0</span></div>
       <div class="badge">❤️ Vidas: <span id="quizLives">3</span></div>
     </div>
 
     <div class="subtitle" id="quizFaseTitle" style="font-weight:bold; color:var(--primary);"></div>
+
+    <!-- VISUALIZADOR RADIOLÓGICO MULTI-INCIDÊNCIA -->
+    <div id="radStation" class="viewer-container">
+      <div class="viewer-incidences" id="incidenceSelectorBar"></div>
+
+      <div class="viewer-toolbar">
+        <span style="color:#4dd0e1; font-weight:bold;">☢️ Ferramentas:</span>
+        <label>☀️ Brilho <input type="range" id="vBrightness" min="30" max="200" value="100" oninput="applyViewerFilters()"></label>
+        <label>🌓 Contraste <input type="range" id="vContrast" min="50" max="250" value="100" oninput="applyViewerFilters()"></label>
+        <button class="sm secondary" onclick="toggleNegative()">🔄 Inverter Negativo</button>
+        <button class="sm secondary" onclick="adjustZoom(0.2)">🔍 +</button>
+        <button class="sm secondary" onclick="adjustZoom(-0.2)">🔍 -</button>
+        <button class="sm secondary" onclick="rotateImage()">↻ Girar 90°</button>
+        <button class="sm outline" onclick="resetViewer()">↺ Reset</button>
+      </div>
+      <div class="viewer-viewport" id="viewportArea">
+        <img id="radImage" src="" alt="Exame Radiográfico do Paciente">
+      </div>
+    </div>
+
     <div id="quizQuestion" style="font-size:1.15rem; font-weight:600; margin:15px 0; line-height:1.4;"></div>
     <div id="quizOptions"></div>
     <div id="quizFeedback" class="feedback hidden"></div>
 
-    <div style="margin-top:20px; text-align:right;">
-      <button id="quizNextBtn" class="hidden" onclick="nextQuestion()">Próxima Questão →</button>
-      <button id="quizBackBtn" class="secondary" onclick="exitQuiz()">Voltar ao Cronograma</button>
+    <div style="margin-top:20px; display:flex; justify-content:space-between; align-items:center;">
+      <button class="secondary" onclick="exitQuiz()">Voltar ao Cronograma</button>
+      <button id="quizNextBtn" class="hidden" onclick="nextQuestion()">Próxima Questão / Concluir Atendimento →</button>
     </div>
   </section>
 
@@ -435,290 +587,542 @@
 
 <script>
 /* =======================================================
-   CRONOGRAMA OFICIAL E BANCO DE QUESTÕES DISTRIBUÍDO
+   CRONOGRAMA COM AS SUAS IMAGENS LOCAIS E EXTENSÕES REAIS
 ======================================================= */
+const CURRENT_DB_VERSION = "v4.0_todas_imagens";
+
 const DEFAULT_SCHEDULE = [
-  { id: 1, discipline: "Posicionamento Radiográfico I", title: "Dedos", desc: "Dedos - Posicionamentos de Rotina e Especiais", unlockedByTeacher: true },
-  { id: 2, discipline: "Posicionamento Radiográfico I", title: "Mão", desc: "Prática de Posicionamento e Incidências: Mão", unlockedByTeacher: false },
-  { id: 3, discipline: "Posicionamento Radiográfico I", title: "Punho", desc: "Prática de Posicionamento e Incidências: Punho", unlockedByTeacher: false },
-  { id: 4, discipline: "Posicionamento Radiográfico I", title: "Antebraço", desc: "Prática de Posicionamento e Incidências: Antebraço", unlockedByTeacher: false },
-  { id: 5, discipline: "Posicionamento Radiográfico I", title: "Cotovelo", desc: "Incidências de Cotovelo - Posicionamentos Especiais", unlockedByTeacher: false },
-  { id: 6, discipline: "Posicionamento Radiográfico I", title: "Úmero", desc: "Prática de Posicionamento e Incidências: Úmero", unlockedByTeacher: false },
-  { id: 7, discipline: "Posicionamento Radiográfico I", title: "Cintura Escapular - Rotina", desc: "Prática de Posicionamento e Incidências de rotina: Cintura Escapular", unlockedByTeacher: false },
-  { id: 8, discipline: "Posicionamento Radiográfico I", title: "Cintura Escapular - Especial", desc: "Prática de Posicionamentos especiais: Cintura Escapular", unlockedByTeacher: false },
-  { id: 9, discipline: "Posicionamento Radiográfico I", title: "Revisão Geral e Fundamentos", desc: "Atividade Prática 1: Revisão Técnica e Posicionamentos", unlockedByTeacher: false },
-  { id: 10, discipline: "Posicionamento Radiográfico I", title: "Fêmur e Joelho (Rotina)", desc: "Incidências de Fêmur; Posicionamentos de Rotina - Incidências de Articulação de Joelho", unlockedByTeacher: false },
-  { id: 11, discipline: "Posicionamento Radiográfico I", title: "Joelho (Especiais)", desc: "Posicionamentos Especiais - Incidências de Articulação de Joelho", unlockedByTeacher: false },
-  { id: 12, discipline: "Posicionamento Radiográfico I", title: "Patela, Perna e Tornozelo", desc: "Incidências de Patela; Perna; Tornozelo - Posicionamentos de Rotina", unlockedByTeacher: false },
-  { id: 13, discipline: "Posicionamento Radiográfico I", title: "Tornozelo, Calcâneo e Pé", desc: "Incidências de Tornozelo Especial, Calcâneo e Pé Rotina", unlockedByTeacher: false },
-  { id: 14, discipline: "Posicionamento Radiográfico I", title: "Artelhos e Tornozelo Especial", desc: "Incidências de Tornozelo Especial e Incidências de Artelhos", unlockedByTeacher: false }
-];
-
-/* 40 Questões da Avaliação Oficial mapeadas nas aulas do cronograma */
-const ALL_QUESTIONS = [
-  // AULA 1: DEDOS
-  {
-    faseId: 1,
-    q: "Por causa da fratura de Bennett, é obrigatório aparecer nas incidências radiográficas obtidas:",
-    options: ["O navicular.", "O escafoide.", "O quinto metacarpo.", "O primeiro metacarpo.", "O primeiro metatarsiano."],
-    answer: 3,
-    explanation: "A fratura de Bennett ocorre especificamente na base do primeiro osso metacarpo."
+  { 
+    id: 1, 
+    discipline: "Posicionamento Radiográfico I", 
+    title: "Dedos", 
+    desc: "Dedos - Posicionamentos de Rotina e Especiais", 
+    unlockedByTeacher: true,
+    patient: {
+      name: "José Ferreira de Souza",
+      record: "PR-2026-0182",
+      age: "28 anos",
+      sex: "M",
+      region: "Quirodáctilos / Dedos da Mão Direita",
+      request: "Trauma direto por impacto. Solicito radiografia de quirodáctilos para avaliação anatômica e exclusão de fratura articular na base.",
+      images: [
+        { label: "Incidência 1: Dedos Geral", url: "imagens/dedos.jpeg" }
+      ]
+    }
   },
-  {
-    faseId: 1,
-    q: "Em uma radiografia, o termo médico utilizado para indicar a posição em que os membros estejam distantes do corpo é:",
-    options: ["Proximal.", "Oblíquo.", "Tangencial.", "Lateral.", "Distal."],
-    answer: 4,
-    explanation: "Distal designa estruturas mais afastadas da raiz de inserção do membro ou tronco."
+  { 
+    id: 2, 
+    discipline: "Posicionamento Radiográfico I", 
+    title: "Mão", 
+    desc: "Prática de Posicionamento e Incidências: Mão", 
+    unlockedByTeacher: true,
+    patient: {
+      name: "Pedro Henrique Alencar",
+      record: "PR-2026-0195",
+      age: "11 anos",
+      sex: "M",
+      region: "Mão Direita (PA, Oblíqua e Lateral)",
+      request: "Estudo radiográfico da mão com rotina completa (PA, Oblíqua e Lateral) para análise de espaços articulares e centros de ossificação.",
+      images: [
+        { label: "Incidência 1: Mão em PA", url: "imagens/mao_pa.png" },
+        { label: "Incidência 2: Mão em Oblíqua", url: "imagens/mao_obliquo.jpg" },
+        { label: "Incidência 3: Mão em Perfil / Lateral", url: "imagens/mao_lateral.jpeg" }
+      ]
+    }
   },
-
-  // AULA 2: MÃO
-  {
-    faseId: 2,
-    q: "Na avaliação da idade óssea pela tabela de Greulich-Pyle, a incidência a ser realizada é:",
-    options: ["Mãos e punhos comparativa em PA.", "AP de quadril com moderada flexão.", "Mãos e punho em oblíqua.", "Mãos e punho em perfil."],
-    answer: 0,
-    explanation: "O método de Greulich-Pyle padroniza a radiografia de mãos e punhos em PA comparativa."
+  { 
+    id: 3, 
+    discipline: "Posicionamento Radiográfico I", 
+    title: "Punho", 
+    desc: "Prática de Posicionamento e Incidências: Punho", 
+    unlockedByTeacher: true,
+    patient: {
+      name: "Camila Fernandes Barros",
+      record: "PR-2026-0210",
+      age: "35 anos",
+      sex: "F",
+      region: "Punho Esquerdo (PA, Perfil e Pesquisa de Fratura)",
+      request: "Queda ao solo sobre a palma da mão espalmada. Dor aguda na tabaqueira anatômica; rotina para pesquisa de fratura carpal.",
+      images: [
+        { label: "Incidência 1: Punho em PA", url: "imagens/punho_pa.jpg" },
+        { label: "Incidência 2: Punho em Perfil", url: "imagens/punho_perfil.jpeg" },
+        { label: "Incidência 3: Pesquisa de Fratura Carpal", url: "imagens/punho_fratura.jpg" }
+      ]
+    }
   },
-  {
-    faseId: 2,
-    q: "O fator que mais contribui para a perda de definição da imagem em um exame de mão é:",
-    options: ["Movimento.", "Quilovoltagem.", "O uso de écran rápido.", "A distância foco-objeto.", "Tamanho do ponto focal."],
-    answer: 0,
-    explanation: "O borramento cinético provocado pelo movimento do paciente é o principal fator de degradação da definição."
+  { 
+    id: 4, 
+    discipline: "Posicionamento Radiográfico I", 
+    title: "Antebraço", 
+    desc: "Prática de Posicionamento e Incidências: Antebraço", 
+    unlockedByTeacher: true,
+    patient: {
+      name: "Antônio Marcos de Lima",
+      record: "PR-2026-0222",
+      age: "42 anos",
+      sex: "M",
+      region: "Antebraço Direito (AP e Perfil)",
+      request: "Avaliação do alinhamento cortical de rádio e ulna. Realizar AP em supinação anatômica e Perfil verdadeiro a 90°.",
+      images: [
+        { label: "Incidência 1: Antebraço em AP", url: "imagens/antabraco_ap.png" },
+        { label: "Incidência 2: Antebraço em Perfil", url: "imagens/antabraco_perfil.png" }
+      ]
+    }
   },
-  {
-    faseId: 2,
-    q: "Na avaliação da idade óssea pela técnica de Greulich-Pyle, deve-se fazer radiografia de:",
-    options: ["Joelhos e cotovelos.", "Punhos e joelhos.", "Mãos e punhos.", "Crânio e cotovelos.", "Mãos e joelhos."],
-    answer: 2,
-    explanation: "O protocolo avalia a sequência cronológica dos centros de ossificação da mão e punho."
+  { 
+    id: 5, 
+    discipline: "Posicionamento Radiográfico I", 
+    title: "Cotovelo", 
+    desc: "Incidências de Cotovelo - Posicionamentos Especiais", 
+    unlockedByTeacher: true,
+    patient: {
+      name: "Mariana Vasconcelos",
+      record: "PR-2026-0238",
+      age: "24 anos",
+      sex: "F",
+      region: "Cotovelo Direito (Perfil Verdadeiro)",
+      request: "Perfil absoluto com flexão de 90 graus para avaliação dos coxins adiposos articulares e processo do olécrano.",
+      images: [
+        { label: "Incidência 1: Cotovelo em Perfil", url: "imagens/cotovelo_perfil.png" }
+      ]
+    }
   },
-
-  // AULA 3: PUNHO
-  {
-    faseId: 3,
-    q: "As incidências de Stecher e Pierquin estudam, respectivamente, os seguintes tipos de ossos:",
-    options: ["Úmero e cotovelo.", "Escafóide e joelho.", "Escafóide e cotovelo.", "Ossos nasais e cotovelo."],
-    answer: 2,
-    explanation: "Stecher é o método clássico para escafóide e Pierquin estuda a articulação do cotovelo."
+  { 
+    id: 6, 
+    discipline: "Posicionamento Radiográfico I", 
+    title: "Úmero", 
+    desc: "Prática de Posicionamento e Incidências: Úmero", 
+    unlockedByTeacher: true,
+    patient: {
+      name: "Francisco de Assis Costa",
+      record: "PR-2026-0245",
+      age: "58 anos",
+      sex: "M",
+      region: "Úmero Esquerdo",
+      request: "Investigação da diáfise umeral após trauma contuso direto.",
+      images: [
+        { label: "Incidência 1: Estudo do Úmero", url: "imagens/umero.jpeg" }
+      ]
+    }
   },
-  {
-    faseId: 3,
-    q: "Das incidências relacionadas, a melhor para a avaliação do escafóide é PA com flexão:",
-    options: ["Ulnar e angulação do raio central de 10º a 15º.", "Radial e angulação do raio central de 10 a 15º.", "Ulnar e angulação proximal do raio central de 30º a 35º.", "Radial e angulação proximal do raio central de 30º a 35º.", "Radial e angulação distal do raio central de 30º a 35º."],
-    answer: 0,
-    explanation: "O desvio ulnar com angulação cefálica do RC (10°-15°) alonga e isola o osso escafóide."
+  { 
+    id: 7, 
+    discipline: "Posicionamento Radiográfico I", 
+    title: "Cintura Escapular - Rotina", 
+    desc: "Prática de Posicionamento e Incidências de rotina: Cintura Escapular", 
+    unlockedByTeacher: true,
+    patient: {
+      name: "Raimundo Nonato",
+      record: "PR-2026-0259",
+      age: "61 anos",
+      sex: "M",
+      region: "Ombro e Articulação Glenoumeral",
+      request: "Dor escapular com limitação de abdução. Rotina de ombro para descarte de luxação.",
+      images: [
+        { label: "Incidência 1: Ombro Rotina", url: "imagens/ombro.jpeg" }
+      ]
+    }
   },
-  {
-    faseId: 3,
-    q: "Os dois ossos do carpo que podem ser evidenciados em técnicas especiais são:",
-    options: ["Escafóide e grande osso.", "Trapézio e grande osso.", "Ganchoso e trapézio.", "Escafóide e pisiforme.", "Escafóide e ganchoso."],
-    answer: 3,
-    explanation: "Incidências específicas com desvios e angulações projetam livremente o escafóide e o pisiforme."
+  { 
+    id: 8, 
+    discipline: "Posicionamento Radiográfico I", 
+    title: "Cintura Escapular - Especial", 
+    desc: "Prática de Posicionamentos especiais: Cintura Escapular", 
+    unlockedByTeacher: true,
+    patient: {
+      name: "Francisca Silva de Moura",
+      record: "PR-2026-0270",
+      age: "49 anos",
+      sex: "F",
+      region: "Escápula e Cintura Escapular Especial",
+      request: "Suspeita de lesão da borda escapular e acrômio. Solicito incidência específica de escápula.",
+      images: [
+        { label: "Incidência 1: Estudo da Escápula", url: "imagens/escapula.jpeg" }
+      ]
+    }
   },
-
-  // AULA 4: ANTEBRAÇO
-  {
-    faseId: 4,
-    q: "A pronação corresponde a um movimento traduzido por:",
-    options: [
-      "Deslocamento lateral com afastamento do PMS.",
-      "Rotação lateral do antebraço e da mão que fica com sua face anterior voltada para frente.",
-      "Deslocamento lateral em angulação ao PMS.",
-      "Rotação interna do antebraço e da mão que fica com sua face anterior voltada para trás.",
-      "Deslocamento medial com aproximação do PMS."
-    ],
-    answer: 3,
-    explanation: "A pronação gira o rádio sobre a ulna medialmente, direcionando a palma para trás/baixo."
+  { 
+    id: 9, 
+    discipline: "Posicionamento Radiográfico I", 
+    title: "Revisão Geral e Fundamentos", 
+    desc: "Atividade Prática 1: Revisão Técnica e Posicionamentos", 
+    unlockedByTeacher: true,
+    patient: {
+      name: "Beatriz Nogueira Duarte",
+      record: "PR-2026-0288",
+      age: "31 anos",
+      sex: "F",
+      region: "Avaliação Geral de Qualidade",
+      request: "Controle técnico e análise da formação geométrica da imagem radiográfica.",
+      images: [
+        { label: "Incidência 1: Análise Geral de Qualidade", url: "imagens/mao_pa.png" }
+      ]
+    }
   },
-  {
-    faseId: 4,
-    q: "A Supinação corresponde a um movimento traduzido por:",
-    options: [
-      "Deslocamento lateral com afastamento do PMS.",
-      "Abdução movimento lateral de afastamento do PMS.",
-      "Rotação externa do antebraço e da mão que fica com sua face anterior voltada para frente.",
-      "Deslocamento medial com aproximação do PMS.",
-      "Rotação interna do antebraço e da mão que fica com sua face anterior voltada para trás."
-    ],
-    answer: 2,
-    explanation: "A supinação coloca o antebraço em posição anatômica com os ossos paralelos e palma para frente."
+  { 
+    id: 10, 
+    discipline: "Posicionamento Radiográfico I", 
+    title: "Fêmur e Joelho (Rotina)", 
+    desc: "Incidências de Fêmur; Posicionamentos de Rotina - Incidências de Articulação de Joelho", 
+    unlockedByTeacher: true,
+    patient: {
+      name: "Marcelo Teixeira",
+      record: "PR-2026-0301",
+      age: "29 anos",
+      sex: "M",
+      region: "Fêmur e Joelho Esquerdo",
+      request: "Politraumatismo: avaliação urgente de diáfise femoral e perfil articular do joelho.",
+      images: [
+        { label: "Incidência 1: Fêmur Fratura", url: "imagens/femur_fratura.jpg" },
+        { label: "Incidência 2: Joelho em Perfil", url: "imagens/joelho_perfil.jpg" }
+      ]
+    }
   },
-  {
-    faseId: 4,
-    q: "Na supinação o final do movimento realizado é indicado por:",
-    options: ["Palma da mão direcionada para o PMS.", "Face anterior da mão voltada para frente.", "Dorso da mão voltado para o plano mediano.", "Palma da mão direcionada para o plano coronal.", "Face posterior da mão voltada para frente."],
-    answer: 1,
-    explanation: "Ao término do movimento de supinação, a face anterior da mão projeta-se anteriormente."
+  { 
+    id: 11, 
+    discipline: "Posicionamento Radiográfico I", 
+    title: "Joelho (Especiais)", 
+    desc: "Posicionamentos Especiais - Incidências de Articulação de Joelho", 
+    unlockedByTeacher: true,
+    patient: {
+      name: "Severino dos Ramos",
+      record: "PR-2026-0315",
+      age: "67 anos",
+      sex: "M",
+      region: "Joelho Esquerdo",
+      request: "Avaliação do espaço femorotibial e patela.",
+      images: [
+        { label: "Incidência 1: Joelho em Perfil Estrito", url: "imagens/joelho_perfil.jpg" }
+      ]
+    }
   },
-
-  // AULA 5: COTOVELO
-  {
-    faseId: 5,
-    q: "Para se ter incidência em perfil absoluto do cotovelo, é necessário que o:",
-    options: [
-      "Braço esteja fletido a 90º, apoiado sobre o chassis, com o úmero, o antebraço e a mão no mesmo plano horizontal, sem rotação.",
-      "Antebraço esteja fletido a 90º, apoiado sobre o chassis, com o úmero, o antebraço e a mão no mesmo plano vertical, sem rotação.",
-      "Braço esteja apoiado 45º sobre o chassis, com úmero, antebraço e a mão no mesmo plano horizontal.",
-      "Braço esteja fletido a 180º, apoiado sobre o chassis, com o úmero, o antebraço e a mão no plano oblíquo.",
-      "Braço esteja fletido a 90º, apoiado sobre o chassis, com o úmero, o antebraço e mão no mesmo plano coronal."
-    ],
-    answer: 0,
-    explanation: "Flexão exata a 90° com ombro, cotovelo e punho no mesmo plano horizontal garantem o perfil verdadeiro."
+  { 
+    id: 12, 
+    discipline: "Posicionamento Radiográfico I", 
+    title: "Patela, Perna e Tornozelo", 
+    desc: "Incidências de Patela; Perna; Tornozelo - Posicionamentos de Rotina", 
+    unlockedByTeacher: true,
+    patient: {
+      name: "Juliana Medeiros",
+      record: "PR-2026-0329",
+      age: "21 anos",
+      sex: "F",
+      region: "Perna (Tíbia e Fíbula)",
+      request: "Trauma automobilístico: radiografia de perna incluindo as articulações proximal e distal.",
+      images: [
+        { label: "Incidência 1: Perna (Tíbia e Fíbula)", url: "imagens/perna.webp" }
+      ]
+    }
   },
-
-  // AULA 6: ÚMERO
-  {
-    faseId: 6,
-    q: "A radiação que provém da ampola em sentido reto sem variação de ângulo incidindo na estativa corresponde ao:",
-    options: ["RC perpendicular em sentido caudal.", "RC angulado em sentido vertical.", "RC perpendicular em sentido horizontal.", "RC perpendicular em sentido supino.", "RC perpendicular em sentido cefálico."],
-    answer: 2,
-    explanation: "Na estativa vertical (bucky mural), o raio central sai reto e horizontal."
+  { 
+    id: 13, 
+    discipline: "Posicionamento Radiográfico I", 
+    title: "Tornozelo, Calcâneo e Pé", 
+    desc: "Incidências de Tornozelo Especial, Calcâneo e Pé Rotina", 
+    unlockedByTeacher: true,
+    patient: {
+      name: "Valdemar Bezerra",
+      record: "PR-2026-0342",
+      age: "52 anos",
+      sex: "M",
+      region: "Calcâneo e Retropé",
+      request: "Queda de nível com impacto no calcanhar. Avaliação da tuberosidade do calcâneo e sustentáculo do tálus.",
+      images: [
+        { label: "Incidência 1: Estudo do Calcâneo", url: "imagens/calcaneo.webp" }
+      ]
+    }
   },
-  {
-    faseId: 6,
-    q: "O indivíduo na posição anatômica com sua região dorsal direcionada para a ampola de raios-x estará realizando uma incidência:",
-    options: ["Antero – posterior.", "Latero – medial.", "Obliqua posterior.", "Medial – lateral.", "Póstero – anterior."],
-    answer: 4,
-    explanation: "Se o dorso (costas) está voltado para o tubo, o feixe entra na região posterior e sai na anterior (PA)."
-  },
-
-  // AULA 7: CINTURA ESCAPULAR - ROTINA
-  {
-    faseId: 7,
-    q: "Para realização da incidência obliqua para estudo do ombro o RC está a 45° no sentido caudal em direção à face medial da articulação. O termo indica que este:",
-    options: ["É perpendicular em sentido vertical.", "É angulado em sentido cefálico.", "É perpendicular em sentido horizontal.", "Deve entrar na face medial da estrutura não importando o sentido.", "É angulado em sentido podálico."],
-    answer: 4,
-    explanation: "Caudal e podálico são termos equivalentes que indicam direcionamento em direção aos pés."
-  },
-  {
-    faseId: 7,
-    q: "O chassi posicionado sobre a mesa de exame apresentando as bordas superiores e inferiores menores que as bordas laterais está no sentido:",
-    options: ["Perpendicular vertical.", "Médio-lateral.", "Transversal.", "Perpendicular horizontal.", "Longitudinal."],
-    answer: 4,
-    explanation: "No formato longitudinal a maior dimensão do chassi acompanha o maior comprimento do corpo."
-  },
-
-  // AULA 8: CINTURA ESCAPULAR - ESPECIAIS
-  {
-    faseId: 8,
-    q: "A ampola de raios-x apresenta uma variação de ângulo de forma que fica posicionada acima da área com radiação direcionada no sentido caudal. O RC será:",
-    options: ["Perpendicular podálico.", "Angulado cefálico.", "Perpendicular horizontal.", "Perpendicular reto.", "Angulado podálico."],
-    answer: 4,
-    explanation: "A inclinação para baixo em direção aos pés denomina-se angulação podálica/caudal."
-  },
-  {
-    faseId: 8,
-    q: "A descrição: 'raio central incide na região anterior direita com PMS obliquado a 45° graus, saindo na região posterior' corresponde à:",
-    options: ["Incidência obliqua anterior direita.", "Posição obliqua anterior direita.", "Incidência obliqua posterior direita.", "Posição obliqua posterior direita.", "NDA."],
-    answer: 0,
-    explanation: "A incidência recebe o nome da região anatômica de entrada do feixe central de radiação."
-  },
-
-  // AULA 9: REVISÃO GERAL E FUNDAMENTOS
-  {
-    faseId: 9,
-    q: "Assinale a alternativa INCORRETA:",
-    options: [
-      "Na incidência ântero-posterior, a região anterior do paciente está direcionada para a ampola.",
-      "Em perfil esquerdo, o paciente encontra-se com seu lado esquerdo mais próximo ao filme.",
-      "Em decúbito lateral direito, o paciente coloca seu lado esquerdo mais próximo do filme.",
-      "Em OAD, o paciente encontra-se com sua região anterior direita mais próxima do filme.",
-      "Na incidência póstero-anterior à região anterior do paciente está mais próxima do filme."
-    ],
-    answer: 2,
-    explanation: "No decúbito lateral direito, é o lado direito que repousa sobre a mesa e fica mais próximo ao filme."
-  },
-  {
-    faseId: 9,
-    q: "Sobre a DFOFI (Distância Foco-Receptor) está correta apenas a alternativa:",
-    options: [
-      "Quanto maior a DFOFI menor será ampliação da imagem.",
-      "Quanto menor a DFOFI maior será a ampliação da imagem.",
-      "Quanto maior a DFOFI maior será a ampliação da imagem.",
-      "A DFOFI não interfere no tamanho da imagem.",
-      "NDA."
-    ],
-    answer: 0,
-    explanation: "O aumento da distância tubo-filme reduz a divergência geométrica dos raios e a ampliação."
-  },
-  {
-    faseId: 9,
-    q: "As grades antidifusoras utilizadas em estruturas com espessuras maiores que 10 cm, têm por finalidade:",
-    options: [
-      "Facilitar o manuseio do filme radiográfico.",
-      "Delimitar o campo de incidência do RC.",
-      "Limitar a radiação secundária proveniente do paciente.",
-      "Proteger o paciente dos feixes de menor intensidade.",
-      "NDA."
-    ],
-    answer: 2,
-    explanation: "A grade absorve fótons de radiação espalhada/secundária gerados no paciente, melhorando o contraste."
-  },
-  {
-    faseId: 9,
-    q: "O filme radiográfico convencional é uma folha com base de:",
-    options: ["Celulose.", "Poliéster.", "Gelatina.", "Fósforo."],
-    answer: 1,
-    explanation: "A base moderna dos filmes radiográficos médicos convencionais é constituída de poliéster."
-  },
-  {
-    faseId: 9,
-    q: "Os cristais de haleto de prata usados na emulsão do filme radiográfico convencional são compostos de bromo e:",
-    options: ["Prata.", "Iodo.", "Bário.", "Fósforo."],
-    answer: 0,
-    explanation: "A emulsão fotossensível é formada principalmente por brometo de prata (e traços de iodeto de prata)."
-  },
-
-  // AULAS 10 a 14: MEMBROS INFERIORES E ARTELHOS
-  {
-    faseId: 10,
-    q: "Paciente deitado sobre o lado esquerdo do corpo com o RC perpendicular ao plano coronal corresponde à:",
-    options: ["Incidência lateral direita.", "Decúbito esquerdo com alinhamento do PMS.", "Incidência lateral esquerda.", "Posicionamento anterior direito.", "Decúbito esquerdo com alinhamento do plano coronal."],
-    answer: 2,
-    explanation: "O paciente apoia o lado esquerdo com o raio atingindo o plano coronal, configurando incidência lateral esquerda."
-  },
-  {
-    faseId: 11,
-    q: "O plano anatômico que divide o corpo em porção superior (cranial) e inferior (caudal) é denominado:",
-    options: ["Parassagital.", "Frontal mediano.", "Sagital mediano.", "Coronal transversal.", "Transversal."],
-    answer: 4,
-    explanation: "O plano transversal (axial) realiza o corte horizontal dividindo em porções superior e inferior."
-  },
-  {
-    faseId: 12,
-    q: "Deitado sobre a região posterior do corpo corresponde a qual tipo de decúbito?",
-    options: ["Lateral.", "Dorsal.", "Oblíquo posterior.", "Ventral.", "Oblíquo anterior."],
-    answer: 1,
-    explanation: "O apoio dorsal sobre a maca caracteriza o decúbito dorsal (posição supina)."
-  },
-  {
-    faseId: 13,
-    q: "Quando o paciente está em decúbito lateral esquerdo e o feixe de raios é emitido horizontalmente em AP, trata-se de:",
-    options: [
-      "Decúbito lateral esquerdo com raios horizontais em póstero-anterior.",
-      "Perfil Direito.",
-      "Decúbito lateral esquerdo com raios horizontais em ântero-posterior.",
-      "Perfil Esquerdo.",
-      "NDA."
-    ],
-    answer: 2,
-    explanation: "Posicionamento adotado frequentemente em rotinas de abdome agudo com raios horizontais."
-  },
-  {
-    faseId: 14,
-    q: "Em relação ao pé e artelhos, por que a incidência em AP com angulação cefálica de 10° a 15° é empregada na rotina?",
-    options: [
-      "Para abrir as articulações társicas e metatarsianas paralelas ao feixe.",
-      "Para aumentar a dose de radiação no calcanhar.",
-      "Para fechar os espaços intermetatársicos.",
-      "Não há justificativa técnica."
-    ],
-    answer: 0,
-    explanation: "A inclinação do feixe central compensa o arco longitudinal do pé e projeta as articulações abertas."
+  { 
+    id: 14, 
+    discipline: "Posicionamento Radiográfico I", 
+    title: "Artelhos e Tornozelo Especial", 
+    desc: "Incidências de Tornozelo Especial e Incidências de Artelhos", 
+    unlockedByTeacher: true,
+    patient: {
+      name: "Larissa Kelly",
+      record: "PR-2026-0355",
+      age: "19 anos",
+      sex: "F",
+      region: "Pododáctilos / Artelhos",
+      request: "Contusão direta no hálux. AP com angulação cefálica e oblíqua interna para abrir espaços interfalângicos.",
+      images: [
+        { label: "Incidência 1: Radiografia de Artelhos", url: "imagens/artelhos.jpeg" }
+      ]
+    }
   }
 ];
+
+/* QUESTÕES ADAPTADAS PARA ANÁLISE PRÁTICA DAS SUAS IMAGENS LOCAIS */
+const ALL_QUESTIONS = [
+  // AULA 1: DEDOS (dedos.jpeg)
+  {
+    faseId: 1,
+    q: "Inspecione a radiografia de Dedos na tela: na avaliação da fratura articular de Bennett, qual estrutura óssea deve obrigatoriamente estar demonstrada sem sobreposição?",
+    options: [
+      "A base do primeiro metacarpo[cite: 3].",
+      "O osso navicular[cite: 3].",
+      "O quinto metacarpo[cite: 3].",
+      "O primeiro metatarsiano[cite: 3]."
+    ],
+    answer: 0,
+    explanation: "A fratura de Bennett localiza-se especificamente na base intra-articular do 1º osso metacarpiano[cite: 3]."
+  },
+  {
+    faseId: 1,
+    q: "Na análise dos quirodáctilos demonstrados, o termo médico utilizado para indicar as extremidades dos membros mais distantes da inserção é:",
+    options: ["Distal[cite: 3].", "Proximal[cite: 3].", "Oblíquo[cite: 3].", "Tangencial[cite: 3]."],
+    answer: 0,
+    explanation: "Distal refere-se à região mais afastada do ponto de inserção do membro no tronco[cite: 3]."
+  },
+
+  // AULA 2: MÃO (mao_pa.png, mao_obliquo.jpg, mao_lateral.jpeg)
+  {
+    faseId: 2,
+    q: "Alterne para a 'Incidência 2: Mão em Oblíqua'. Por que a separação dos dedos em leque (conforme visualizado) é um critério técnico fundamental?",
+    options: [
+      "Para evitar a sobreposição das falanges e avaliar com clareza os espaços articulares intermetacarpais.",
+      "Apenas para reduzir a dose de radiação aplicada ao paciente.",
+      "Para encurtar geometricamente a imagem dos metacarpos.",
+      "Não há justificativa técnica, sendo apenas estética."
+    ],
+    answer: 0,
+    explanation: "A oblíqua com separação dos dedos impede a sobreposição óssea das falanges, mantendo os espaços abertos."
+  },
+  {
+    faseId: 2,
+    q: "Observe a 'Incidência 1: Mão em PA'. Na avaliação padrão da idade óssea (tabela de Greulich-Pyle), qual o protocolo de incidência oficial?",
+    options: [
+      "Mãos e punhos comparativa em PA[cite: 3].",
+      "Mãos e punho em oblíqua[cite: 3].",
+      "Mãos e punho em perfil[cite: 3].",
+      "AP de quadril com moderada flexão[cite: 3]."
+    ],
+    answer: 0,
+    explanation: "O atlas de Greulich-Pyle padroniza a incidência em PA comparativa de mãos e punhos[cite: 3]."
+  },
+  {
+    faseId: 2,
+    q: "Alterne para a 'Incidência 3: Mão Lateral'. Qual é o fator que mais prejudica a nitidez e a definição da imagem nessa posição?",
+    options: [
+      "Movimento do paciente (borramento cinético)[cite: 3].",
+      "Quilovoltagem ligeiramente acima da média[cite: 3].",
+      "A distância foco-filme de 100 cm[cite: 3].",
+      "O uso de receptor digital[cite: 3]."
+    ],
+    answer: 0,
+    explanation: "O movimento inadvertido do paciente durante a exposição gera borramento cinético e perda de definição[cite: 3]."
+  },
+
+  // AULA 3: PUNHO (punho_pa.jpg, punho_perfil.jpeg, punho_fratura.jpg)
+  {
+    faseId: 3,
+    q: "Inspecione a 'Incidência 3: Pesquisa de Fratura Carpal' no visualizador. Qual o melhor método radiográfico com flexão ulnar para investigar o osso escafóide?",
+    options: [
+      "PA com flexão ulnar e angulação do raio central de 10º a 15º (Método de Stecher)[cite: 3].",
+      "PA com flexão radial sem angulação do raio central[cite: 3].",
+      "Perfil absoluto com pronação forçada[cite: 3].",
+      "PA com flexão ulnar e angulação caudal de 45°[cite: 3]."
+    ],
+    answer: 0,
+    explanation: "O desvio ulnar com inclinação do raio central de 10° a 15° abre os espaços e projeta o escafóide sem sobreposição[cite: 3]."
+  },
+  {
+    faseId: 3,
+    q: "Na rotina de punho em PA e Perfil demonstrada, as incidências de Stecher e Pierquin destinam-se ao estudo de quais ossos respectivamente?",
+    options: [
+      "Escafóide e cotovelo[cite: 3].",
+      "Úmero e cotovelo[cite: 3].",
+      "Escafóide e joelho[cite: 3].",
+      "Ossos nasais e cotovelo[cite: 3]."
+    ],
+    answer: 0,
+    explanation: "Stecher estuda especificamente o escafóide carpal e Pierquin avalia a articulação do cotovelo[cite: 3]."
+  },
+
+  // AULA 4: ANTEBRAÇO (antabraco_ap.png, antabraco_perfil.png)
+  {
+    faseId: 4,
+    q: "Observe a 'Incidência 1: Antebraço em AP'. Por que a mão deve obrigatoriamente permanecer em supinação anatômica nesta incidência?",
+    options: [
+      "Porque a pronação gira o rádio sobre a ulna, causando sobreposição óssea[cite: 3].",
+      "Para aproximar o rádio do plano coronal de forma invertida.",
+      "Porque o paciente não consegue fletir o cotovelo.",
+      "Para diminuir a quilovoltagem necessária na exposição."
+    ],
+    answer: 0,
+    explanation: "A supinação mantém o rádio e a ulna rigorosamente paralelos, impedindo que se cruzem[cite: 3]."
+  },
+  {
+    faseId: 4,
+    q: "Alterne para a 'Incidência 2: Antebraço em Perfil'. Ao final do movimento de supinação, como se posiciona a face anterior da mão?",
+    options: [
+      "Face anterior da mão voltada para a frente[cite: 3].",
+      "Dorso da mão voltado para o plano mediano[cite: 3].",
+      "Palma da mão direcionada para trás[cite: 3].",
+      "Face posterior voltada para a frente[cite: 3]."
+    ],
+    answer: 0,
+    explanation: "Na posição de supinação completa, a face anterior da mão (palma) fica voltada para frente[cite: 3]."
+  },
+
+  // AULA 5: COTOVELO (cotovelo_perfil.png)
+  {
+    faseId: 5,
+    q: "Inspecione a radiografia de Cotovelo em Perfil: para obter um perfil verdadeiro rigoroso da articulação, qual o critério de posicionamento obrigatório?",
+    options: [
+      "Braço e antebraço fletidos a 90º, apoiados no mesmo plano horizontal, sem rotação[cite: 3].",
+      "Braço fletido a 180º estendido no plano vertical[cite: 3].",
+      "Braço fletido a 45º sobre o chassis com rotação interna forçada[cite: 3].",
+      "Antebraço em pronação máxima de 30º[cite: 3]."
+    ],
+    answer: 0,
+    explanation: "A flexão do cotovelo a 90° com úmero e antebraço no mesmo plano horizontal garante o perfil verdadeiro[cite: 3]."
+  },
+
+  // AULA 6: ÚMERO (umero.jpeg)
+  {
+    faseId: 6,
+    q: "Na realização do exame de Úmero na estativa vertical, a radiação que provém da ampola em sentido reto sem variação angular corresponde a:",
+    options: [
+      "Raio central perpendicular em sentido horizontal[cite: 3].",
+      "Raio central angulado em sentido vertical[cite: 3].",
+      "Raio central perpendicular em sentido caudal[cite: 3].",
+      "Raio central em sentido podálico[cite: 3]."
+    ],
+    answer: 0,
+    explanation: "Na estativa vertical (mural bucky), o raio central é emitido em trajetória horizontal e perpendicular[cite: 3]."
+  },
+
+  // AULA 7: CINTURA ESCAPULAR - ROTINA (ombro.jpeg)
+  {
+    faseId: 7,
+    q: "Examine a radiografia de Ombro. Na incidência oblíqua com angulação de 45° no sentido caudal, qual termo anatômico é sinônimo do direcionamento do feixe?",
+    options: [
+      "Angulado em sentido podálico[cite: 3].",
+      "Angulado em sentido cefálico[cite: 3].",
+      "Perpendicular em sentido vertical[cite: 3].",
+      "Perpendicular em sentido lateral[cite: 3]."
+    ],
+    answer: 0,
+    explanation: "Caudal e podálico são termos equivalentes que indicam inclinação do raio em direção aos pés[cite: 3]."
+  },
+
+  // AULA 8: CINTURA ESCAPULAR - ESPECIAL (escapula.jpeg)
+  {
+    faseId: 8,
+    q: "Na análise da incidência de Escápula, quando o feixe incide na região anterior direita com o corpo obliquado a 45°, saindo na região posterior, a incidência é:",
+    options: [
+      "Incidência oblíqua anterior direita (OAD)[cite: 3].",
+      "Posição oblíqua posterior direita (OPD)[cite: 3].",
+      "Incidência látero-lateral estrita[cite: 3].",
+      "Incidência axial posterior[cite: 3]."
+    ],
+    answer: 0,
+    explanation: "O nome da incidência é definido pela face anatômica em que o feixe penetra no paciente[cite: 3]."
+  },
+
+  // AULA 9: FUNDAMENTOS
+  {
+    faseId: 9,
+    q: "Sobre as regras geométricas e técnicas radiográficas, assinale a afirmação INCORRETA:",
+    options: [
+      "Em decúbito lateral direito o paciente coloca seu lado esquerdo mais próximo do filme[cite: 3].",
+      "Na incidência em AP a região anterior do paciente está direcionada para o tubo de raios-X[cite: 3].",
+      "Em perfil esquerdo o paciente encontra-se com seu lado esquerdo mais próximo ao filme[cite: 3].",
+      "Em decúbito o paciente encontra-se deitado[cite: 3]."
+    ],
+    answer: 0,
+    explanation: "No decúbito lateral direito é o lado direito do corpo que fica apoiado e próximo ao filme[cite: 3]."
+  },
+
+  // AULA 10: FÊMUR E JOELHO (femur_fratura.jpg, joelho_perfil.jpg)
+  {
+    faseId: 10,
+    q: "Examine a 'Incidência 1: Fêmur Fratura' na estação de imagem. O que a identificação clara de traço de fratura com desvio requer no protocolo radiográfico?",
+    options: [
+      "Inclusão obrigatória de pelo menos uma articulação adjacente (quadril ou joelho) em duas incidências ortogonais.",
+      "Uso de tração mecânica sem controle radiográfico prévio.",
+      "Realização exclusiva de uma única projeção sem perfil.",
+      "Aplicação de rotação forçada interna do membro fraturado."
+    ],
+    answer: 0,
+    explanation: "Todo estudo de ossos longos fraturados exige incluir as articulações e realizar no mínimo duas projeções ortogonais."
+  },
+  {
+    faseId: 10,
+    q: "Alterne para a 'Incidência 2: Joelho em Perfil'. Quando o paciente deita sobre o lado esquerdo com o raio perpendicular ao plano coronal, corresponde a:",
+    options: [
+      "Incidência lateral esquerda (perfil esquerdo)[cite: 3].",
+      "Decúbito dorsal em AP[cite: 3].",
+      "Posição oblíqua anterior direita[cite: 3].",
+      "Incidência lateral direita[cite: 3]."
+    ],
+    answer: 0,
+    explanation: "O apoio do lado esquerdo com raio atingindo o plano coronal configura o perfil/lateral esquerdo[cite: 3]."
+  },
+
+  // AULA 11: JOELHO ESPECIAL (joelho_perfil.jpg)
+  {
+    faseId: 11,
+    q: "Qual plano anatômico divide o corpo verticalmente em metades cranial (superior) e caudal (inferior)?",
+    options: [
+      "Plano Transversal (Horizontal)[cite: 3].",
+      "Plano Sagital mediano[cite: 3].",
+      "Plano Coronal frontal[cite: 3].",
+      "Plano Parassagital[cite: 3]."
+    ],
+    answer: 0,
+    explanation: "O plano transversal corta o corpo horizontalmente em metades superior e inferior[cite: 3]."
+  },
+
+  // AULA 12: PERNA (perna.webp)
+  {
+    faseId: 12,
+    q: "Inspecione a radiografia de Perna no visualizador. Qual é a regra técnica primária para o estudo dos ossos da perna (tíbia e fíbula)?",
+    options: [
+      "Incluir obrigatoriamente as articulações do joelho e do tornozelo no mesmo filme ou receptor.",
+      "Estudar unicamente o terço médio da tíbia.",
+      "Fazer o exame apenas com o membro em rotação interna máxima de 45°.",
+      "Não utilizar colimação nos limites anatômicos."
+    ],
+    answer: 0,
+    explanation: "Na radiografia de perna é imperativo demonstrar ambas as articulações (joelho e tornozelo) no receptor."
+  },
+
+  // AULA 13: CALCÂNEO (calcaneo.webp)
+  {
+    faseId: 13,
+    q: "Inspecione a radiografia de Calcâneo. Além da incidência em perfil demonstrada, qual projeção complementar axial clássica é indispensável?",
+    options: [
+      "Incidência axial plantodorsal (com angulação cefálica de 40°).",
+      "Incidência oblíqua externa a 15°.",
+      "AP estrito com flexão plantar.",
+      "Incidência túnel de Holmblad."
+    ],
+    answer: 0,
+    explanation: "A projeção axial plantodorsal a 40° avalia a tuberosidade do calcâneo e a articulação subtalar."
+  },
+
+  // AULA 14: ARTELHOS (artelhos.jpeg)
+  {
+    faseId: 14,
+    q: "Examine a imagem de Artelhos no visor. Por que a incidência em AP dos artelhos utiliza raio central angulado em 10° a 15° posteriormente (em direção ao calcâneo)?",
+    options: [
+      "Para abrir com precisão os espaços articulares interfalângicos e metatarsofalângicos[cite: 3].",
+      "Apenas para sobrepor as falanges médias e proximais.",
+      "Para compensar a falta de filme radiográfico adequado.",
+      "Para aumentar a dose de radiação aplicada."
+    ],
+    answer: 0,
+    explanation: "A angulação acompanha a curvatura anatômica dos pododáctilos, abrindo as fendas articulares[cite: 3]."
+  }
+];
+
+// Atualizador de versão local do navegador
+if (localStorage.getItem('db_version') !== CURRENT_DB_VERSION) {
+  localStorage.setItem('schedule', JSON.stringify(DEFAULT_SCHEDULE));
+  localStorage.setItem('db_version', CURRENT_DB_VERSION);
+}
 
 let state = {
   currentUser: null,
@@ -739,8 +1143,17 @@ let state = {
   currentQuizList: [],
   quizIdx: 0,
   quizFase: null,
+  activeImageIndex: 0,
   sessionScore: 0,
-  sessionLives: 3
+  sessionLives: 3,
+
+  viewer: {
+    brightness: 100,
+    contrast: 100,
+    negative: false,
+    zoom: 1,
+    rotation: 0
+  }
 };
 
 function saveDatabase() {
@@ -750,6 +1163,7 @@ function saveDatabase() {
   localStorage.setItem('teachers', JSON.stringify(state.teachers));
   localStorage.setItem('students', JSON.stringify(state.students));
   localStorage.setItem('stats', JSON.stringify(state.stats));
+  localStorage.setItem('db_version', CURRENT_DB_VERSION);
 }
 
 /* =======================================================
@@ -1004,7 +1418,7 @@ function renderUserTable() {
 }
 
 /* =======================================================
-   PROFESSOR (DASHBOARD & LIBERAÇÃO DE MÓDULOS)
+   PROFESSOR
 ======================================================= */
 function initTeacherPanel() {
   document.getElementById("teacherScreen").classList.remove("hidden");
@@ -1070,13 +1484,15 @@ function renderTeacherModuleControl() {
 
   courseSchedule.forEach(m => {
     const isUnlocked = m.unlockedByTeacher;
+    const totalImgs = (m.patient && m.patient.images) ? m.patient.images.length : 1;
     tbody.innerHTML += `
       <tr>
         <td><b>Aula ${m.id}ª</b></td>
         <td><b>${m.title}</b><br><small style="color:#627d98;">${m.desc}</small></td>
+        <td><span class="badge" style="padding:4px 8px; font-size:0.75rem;">🖼️ ${totalImgs} Incidência(s)</span></td>
         <td>
           <span style="padding:4px 8px; border-radius:6px; font-weight:bold; font-size:0.8rem; background:${isUnlocked ? '#dcfce7' : '#fee2e2'}; color:${isUnlocked ? '#15803d' : '#991b1b'};">
-            ${isUnlocked ? '🔓 Liberado para os Alunos' : '🔒 Bloqueado'}
+            ${isUnlocked ? '🔓 Liberado em Sala' : '🔒 Bloqueado'}
           </span>
         </td>
         <td>
@@ -1098,7 +1514,7 @@ function toggleModuleLock(moduleId) {
 }
 
 /* =======================================================
-   ALUNO (CRONOGRAMA E LIBERAÇÃO PELO PROFESSOR)
+   ALUNO
 ======================================================= */
 function initStudentPanel() {
   document.getElementById("studentScreen").classList.remove("hidden");
@@ -1116,12 +1532,13 @@ function renderStudentTimeline(discipline) {
   discSchedule.forEach(item => {
     const isUnlocked = item.unlockedByTeacher === true;
     const isCompleted = state.currentUser.completedFases.includes(item.id);
+    const numImgs = (item.patient && item.patient.images) ? item.patient.images.length : 1;
 
     let statusClass = "locked";
     let statusText = "🔒 Aguardando Professor";
     if (isCompleted) {
       statusClass = "completed";
-      statusText = "✓ Concluído";
+      statusText = "✓ Atendimento Concluído";
     } else if (isUnlocked) {
       statusClass = "open";
       statusText = "🔓 Liberado em Sala";
@@ -1132,11 +1549,12 @@ function renderStudentTimeline(discipline) {
     card.innerHTML = `
       <span class="status ${statusClass}">${statusText}</span>
       <h3 style="margin-bottom:6px;">Aula ${item.id}ª: ${item.title}</h3>
-      <p style="font-size:0.85rem; color:#486581; min-height:45px;">${item.desc}</p>
-      <button style="width:100%; margin-top:10px;" 
+      <p style="font-size:0.85rem; color:#486581; min-height:40px;">${item.desc}</p>
+      <div style="font-size:0.75rem; color:#0c5460; font-weight:bold; margin-bottom:10px;">📸 ${numImgs} Incidência(s) Disponíveis</div>
+      <button style="width:100%;" 
         ${!isUnlocked ? 'disabled style="background:#cbd5e1;cursor:not-allowed;"' : ''}
-        onclick="openQuizForFase(${item.id})">
-        ${!isUnlocked ? 'Aguardando Liberação' : isCompleted ? 'Refazer Exercícios' : 'Responder Questões'}
+        onclick="openPatientIntake(${item.id})">
+        ${!isUnlocked ? 'Aguardando Liberação' : isCompleted ? 'Revisar Atendimento' : 'Iniciar Atendimento / RX'}
       </button>
     `;
     container.appendChild(card);
@@ -1144,44 +1562,139 @@ function renderStudentTimeline(discipline) {
 }
 
 /* =======================================================
-   QUIZ E BANCO DE QUESTÕES
+   ETAPA 1: ADMISSÃO DO PACIENTE
 ======================================================= */
-function openQuizForFase(faseId) {
+function openPatientIntake(faseId) {
   const faseData = state.schedule.find(s => s.id === faseId);
   state.quizFase = faseData;
-  state.currentQuizList = ALL_QUESTIONS.filter(q => q.faseId === faseId);
+
+  const pt = faseData.patient || {
+    name: "Paciente Padrão",
+    record: `PR-2026-${faseId}01`,
+    age: "30 anos",
+    sex: "M",
+    region: faseData.title,
+    request: `Avaliação de rotina radiográfica para a estrutura de ${faseData.title}.`,
+    images: [{ label: "Incidência Padrão", url: `imagens/${faseData.title.toLowerCase()}.jpg` }]
+  };
+
+  document.getElementById("studentScreen").classList.add("hidden");
+  document.getElementById("patientRegScreen").classList.remove("hidden");
+
+  document.getElementById("regModTitle").textContent = `Aula ${faseData.id}ª - ${faseData.title}`;
+  document.getElementById("regStudentName").textContent = state.currentUser.name;
+
+  document.getElementById("reqDescription").textContent = pt.request;
+  document.getElementById("patientNameInput").value = pt.name;
+  document.getElementById("patientRecordInput").value = pt.record;
+  document.getElementById("patientAgeInput").value = pt.age;
+  document.getElementById("patientSexInput").value = pt.sex;
+  document.getElementById("patientRegionInput").value = pt.region;
+  document.getElementById("patientAnamnesisInput").value = "Paciente lúcido e orientado, cooperativo para o posicionamento e confirmação das incidências solicitadas.";
+}
+
+function exitPatientScreen() {
+  document.getElementById("patientRegScreen").classList.add("hidden");
+  initStudentPanel();
+}
+
+function confirmPatientAndProceed() {
+  const age = document.getElementById("patientAgeInput").value.trim();
+  if(!age) return alert("Por favor, confirme a idade na ficha cadastral do paciente!");
+
+  document.getElementById("patientRegScreen").classList.add("hidden");
+  openQuizStation();
+}
+
+/* =======================================================
+   ETAPA 2 & 3: ESTAÇÃO MULTI-IMAGEM E QUIZ
+======================================================= */
+function openQuizStation() {
+  state.currentQuizList = ALL_QUESTIONS.filter(q => q.faseId === state.quizFase.id);
 
   if (state.currentQuizList.length === 0) {
     state.currentQuizList = [{
-      faseId: faseId,
-      q: `Exercício prático de fixação para a aula prática de ${faseData.title}: qual o alinhamento principal do feixe de raios?`,
+      faseId: state.quizFase.id,
+      q: `Análise técnica da imagem radiográfica: qual o direcionamento primário do feixe central no estudo de ${state.quizFase.title}?`,
       options: [
-        "Raio central perpendicular incidindo no centro da estrutura.",
-        "Angulação caudal de 45° obrigatória.",
+        "Raio central perpendicular incidindo no centro da estrutura de interesse.",
+        "Angulação caudal obrigatória de 45°.",
         "Angulação cefálica de 35°.",
         "Raio tangencial horizontal rasante."
       ],
       answer: 0,
-      explanation: "A rotina elementar de posicionamento mantém o raio central perpendicular direcionado ao ponto de interesse anatômico."
+      explanation: "A rotina elementar de posicionamento mantém o feixe perpendicular ao centro anatômico estudado[cite: 3]."
     }];
   }
 
   state.quizIdx = 0;
+  state.activeImageIndex = 0;
   state.sessionScore = 0;
   state.sessionLives = 3;
 
-  document.getElementById("studentScreen").classList.add("hidden");
   document.getElementById("quizScreen").classList.remove("hidden");
   document.getElementById("quizPlayer").textContent = state.currentUser.name;
+  document.getElementById("quizPatientBadge").textContent = state.quizFase.patient ? state.quizFase.patient.name : "Paciente Padrão";
+
+  renderIncidenceSelectorTabs();
   renderCurrentQuestion();
+}
+
+function renderIncidenceSelectorTabs() {
+  const bar = document.getElementById("incidenceSelectorBar");
+  bar.innerHTML = "<span style='color:#bcccdc; font-size:0.85rem; font-weight:bold; margin-right:4px;'>Incidências da Sala:</span>";
+
+  const pt = state.quizFase.patient;
+  if (!pt || !pt.images || pt.images.length === 0) {
+    bar.innerHTML += "<span class='badge'>Incidência Única</span>";
+    return;
+  }
+
+  pt.images.forEach((imgObj, idx) => {
+    const btn = document.createElement("button");
+    btn.className = `incidence-btn ${idx === state.activeImageIndex ? 'active' : ''}`;
+    btn.textContent = imgObj.label;
+    btn.onclick = () => switchIncidence(idx);
+    bar.appendChild(btn);
+  });
+}
+
+function switchIncidence(index) {
+  state.activeImageIndex = index;
+  renderIncidenceSelectorTabs();
+  loadImageInStation();
+}
+
+function loadImageInStation() {
+  const pt = state.quizFase.patient;
+  const imgElem = document.getElementById("radImage");
+
+  if (!pt || !pt.images || pt.images.length === 0) {
+    imgElem.src = "imagens/dedos.jpeg";
+    return;
+  }
+
+  const selectedImage = pt.images[state.activeImageIndex] || pt.images[0];
+
+  imgElem.onerror = function() {
+    this.onerror = null;
+    if (selectedImage.fallback) {
+      this.src = selectedImage.fallback;
+    }
+  };
+  imgElem.src = selectedImage.url;
+  resetViewer();
 }
 
 function renderCurrentQuestion() {
   const currentQ = state.currentQuizList[state.quizIdx];
-  document.getElementById("quizFaseTitle").textContent = `Aula ${state.quizFase.id}ª: ${state.quizFase.title} (Questão ${state.quizIdx + 1} de ${state.currentQuizList.length})`;
+
+  document.getElementById("quizFaseTitle").textContent = `Atendimento: ${state.quizFase.title} (Avaliação ${state.quizIdx + 1} de ${state.currentQuizList.length})`;
   document.getElementById("quizQuestion").textContent = currentQ.q;
   document.getElementById("quizScore").textContent = state.sessionScore;
   document.getElementById("quizLives").textContent = state.sessionLives;
+
+  loadImageInStation();
 
   const optBox = document.getElementById("quizOptions");
   optBox.innerHTML = "";
@@ -1196,6 +1709,43 @@ function renderCurrentQuestion() {
 
   document.getElementById("quizFeedback").className = "feedback hidden";
   document.getElementById("quizNextBtn").classList.add("hidden");
+}
+
+function applyViewerFilters() {
+  const b = document.getElementById("vBrightness").value;
+  const c = document.getElementById("vContrast").value;
+  state.viewer.brightness = b;
+  state.viewer.contrast = c;
+  updateImageTransform();
+}
+
+function toggleNegative() {
+  state.viewer.negative = !state.viewer.negative;
+  updateImageTransform();
+}
+
+function adjustZoom(delta) {
+  state.viewer.zoom = Math.max(0.6, Math.min(3.5, state.viewer.zoom + delta));
+  updateImageTransform();
+}
+
+function rotateImage() {
+  state.viewer.rotation = (state.viewer.rotation + 90) % 360;
+  updateImageTransform();
+}
+
+function resetViewer() {
+  state.viewer = { brightness: 100, contrast: 100, negative: false, zoom: 1, rotation: 0 };
+  document.getElementById("vBrightness").value = 100;
+  document.getElementById("vContrast").value = 100;
+  updateImageTransform();
+}
+
+function updateImageTransform() {
+  const img = document.getElementById("radImage");
+  const inv = state.viewer.negative ? 1 : 0;
+  img.style.filter = `brightness(${state.viewer.brightness}%) contrast(${state.viewer.contrast}%) invert(${inv})`;
+  img.style.transform = `scale(${state.viewer.zoom}) rotate(${state.viewer.rotation}deg)`;
 }
 
 function handleAnswer(choiceIdx, btnElem) {
@@ -1242,7 +1792,7 @@ function nextQuestion() {
 }
 
 function finishQuizFase() {
-  alert(`Aula prática concluída! Pontuação acumulada: ${state.sessionScore}`);
+  alert(`Atendimento e exame concluídos com sucesso! Pontuação obtida: ${state.sessionScore}`);
   const stIndex = state.students.findIndex(s => s.id === state.currentUser.id);
   if (stIndex !== -1) {
     if (!state.students[stIndex].completedFases.includes(state.quizFase.id)) {
