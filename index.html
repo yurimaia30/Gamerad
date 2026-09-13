@@ -137,6 +137,31 @@
   th, td { padding: 12px; text-align: left; border-bottom: 1px solid #e2e8f0; font-size: 0.9rem; }
   th { background: #f1f5f9; color: var(--primary-dark); }
 
+  /* TEMPORIZADOR */
+  .timer-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff3cd;
+    border: 1px solid #ffeeba;
+    color: #856404;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 0.95rem;
+  }
+  .timer-box.warning {
+    background: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+    animation: pulse 1s infinite;
+  }
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+  }
+
   /* FICHA DO PACIENTE */
   .patient-card {
     background: #f0f4f8;
@@ -200,7 +225,7 @@
     margin: 0; width: 85px; accent-color: var(--accent);
   }
   .viewer-viewport {
-    height: 440px;
+    height: 460px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -217,7 +242,7 @@
     pointer-events: none;
   }
 
-  .topbar { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 15px; }
+  .topbar { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
   .badge { background: #eaf2f8; padding: 8px 12px; border-radius: 8px; font-weight: bold; font-size: 0.9rem; }
   .option { display: block; width: 100%; text-align: left; margin: 8px 0; background: #f8fafc; color: var(--text-color); border: 2px solid var(--border-color); }
   .option.correct { background: #d9f7e8; border-color: var(--success); }
@@ -257,7 +282,7 @@
         Grau Educacional • Mossoró/RN
       </span>
       <h1 style="margin-top:5px; margin-bottom:8px;">Portal Radiológico</h1>
-      <p class="subtitle" style="margin-bottom:5px;">Simulador de Atendimento e Posicionamento Radiográfico</p>
+      <p class="subtitle" style="margin-bottom:5px;">Simulador Teórico e Estação Prática de Exames</p>
       <small style="color:var(--text-muted);">Desenvolvido por Yuri Maia</small>
     </div>
 
@@ -283,7 +308,7 @@
     <button style="width: 100%; margin-top:10px;" onclick="handleLogin()">Entrar no Sistema</button>
     
     <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px; margin-top:20px; font-size:0.8rem; color:#627d98;">
-      <b>Acessos de Teste:</b><br>
+      <b>Acessos Padrão:</b><br>
       • <b>Admin:</b> admin (senha: <code>admin123</code>)<br>
       • <b>Professor:</b> prof10<br>
       • <b>Aluno:</b> aluno101
@@ -426,14 +451,13 @@
     <div style="background: #eaf2f8; border: 2px solid #b8daff; border-radius: 14px; padding: 20px; margin-bottom: 25px;">
       <h3 style="margin-top:0; color:#0c5460;">🔓 Controle de Liberação dos Módulos em Sala de Aula</h3>
       <p style="font-size:0.88rem; color:#486581; margin-bottom:15px;">
-        Clique nos botões abaixo para <b>Liberar</b> ou <b>Bloquear</b> o acesso dos alunos aos atendimentos práticos em tempo real.
+        Clique nos botões abaixo para <b>Liberar</b> ou <b>Bloquear</b> o acesso dos alunos às questões e à ficha prática de cada aula.
       </p>
       <table>
         <thead>
           <tr>
             <th>Aula / Fase</th>
             <th>Conteúdo do Cronograma</th>
-            <th>Incidências Vinculadas</th>
             <th>Status Atual</th>
             <th style="width: 160px;">Ação</th>
           </tr>
@@ -468,7 +492,7 @@
     <h3 style="margin-top:25px;">Progresso Individual dos Alunos</h3>
     <table>
       <thead>
-        <tr><th>Matrícula</th><th>Aluno</th><th>Turma</th><th>Atendimentos Feitos</th><th>Pontos</th><th>Status</th></tr>
+        <tr><th>Matrícula</th><th>Aluno</th><th>Turma</th><th>Aulas Feitas</th><th>Pontos</th><th>Status</th></tr>
       </thead>
       <tbody id="studentProgressBody"></tbody>
     </table>
@@ -479,12 +503,32 @@
     <div style="margin-bottom: 15px;">
       <h1 style="margin-bottom:4px;">Cronograma de Aulas e Atendimentos Práticos</h1>
       <p class="subtitle" id="studentCourseTitle" style="margin-bottom:5px;"></p>
-      <small style="color:#0284c7; font-weight:600;">⚠️ Analise as radiografias na estação de imagem antes de responder às questões de cada paciente.</small>
+      <small style="color:#0284c7; font-weight:600;">⚠️ Cada aula é dividida em duas etapas: primeiro você responde às questões teóricas (com 45s por questão) e em seguida realiza a análise prática da radiografia.</small>
     </div>
     <div class="timeline-grid" id="timelineGrid"></div>
   </section>
 
-  <!-- ETAPA 1: FICHA DE CADASTRO DO PACIENTE -->
+  <!-- ETAPA 1: QUESTIONÁRIO TEÓRICO COM TEMPORIZADOR DE 45 SEGUNDOS -->
+  <section id="quizScreen" class="card hidden">
+    <div class="topbar">
+      <div class="badge">👨‍🎓 Aluno: <span id="quizPlayer"></span></div>
+      <div class="badge">⭐ Pontos: <span id="quizScore">0</span></div>
+      <div class="badge">❤️ Vidas: <span id="quizLives">3</span></div>
+      <div class="timer-box" id="quizTimerBox">⏳ Tempo: <span id="quizTimerVal">45</span>s</div>
+    </div>
+
+    <div class="subtitle" id="quizFaseTitle" style="font-weight:bold; color:var(--primary);"></div>
+    <div id="quizQuestion" style="font-size:1.15rem; font-weight:600; margin:15px 0; line-height:1.4;"></div>
+    <div id="quizOptions"></div>
+    <div id="quizFeedback" class="feedback hidden"></div>
+
+    <div style="margin-top:20px; display:flex; justify-content:space-between; align-items:center;">
+      <button class="secondary" onclick="exitQuiz()">Voltar ao Cronograma</button>
+      <button id="quizNextBtn" class="hidden" onclick="nextQuestion()">Próxima Questão →</button>
+    </div>
+  </section>
+
+  <!-- ETAPA 2: FICHA DE ADMISSÃO CLÍNICA DO PACIENTE -->
   <section id="patientRegScreen" class="card hidden">
     <div class="topbar">
       <div class="badge">🏥 Módulo Prático: <span id="regModTitle"></span></div>
@@ -492,7 +536,7 @@
     </div>
 
     <h2>📋 Ficha de Atendimento e Admissão Radiológica</h2>
-    <p class="subtitle">Faça o acolhimento do paciente conferindo o pedido médico e confirmando a ficha para liberação da sala de Raio-X.</p>
+    <p class="subtitle">Parabéns por concluir as questões teóricas! Agora realize o acolhimento do paciente e confira a solicitação para ir à Estação de Raio-X.</p>
 
     <div class="req-box">
       <h4 style="margin:0 0 6px 0; color:var(--primary-dark);">📄 Solicitação Médica / Guia de Encaminhamento:</h4>
@@ -530,28 +574,26 @@
       </div>
 
       <label>Anamnese e Triagem Rápida (Sintomas / Queixa Principal)</label>
-      <textarea id="patientAnamnesisInput" rows="2" placeholder="Descreva dor, trauma, tempo de evolução ou suspeita clínica informada pelo paciente..."></textarea>
+      <textarea id="patientAnamnesisInput" rows="2" placeholder="Descreva a queixa informada pelo paciente..."></textarea>
     </div>
 
     <div style="display:flex; justify-content:space-between; align-items:center;">
-      <button class="secondary" onclick="exitPatientScreen()">← Cancelar e Voltar</button>
-      <button class="success" onclick="confirmPatientAndProceed()">✓ Confirmar Cadastro e Realizar Raio-X →</button>
+      <button class="secondary" onclick="exitPatientScreen()">← Voltar ao Início</button>
+      <button class="success" onclick="confirmPatientAndOpenStation()">✓ Confirmar Cadastro e Abrir Estação Radiológica →</button>
     </div>
   </section>
 
-  <!-- ETAPA 2 & 3: ESTAÇÃO RADIOLÓGICA E QUIZ -->
-  <section id="quizScreen" class="card hidden">
+  <!-- ETAPA 3: ESTAÇÃO DE TRABALHO E VISUALIZAÇÃO RADIOLÓGICA -->
+  <section id="stationScreen" class="card hidden">
     <div class="topbar">
-      <div class="badge">👨‍🎓 Aluno: <span id="quizPlayer"></span></div>
-      <div class="badge">👤 Paciente: <span id="quizPatientBadge"></span></div>
-      <div class="badge">⭐ Pontos: <span id="quizScore">0</span></div>
-      <div class="badge">❤️ Vidas: <span id="quizLives">3</span></div>
+      <div class="badge">👨‍🎓 Operador: <span id="stationPlayer"></span></div>
+      <div class="badge">👤 Paciente: <span id="stationPatient"></span></div>
+      <div class="badge" style="background:#e0f2fe; color:#0284c7;">🔬 Estação de Análise Radiológica</div>
     </div>
 
-    <div class="subtitle" id="quizFaseTitle" style="font-weight:bold; color:var(--primary);"></div>
+    <div class="subtitle" id="stationFaseTitle" style="font-weight:bold; color:var(--primary);"></div>
 
-    <!-- VISUALIZADOR RADIOLÓGICO MULTI-INCIDÊNCIA -->
-    <div id="radStation" class="viewer-container">
+    <div class="viewer-container">
       <div class="viewer-incidences" id="incidenceSelectorBar"></div>
 
       <div class="viewer-toolbar">
@@ -569,13 +611,14 @@
       </div>
     </div>
 
-    <div id="quizQuestion" style="font-size:1.15rem; font-weight:600; margin:15px 0; line-height:1.4;"></div>
-    <div id="quizOptions"></div>
-    <div id="quizFeedback" class="feedback hidden"></div>
+    <div style="background:#f8fafc; border:1px solid #bcccdc; border-radius:12px; padding:16px; margin-top:15px;">
+      <h4 style="margin:0 0 8px 0; color:var(--primary-dark);">📝 Laudo do Operador e Critérios de Qualidade:</h4>
+      <p style="margin:0 0 10px 0; font-size:0.9rem; color:#486581;">Utilize as ferramentas de imagem para avaliar rotação, contraste das densidades ósseas e partes moles antes de liberar o laudo final.</p>
+      <textarea id="stationReport" rows="2" placeholder="Digite as observações técnicas sobre o posicionamento e os achados da imagem..."></textarea>
+    </div>
 
-    <div style="margin-top:20px; display:flex; justify-content:space-between; align-items:center;">
-      <button class="secondary" onclick="exitQuiz()">Voltar ao Cronograma</button>
-      <button id="quizNextBtn" class="hidden" onclick="nextQuestion()">Próxima Questão / Concluir Atendimento →</button>
+    <div style="margin-top:20px; text-align:right;">
+      <button class="success" onclick="finishFullModule()">✓ Concluir Aula Prática e Salvar Desempenho</button>
     </div>
   </section>
 
@@ -587,9 +630,9 @@
 
 <script>
 /* =======================================================
-   CRONOGRAMA COM AS SUAS IMAGENS LOCAIS E EXTENSÕES REAIS
+   CRONOGRAMA E DIRETÓRIOS DAS IMAGENS
 ======================================================= */
-const CURRENT_DB_VERSION = "v5.2_fix_casing";
+const CURRENT_DB_VERSION = "v6.0_separate_quiz_and_station";
 
 const DEFAULT_SCHEDULE = [
   { 
@@ -606,7 +649,7 @@ const DEFAULT_SCHEDULE = [
       region: "Quirodáctilos / Dedos da Mão Direita",
       request: "Trauma direto por impacto. Solicito radiografia de quirodáctilos para avaliação anatômica e exclusão de fratura articular na base.",
       images: [
-        { label: "Incidência 1: Dedos Geral", url: "Imagens/dedos.jpeg" }
+        { label: "Incidência 1: Dedos Geral", url: "imagens/dedos.jpeg" }
       ]
     }
   },
@@ -624,9 +667,9 @@ const DEFAULT_SCHEDULE = [
       region: "Mão Direita (PA, Oblíqua e Lateral)",
       request: "Estudo radiográfico da mão com rotina completa (PA, Oblíqua e Lateral) para análise de espaços articulares e centros de ossificação.",
       images: [
-        { label: "Incidência 1: Mão em PA", url: "Imagens/mao_pa.png" },
-        { label: "Incidência 2: Mão em Oblíqua", url: "Imagens/mao_obliquo.jpg" },
-        { label: "Incidência 3: Mão em Perfil / Lateral", url: "Imagens/mao_lateral.jpeg" }
+        { label: "Incidência 1: Mão em PA", url: "imagens/mao_pa.png" },
+        { label: "Incidência 2: Mão em Oblíqua", url: "imagens/mao_obliquo.jpg" },
+        { label: "Incidência 3: Mão em Perfil / Lateral", url: "imagens/mao_lateral.jpeg" }
       ]
     }
   },
@@ -644,9 +687,9 @@ const DEFAULT_SCHEDULE = [
       region: "Punho Esquerdo (PA, Perfil e Pesquisa de Fratura)",
       request: "Queda ao solo sobre a palma da mão espalmada. Dor aguda na tabaqueira anatômica; rotina para pesquisa de fratura carpal.",
       images: [
-        { label: "Incidência 1: Punho em PA", url: "Imagens/punho_pa.jpg" },
-        { label: "Incidência 2: Punho em Perfil", url: "Imagens/punho_perfil.jpeg" },
-        { label: "Incidência 3: Pesquisa de Fratura Carpal", url: "Imagens/punho_fratura.jpg" }
+        { label: "Incidência 1: Punho em PA", url: "imagens/punho_pa.jpg" },
+        { label: "Incidência 2: Punho em Perfil", url: "imagens/punho_perfil.jpeg" },
+        { label: "Incidência 3: Pesquisa de Fratura Carpal", url: "imagens/punho_fratura.jpg" }
       ]
     }
   },
@@ -664,8 +707,8 @@ const DEFAULT_SCHEDULE = [
       region: "Antebraço Direito (AP e Perfil)",
       request: "Avaliação do alinhamento cortical de rádio e ulna. Realizar AP em supinação anatômica e Perfil verdadeiro a 90°.",
       images: [
-        { label: "Incidência 1: Antebraço em AP", url: "Imagens/antebraco_ap.png" },
-        { label: "Incidência 2: Antebraço em Perfil", url: "Imagens/antebraco_perfil.png" }
+        { label: "Incidência 1: Antebraço em AP", url: "imagens/antebraco_ap.png" },
+        { label: "Incidência 2: Antebraço em Perfil", url: "imagens/antebraco_perfil.png" }
       ]
     }
   },
@@ -683,7 +726,7 @@ const DEFAULT_SCHEDULE = [
       region: "Cotovelo Direito (Perfil Verdadeiro)",
       request: "Perfil absoluto com flexão de 90 graus para avaliação dos coxins adiposos articulares e processo do olécrano.",
       images: [
-        { label: "Incidência 1: Cotovelo em Perfil", url: "Imagens/cotovelo_perfil.png" }
+        { label: "Incidência 1: Cotovelo em Perfil", url: "imagens/cotovelo_perfil.png" }
       ]
     }
   },
@@ -701,7 +744,7 @@ const DEFAULT_SCHEDULE = [
       region: "Úmero Esquerdo",
       request: "Investigação da diáfise umeral após trauma contuso direto.",
       images: [
-        { label: "Incidência 1: Estudo do Úmero", url: "Imagens/umero.jpeg" }
+        { label: "Incidência 1: Estudo do Úmero", url: "imagens/umero.jpeg" }
       ]
     }
   },
@@ -719,7 +762,7 @@ const DEFAULT_SCHEDULE = [
       region: "Ombro e Articulação Glenoumeral",
       request: "Dor escapular com limitação de abdução. Rotina de ombro para descarte de luxação.",
       images: [
-        { label: "Incidência 1: Ombro Rotina", url: "Imagens/ombro.jpeg" }
+        { label: "Incidência 1: Ombro Rotina", url: "imagens/ombro.jpeg" }
       ]
     }
   },
@@ -737,7 +780,7 @@ const DEFAULT_SCHEDULE = [
       region: "Escápula e Cintura Escapular Especial",
       request: "Suspeita de lesão da borda escapular e acrômio. Solicito incidência específica de escápula.",
       images: [
-        { label: "Incidência 1: Estudo da Escápula", url: "Imagens/escapula.jpeg" }
+        { label: "Incidência 1: Estudo da Escápula", url: "imagens/escapula.jpeg" }
       ]
     }
   },
@@ -755,7 +798,7 @@ const DEFAULT_SCHEDULE = [
       region: "Avaliação Geral de Qualidade",
       request: "Controle técnico e análise da formação geométrica da imagem radiográfica.",
       images: [
-        { label: "Incidência 1: Análise Geral de Qualidade", url: "Imagens/mao_pa.png" }
+        { label: "Incidência 1: Análise Geral de Qualidade", url: "imagens/mao_pa.png" }
       ]
     }
   },
@@ -773,8 +816,8 @@ const DEFAULT_SCHEDULE = [
       region: "Fêmur e Joelho Esquerdo",
       request: "Politraumatismo: avaliação urgente de diáfise femoral e perfil articular do joelho.",
       images: [
-        { label: "Incidência 1: Fêmur Fratura", url: "Imagens/femur_fratura.jpg" },
-        { label: "Incidência 2: Joelho em Perfil", url: "Imagens/joelho_perfil.jpg" }
+        { label: "Incidência 1: Fêmur Fratura", url: "imagens/femur_fratura.jpg" },
+        { label: "Incidência 2: Joelho em Perfil", url: "imagens/joelho_perfil.jpg" }
       ]
     }
   },
@@ -792,7 +835,7 @@ const DEFAULT_SCHEDULE = [
       region: "Joelho Esquerdo",
       request: "Avaliação do espaço femorotibial e patela.",
       images: [
-        { label: "Incidência 1: Joelho em Perfil Estrito", url: "Imagens/joelho_perfil.jpg" }
+        { label: "Incidência 1: Joelho em Perfil Estrito", url: "imagens/joelho_perfil.jpg" }
       ]
     }
   },
@@ -810,7 +853,7 @@ const DEFAULT_SCHEDULE = [
       region: "Perna (Tíbia e Fíbula)",
       request: "Trauma automobilístico: radiografia de perna incluindo as articulações proximal e distal.",
       images: [
-        { label: "Incidência 1: Perna (Tíbia e Fíbula)", url: "Imagens/perna.webp" }
+        { label: "Incidência 1: Perna (Tíbia e Fíbula)", url: "imagens/perna.webp" }
       ]
     }
   },
@@ -828,7 +871,7 @@ const DEFAULT_SCHEDULE = [
       region: "Calcâneo e Retropé",
       request: "Queda de nível com impacto no calcanhar. Avaliação da tuberosidade do calcâneo e sustentáculo do tálus.",
       images: [
-        { label: "Incidência 1: Estudo do Calcâneo", url: "Imagens/calcaneo.webp" }
+        { label: "Incidência 1: Estudo do Calcâneo", url: "imagens/calcaneo.webp" }
       ]
     }
   },
@@ -846,252 +889,225 @@ const DEFAULT_SCHEDULE = [
       region: "Pododáctilos / Artelhos",
       request: "Contusão direta no hálux. AP com angulação cefálica e oblíqua interna para abrir espaços interfalângicos.",
       images: [
-        { label: "Incidência 1: Radiografia de Artelhos", url: "Imagens/artelhos.jpeg" }
+        { label: "Incidência 1: Radiografia de Artelhos", url: "imagens/artelhos.jpeg" }
       ]
     }
   }
 ];
 
-/* QUESTÕES ADAPTADAS PARA ANÁLISE PRÁTICA DAS SUAS IMAGENS LOCAIS */
+/* =======================================================
+   BANCO COMPLETO DE QUESTÕES TEÓRICAS DO CRONOGRAMA
+======================================================= */
 const ALL_QUESTIONS = [
+  // AULA 1: DEDOS
   {
     faseId: 1,
-    q: "Inspecione a radiografia de Dedos na tela: na avaliação da fratura articular de Bennett, qual estrutura óssea deve obrigatoriamente estar demonstrada sem sobreposição?",
-    options: [
-      "A base do primeiro metacarpo.",
-      "O osso navicular.",
-      "O quinto metacarpo.",
-      "O primeiro metatarsiano."
-    ],
-    answer: 0,
-    explanation: "A fratura de Bennett localiza-se especificamente na base intra-articular do 1º osso metacarpiano."
+    q: "Por causa da fratura de Bennett, é obrigatório aparecer nas incidências radiográficas obtidas:",
+    options: ["O navicular.", "O escafoide.", "O quinto metacarpo.", "O primeiro metacarpo.", "O primeiro metatarsiano."],
+    answer: 3,
+    explanation: "A fratura de Bennett acomete especificamente a base articular do 1º osso metacarpiano."
   },
   {
     faseId: 1,
-    q: "Na análise dos quirodáctilos demonstrados, o termo médico utilizado para indicar as extremidades dos membros mais distantes da inserção é:",
-    options: ["Distal.", "Proximal.", "Oblíquo.", "Tangencial."],
+    q: "Em uma radiografia, o termo médico utilizado para indicar a posição em que os membros estejam distantes do corpo é:",
+    options: ["Proximal.", "Oblíquo.", "Tangencial.", "Lateral.", "Distal."],
+    answer: 4,
+    explanation: "Distal designa estruturas mais afastadas do eixo mediano ou da raiz de inserção do membro."
+  },
+
+  // AULA 2: MÃO
+  {
+    faseId: 2,
+    q: "Na avaliação da idade óssea pela tabela de Greulich-Pyle, a incidência a ser realizada é:",
+    options: ["Mãos e punhos comparativa em PA.", "AP de quadril com moderada flexão.", "Mãos e punho em oblíqua.", "Mãos e punho em perfil."],
     answer: 0,
-    explanation: "Distal refere-se à região mais afastada do ponto de inserção do membro no tronco."
+    explanation: "O atlas padrão de Greulich-Pyle estabelece a incidência comparativa de mãos e punhos em PA."
   },
   {
     faseId: 2,
-    q: "Alterne para a 'Incidência 2: Mão em Oblíqua'. Por que a separação dos dedos em leque (conforme visualizado) é um critério técnico fundamental?",
-    options: [
-      "Para evitar a sobreposição das falanges e avaliar com clareza os espaços articulares intermetacarpais.",
-      "Apenas para reduzir a dose de radiação aplicada ao paciente.",
-      "Para encurtar geometricamente a imagem dos metacarpos.",
-      "Não há justificativa técnica, sendo apenas estética."
-    ],
+    q: "O fator que mais contribui para a perda de definição da imagem em um exame de mão é:",
+    options: ["Movimento.", "Quilovoltagem.", "O uso de écran rápido.", "A distância foco-objeto.", "Tamanho do ponto focal."],
     answer: 0,
-    explanation: "A oblíqua com separação dos dedos impede a sobreposição óssea das falanges, mantendo os espaços abertos."
+    explanation: "O movimento do paciente provoca indefinição geométrica por borramento cinético."
   },
+
+  // AULA 3: PUNHO
   {
-    faseId: 2,
-    q: "Observe a 'Incidência 1: Mão em PA'. Na avaliação padrão da idade óssea (tabela de Greulich-Pyle), qual o protocolo de incidência oficial?",
+    faseId: 3,
+    q: "Qual o melhor método para a avaliação isolada do osso escafóide carpal?",
     options: [
-      "Mãos e punhos comparativa em PA.",
-      "Mãos e punho em oblíqua.",
-      "Mãos e punho em perfil.",
-      "AP de quadril com moderada flexão."
+      "PA com flexão ulnar e angulação do raio central de 10º a 15º.",
+      "PA com flexão radial e angulação do raio central de 10 a 15º.",
+      "PA com flexão ulnar e angulação proximal do raio central de 30º a 35º.",
+      "PA com flexão radial e angulação proximal do raio central de 30º a 35º.",
+      "PA com flexão radial e angulação distal do raio central de 30º a 35º."
     ],
     answer: 0,
-    explanation: "O atlas de Greulich-Pyle padroniza a incidência em PA comparativa de mãos e punhos."
-  },
-  {
-    faseId: 2,
-    q: "Alterne para a 'Incidência 3: Mão Lateral'. Qual é o fator que mais prejudica a nitidez e a definição da imagem nessa posição?",
-    options: [
-      "Movimento do paciente (borramento cinético).",
-      "Quilovoltagem ligeiramente acima da média.",
-      "A distância foco-filme de 100 cm.",
-      "O uso de receptor digital."
-    ],
-    answer: 0,
-    explanation: "O movimento inadvertido do paciente durante a exposição gera borramento cinético e perda de definição."
+    explanation: "A flexão ulnar com angulação de 10° a 15° abre os espaços e projeta o escafóide livre de sobreposições carpais."
   },
   {
     faseId: 3,
-    q: "Inspecione a 'Incidência 3: Pesquisa de Fratura Carpal' no visualizador. Qual o melhor método radiográfico com flexão ulnar para investigar o osso escafóide?",
-    options: [
-      "PA com flexão ulnar e angulação do raio central de 10º a 15º (Método de Stecher).",
-      "PA com flexão radial sem angulação do raio central.",
-      "Perfil absoluto com pronação forçada.",
-      "PA com flexão ulnar e angulação caudal de 45°."
-    ],
-    answer: 0,
-    explanation: "O desvio ulnar com inclinação do raio central de 10° a 15° abre os espaços e projeta o escafóide sem sobreposição."
+    q: "As incidências de Stecher e Pierquin estudam, respectivamente, os seguintes tipos de ossos:",
+    options: ["Úmero e cotovelo.", "Escafóide e joelho.", "Escafóide e cotovelo.", "Ossos nasais e cotovelo."],
+    answer: 2,
+    explanation: "O método de Stecher é direcionado ao escafóide e a incidência de Pierquin avalia a articulação do cotovelo."
   },
+
+  // AULA 4: ANTEBRAÇO
   {
-    faseId: 3,
-    q: "Na rotina de punho em PA e Perfil demonstrada, as incidências de Stecher e Pierquin destinam-se ao estudo de quais ossos respectivamente?",
+    faseId: 4,
+    q: "A pronação do antebraço corresponde a um movimento traduzido por:",
     options: [
-      "Escafóide e cotovelo.",
-      "Úmero e cotovelo.",
-      "Escafóide e joelho.",
-      "Ossos nasais e cotovelo."
+      "Deslocamento lateral com afastamento do PMS.",
+      "Rotação lateral do antebraço e da mão que fica com sua face anterior voltada para frente.",
+      "Deslocamento lateral em angulação ao PMS.",
+      "Rotação interna do antebraço e da mão que fica com sua face anterior voltada para trás.",
+      "Deslocamento medial com aproximação do PMS."
     ],
-    answer: 0,
-    explanation: "Stecher estuda especificamente o escafóide carpal e Pierquin avalia a articulação do cotovelo."
+    answer: 3,
+    explanation: "Na pronação, o rádio cruza medialmente sobre a ulna, direcionando a palma da mão para trás."
   },
   {
     faseId: 4,
-    q: "Observe a 'Incidência 1: Antebraço em AP'. Por que a mão deve obrigatoriamente permanecer em supinação anatômica nesta incidência?",
+    q: "A Supinação corresponde a um movimento traduzido por:",
     options: [
-      "Porque a pronação gira o rádio sobre a ulna, causando sobreposição óssea.",
-      "Para aproximar o rádio do plano coronal de forma invertida.",
-      "Porque o paciente não consegue fletir o cotovelo.",
-      "Para diminuir a quilovoltagem necessária na exposição."
+      "Deslocamento lateral com afastamento do PMS.",
+      "Abdução movimento lateral de afastamento do PMS.",
+      "Rotação externa do antebraço e da mão que fica com sua face anterior voltada para frente.",
+      "Deslocamento medial com aproximação do PMS.",
+      "Rotação interna do antebraço e da mão que fica com sua face anterior voltada para trás."
     ],
-    answer: 0,
-    explanation: "A supinação mantém o rádio e a ulna rigorosamente paralelos, impedindo que se cruzem."
+    answer: 2,
+    explanation: "A supinação mantém os ossos do antebraço em paralelismo anatômico verdadeiro."
   },
-  {
-    faseId: 4,
-    q: "Alterne para a 'Incidência 2: Antebraço em Perfil'. Ao final do movimento de supinação, como se posiciona a face anterior da mão?",
-    options: [
-      "Face anterior da mão voltada para a frente.",
-      "Dorso da mão voltado para o plano mediano.",
-      "Palma da mão direcionada para trás.",
-      "Face posterior voltada para a frente."
-    ],
-    answer: 0,
-    explanation: "Na posição de supinação completa, a face anterior da mão (palma) fica voltada para frente."
-  },
+
+  // AULA 5: COTOVELO
   {
     faseId: 5,
-    q: "Inspecione a radiografia de Cotovelo em Perfil: para obter um perfil verdadeiro rigoroso da articulação, qual o critério de posicionamento obrigatório?",
+    q: "Para se ter incidência em perfil absoluto do cotovelo, é necessário que:",
     options: [
-      "Braço e antebraço fletidos a 90º, apoiados no mesmo plano horizontal, sem rotação.",
-      "Braço fletido a 180º estendido no plano vertical.",
-      "Braço fletido a 45º sobre o chassis com rotação interna forçada.",
-      "Antebraço em pronação máxima de 30º."
+      "Braço esteja fletido a 90º, apoiado sobre o chassis, com o úmero, o antebraço e a mão no mesmo plano horizontal, sem rotação.",
+      "Antebraço esteja fletido a 90º, apoiado sobre o chassis, com o úmero, o antebraço e a mão no mesmo plano vertical, sem rotação.",
+      "Braço esteja apoiado 45º sobre o chassis, com úmero, antebraço e a mão no mesmo plano horizontal.",
+      "Braço esteja fletido a 180º, apoiado sobre o chassis, com o úmero, o antebraço e a mão no plano oblíquo.",
+      "Braço esteja fletido a 90º, apoiado sobre o chassis, com o úmero, o antebraço e mão no mesmo plano coronal."
     ],
     answer: 0,
-    explanation: "A flexão do cotovelo a 90° com úmero e antebraço no mesmo plano horizontal garante o perfil verdadeiro."
+    explanation: "A flexão a 90° com úmero e antebraço no mesmo plano horizontal garante o perfil verdadeiro da articulação."
   },
+
+  // AULA 6: ÚMERO
   {
     faseId: 6,
-    q: "Na realização do exame de Úmero na estativa vertical, a radiação que provém da ampola em sentido reto sem variação angular corresponde a:",
-    options: [
-      "Raio central perpendicular em sentido horizontal.",
-      "Raio central angulado em sentido vertical.",
-      "Raio central perpendicular em sentido caudal.",
-      "Raio central em sentido podálico."
-    ],
-    answer: 0,
+    q: "A radiação que provém da ampola em sentido reto sem variação de ângulo incidindo na estativa vertical corresponde ao:",
+    options: ["RC perpendicular em sentido caudal.", "RC angulado em sentido vertical.", "RC perpendicular em sentido horizontal.", "RC perpendicular em sentido supino.", "RC perpendicular em sentido cefálico."],
+    answer: 2,
     explanation: "Na estativa vertical (mural bucky), o raio central é emitido em trajetória horizontal e perpendicular."
   },
+
+  // AULA 7: CINTURA ESCAPULAR - ROTINA
   {
     faseId: 7,
-    q: "Examine a radiografia de Ombro. Na incidência oblíqua com angulação de 45° no sentido caudal, qual termo anatômico é sinônimo do direcionamento do feixe?",
-    options: [
-      "Angulado em sentido podálico.",
-      "Angulado em sentido cefálico.",
-      "Perpendicular em sentido vertical.",
-      "Perpendicular em sentido lateral."
-    ],
-    answer: 0,
-    explanation: "Caudal e podálico são termos equivalentes que indicam inclinação do raio em direção aos pés."
+    q: "Para realização da incidência oblíqua do ombro o RC está a 45° no sentido caudal em direção à face medial da articulação. O termo indica que este:",
+    options: ["É perpendicular em sentido vertical.", "É angulado em sentido cefálico.", "É perpendicular em sentido horizontal.", "Deve entrar na face medial da estrutura não importando o sentido.", "É angulado em sentido podálico."],
+    answer: 4,
+    explanation: "Caudal e podálico designam inclinação do raio central em direção aos pés do paciente."
   },
+
+  // AULA 8: CINTURA ESCAPULAR - ESPECIAL
   {
     faseId: 8,
-    q: "Na análise da incidência de Escápula, quando o feixe incide na região anterior direita com o corpo obliquado a 45°, saindo na região posterior, a incidência é:",
-    options: [
-      "Incidência oblíqua anterior direita (OAD).",
-      "Posição oblíqua posterior direita (OPD).",
-      "Incidência látero-lateral estrita.",
-      "Incidência axial posterior."
-    ],
+    q: "A descrição: 'raio central incide na região anterior direita com PMS obliquado a 45° graus, saindo na região posterior' corresponde à:",
+    options: ["Incidência oblíqua anterior direita.", "Posição oblíqua anterior direita.", "Incidência oblíqua posterior direita.", "Posição oblíqua posterior direita.", "NDA."],
     answer: 0,
-    explanation: "O nome da incidência é definido pela face anatômica em que o feixe penetra no paciente."
+    explanation: "A incidência é denominada com base na face anatômica em que o feixe de radiação penetra."
+  },
+
+  // AULA 9: FUNDAMENTOS
+  {
+    faseId: 9,
+    q: "Assinale a alternativa INCORRETA sobre o posicionamento radiográfico:",
+    options: [
+      "Na incidência ântero-posterior, a região anterior do paciente está direcionada para a ampola.",
+      "Em perfil esquerdo, o paciente encontra-se com seu lado esquerdo mais próximo ao filme.",
+      "Em decúbito lateral direito, o paciente coloca seu lado esquerdo mais próximo do filme.",
+      "Em OAD, o paciente encontra-se com sua região anterior direita mais próxima do filme.",
+      "Na incidência póstero-anterior à região anterior do paciente está mais próxima do filme."
+    ],
+    answer: 2,
+    explanation: "No decúbito lateral direito é o lado direito do paciente que fica em contato com a mesa de exames."
   },
   {
     faseId: 9,
-    q: "Sobre as regras geométricas e técnicas radiográficas, assinale a afirmação INCORRETA:",
+    q: "Sobre a DFOFI (Distância Foco-Receptor) está correta apenas a alternativa:",
     options: [
-      "Em decúbito lateral direito o paciente coloca seu lado esquerdo mais próximo do filme.",
-      "Na incidência em AP a região anterior do paciente está direcionada para o tubo de raios-X.",
-      "Em perfil esquerdo o paciente encontra-se com seu lado esquerdo mais próximo ao filme.",
-      "Em decúbito o paciente encontra-se deitado."
+      "Quanto maior a DFOFI menor será ampliação da imagem.",
+      "Quanto menor a DFOFI maior será a ampliação da imagem.",
+      "Quanto maior a DFOFI maior será a ampliação da imagem.",
+      "A DFOFI não interfere no tamanho da imagem.",
+      "NDA."
     ],
     answer: 0,
-    explanation: "No decúbito lateral direito é o lado direito do corpo que fica apoiado e próximo ao filme."
+    explanation: "O aumento da distância reduz a divergência geométrica dos raios, minimizando a ampliação."
   },
+
+  // AULA 10: FÊMUR E JOELHO
   {
     faseId: 10,
-    q: "Examine a 'Incidência 1: Fêmur Fratura' na estação de imagem. O que a identificação clara de traço de fratura com desvio requer no protocolo radiográfico?",
-    options: [
-      "Inclusão obrigatória de pelo menos uma articulação adjacente (quadril ou joelho) em duas incidências ortogonais.",
-      "Uso de tração mecânica sem controle radiográfico prévio.",
-      "Realização exclusiva de uma única projeção sem perfil.",
-      "Aplicação de rotação forçada interna do membro fraturado."
-    ],
-    answer: 0,
-    explanation: "Todo estudo de ossos longos fraturados exige incluir as articulações e realizar no mínimo duas projeções ortogonais."
+    q: "Paciente deitado sobre o lado esquerdo com o RC perpendicular ao plano coronal corresponde à:",
+    options: ["Incidência lateral direita.", "Decúbito esquerdo com alinhamento do PMS.", "Incidência lateral esquerda.", "Posicionamento anterior direito.", "Decúbito esquerdo com alinhamento do plano coronal."],
+    answer: 2,
+    explanation: "Com o membro esquerdo em contato e o feixe cruzando o plano coronal, tem-se a incidência lateral esquerda (perfil)."
   },
-  {
-    faseId: 10,
-    q: "Alterne para a 'Incidência 2: Joelho em Perfil'. Quando o paciente deita sobre o lado esquerdo com o raio perpendicular ao plano coronal, corresponde a:",
-    options: [
-      "Incidência lateral esquerda (perfil esquerdo).",
-      "Decúbito dorsal em AP.",
-      "Posição oblíqua anterior direita.",
-      "Incidência lateral direita."
-    ],
-    answer: 0,
-    explanation: "O apoio do lado esquerdo com raio atingindo o plano coronal configura o perfil/lateral esquerdo."
-  },
+
+  // AULA 11: JOELHO ESPECIAL
   {
     faseId: 11,
-    q: "Qual plano anatômico divide o corpo verticalmente em metades cranial (superior) e caudal (inferior)?",
-    options: [
-      "Plano Transversal (Horizontal).",
-      "Plano Sagital mediano.",
-      "Plano Coronal frontal.",
-      "Plano Parassagital."
-    ],
-    answer: 0,
-    explanation: "O plano transversal corta o corpo horizontalmente em metades superior e inferior."
+    q: "O plano anatômico que divide o corpo em porção superior (cranial) e inferior (caudal) é denominado:",
+    options: ["Parassagital.", "Frontal mediano.", "Sagital mediano.", "Coronal transversal.", "Transversal."],
+    answer: 4,
+    explanation: "O plano transversal (axial) divide o corpo horizontalmente em metades superior e inferior."
   },
+
+  // AULA 12: PERNA
   {
     faseId: 12,
-    q: "Inspecione a radiografia de Perna no visualizador. Qual é a regra técnica primária para o estudo dos ossos da perna (tíbia e fíbula)?",
-    options: [
-      "Incluir obrigatoriamente as articulações do joelho e do tornozelo no mesmo filme ou receptor.",
-      "Estudar unicamente o terço médio da tíbia.",
-      "Fazer o exame apenas com o membro em rotação interna máxima de 45°.",
-      "Não utilizar colimação nos limites anatômicos."
-    ],
-    answer: 0,
-    explanation: "Na radiografia de perna é imperativo demonstrar ambas as articulações (joelho e tornozelo) no receptor."
+    q: "Deitado sobre a região posterior do corpo corresponde a qual tipo de decúbito?",
+    options: ["Lateral.", "Dorsal.", "Oblíquo posterior.", "Ventral.", "Oblíquo anterior."],
+    answer: 1,
+    explanation: "O decúbito dorsal (posição supina) apoia o dorso/costas na mesa de exames."
   },
+
+  // AULA 13: CALCÂNEO
   {
     faseId: 13,
-    q: "Inspecione a radiografia de Calcâneo. Além da incidência em perfil demonstrada, qual projeção complementar axial clássica é indispensável?",
+    q: "Quando o paciente está em decúbito lateral esquerdo e o feixe de raios é emitido horizontalmente em AP, trata-se de:",
     options: [
-      "Incidência axial plantodorsal (com angulação cefálica de 40°).",
-      "Incidência oblíqua externa a 15°.",
-      "AP estrito com flexão plantar.",
-      "Incidência túnel de Holmblad."
+      "Decúbito lateral esquerdo com raios horizontais em póstero-anterior.",
+      "Perfil Direito.",
+      "Decúbito lateral esquerdo com raios horizontais em ântero-posterior.",
+      "Perfil Esquerdo.",
+      "NDA."
     ],
-    answer: 0,
-    explanation: "A projeção axial plantodorsal a 40° avalia a tuberosidade do calcâneo e a articulação subtalar."
+    answer: 2,
+    explanation: "Técnica fundamental na avaliação de níveis hidroaéreos e pneumoperitônio."
   },
+
+  // AULA 14: ARTELHOS
   {
     faseId: 14,
-    q: "Examine a imagem de Artelhos no visor. Por que a incidência em AP dos artelhos utiliza raio central angulado em 10° a 15° posteriormente (em direção ao calcâneo)?",
+    q: "Em relação ao pé e artelhos, por que a incidência em AP com angulação cefálica de 10° a 15° é empregada na rotina?",
     options: [
-      "Para abrir com precisão os espaços articulares interfalângicos e metatarsofalângicos.",
-      "Apenas para sobrepor as falanges médias e proximais.",
-      "Para compensar a falta de filme radiográfico adequado.",
-      "Para aumentar a dose de radiação aplicada."
+      "Para abrir as articulações társicas e metatarsianas paralelas ao feixe.",
+      "Para aumentar a dose de radiação no calcanhar.",
+      "Para fechar os espaços intermetatársicos.",
+      "Não há justificativa técnica."
     ],
     answer: 0,
-    explanation: "A angulação acompanha a curvatura anatômica dos pododáctilos, abrindo as fendas articulares."
+    explanation: "A angulação acompanha a curvatura anatômica do arco do pé, alinhando o raio aos espaços articulares."
   }
 ];
 
-// Atualizador de versão do banco para garantir que não use cache quebrado
 if (localStorage.getItem('db_version') !== CURRENT_DB_VERSION) {
   localStorage.setItem('schedule', JSON.stringify(DEFAULT_SCHEDULE));
   localStorage.setItem('db_version', CURRENT_DB_VERSION);
@@ -1120,6 +1136,11 @@ let state = {
   sessionScore: 0,
   sessionLives: 3,
 
+  // CONTROLE DO TEMPORIZADOR
+  timerInterval: null,
+  timeLeft: 45,
+
+  // ESTAÇÃO DE VISUALIZAÇÃO
   viewer: {
     brightness: 100,
     contrast: 100,
@@ -1198,6 +1219,7 @@ function handleLogin() {
 }
 
 function logout() {
+  stopTimer();
   state.currentUser = null;
   document.querySelectorAll('.container > section').forEach(s => s.classList.add('hidden'));
   document.getElementById("loginScreen").classList.remove("hidden");
@@ -1457,12 +1479,10 @@ function renderTeacherModuleControl() {
 
   courseSchedule.forEach(m => {
     const isUnlocked = m.unlockedByTeacher;
-    const totalImgs = (m.patient && m.patient.images) ? m.patient.images.length : 1;
     tbody.innerHTML += `
       <tr>
         <td><b>Aula ${m.id}ª</b></td>
         <td><b>${m.title}</b><br><small style="color:#627d98;">${m.desc}</small></td>
-        <td><span class="badge" style="padding:4px 8px; font-size:0.75rem;">🖼️ ${totalImgs} Incidência(s)</span></td>
         <td>
           <span style="padding:4px 8px; border-radius:6px; font-weight:bold; font-size:0.8rem; background:${isUnlocked ? '#dcfce7' : '#fee2e2'}; color:${isUnlocked ? '#15803d' : '#991b1b'};">
             ${isUnlocked ? '🔓 Liberado em Sala' : '🔒 Bloqueado'}
@@ -1487,9 +1507,10 @@ function toggleModuleLock(moduleId) {
 }
 
 /* =======================================================
-   ALUNO
+   ALUNO (CRONOGRAMA)
 ======================================================= */
 function initStudentPanel() {
+  stopTimer();
   document.getElementById("studentScreen").classList.remove("hidden");
   const disc = state.currentUser.discipline || "Posicionamento Radiográfico I";
   document.getElementById("studentCourseTitle").textContent = `Disciplina: ${disc}`;
@@ -1505,7 +1526,6 @@ function renderStudentTimeline(discipline) {
   discSchedule.forEach(item => {
     const isUnlocked = item.unlockedByTeacher === true;
     const isCompleted = state.currentUser.completedFases.includes(item.id);
-    const numImgs = (item.patient && item.patient.images) ? item.patient.images.length : 1;
 
     let statusClass = "locked";
     let statusText = "🔒 Aguardando Professor";
@@ -1523,11 +1543,11 @@ function renderStudentTimeline(discipline) {
       <span class="status ${statusClass}">${statusText}</span>
       <h3 style="margin-bottom:6px;">Aula ${item.id}ª: ${item.title}</h3>
       <p style="font-size:0.85rem; color:#486581; min-height:40px;">${item.desc}</p>
-      <div style="font-size:0.75rem; color:#0c5460; font-weight:bold; margin-bottom:10px;">📸 ${numImgs} Incidência(s) Disponíveis</div>
+      <div style="font-size:0.75rem; color:#0c5460; font-weight:bold; margin-bottom:10px;">⏱️ Etapa 1: Teoria (45s/questão) | 📸 Etapa 2: Prática RX</div>
       <button style="width:100%;" 
         ${!isUnlocked ? 'disabled style="background:#cbd5e1;cursor:not-allowed;"' : ''}
-        onclick="openPatientIntake(${item.id})">
-        ${!isUnlocked ? 'Aguardando Liberação' : isCompleted ? 'Revisar Atendimento' : 'Iniciar Atendimento / RX'}
+        onclick="startModuleTheory(${item.id})">
+        ${!isUnlocked ? 'Aguardando Liberação' : isCompleted ? 'Refazer Aula Prática' : 'Iniciar Aula / Questões'}
       </button>
     `;
     container.appendChild(card);
@@ -1535,25 +1555,194 @@ function renderStudentTimeline(discipline) {
 }
 
 /* =======================================================
-   ETAPA 1: ADMISSÃO DO PACIENTE
+   ETAPA 1: QUESTIONÁRIO TEÓRICO (45 SEGUNDOS POR QUESTÃO)
 ======================================================= */
-function openPatientIntake(faseId) {
+function startModuleTheory(faseId) {
   const faseData = state.schedule.find(s => s.id === faseId);
   state.quizFase = faseData;
+  state.currentQuizList = ALL_QUESTIONS.filter(q => q.faseId === faseId);
 
+  if (state.currentQuizList.length === 0) {
+    state.currentQuizList = [{
+      faseId: faseId,
+      q: `Qual é o direcionamento fundamental do feixe central na incidência de rotina para ${faseData.title}?`,
+      options: [
+        "Raio central perpendicular incidindo no centro da estrutura de interesse.",
+        "Angulação caudal obrigatória de 45°.",
+        "Angulação cefálica de 35°.",
+        "Raio tangencial horizontal rasante."
+      ],
+      answer: 0,
+      explanation: "A rotina elementar de posicionamento mantém o feixe perpendicular ao centro da estrutura anatômica."
+    }];
+  }
+
+  state.quizIdx = 0;
+  state.sessionScore = 0;
+  state.sessionLives = 3;
+
+  document.getElementById("studentScreen").classList.add("hidden");
+  document.getElementById("quizScreen").classList.remove("hidden");
+  document.getElementById("quizPlayer").textContent = state.currentUser.name;
+
+  renderCurrentQuestion();
+}
+
+function renderCurrentQuestion() {
+  const currentQ = state.currentQuizList[state.quizIdx];
+
+  document.getElementById("quizFaseTitle").textContent = `Aula ${state.quizFase.id}ª: ${state.quizFase.title} (Questão Teórica ${state.quizIdx + 1} de ${state.currentQuizList.length})`;
+  document.getElementById("quizQuestion").textContent = currentQ.q;
+  document.getElementById("quizScore").textContent = state.sessionScore;
+  document.getElementById("quizLives").textContent = state.sessionLives;
+
+  const optBox = document.getElementById("quizOptions");
+  optBox.innerHTML = "";
+
+  currentQ.options.forEach((optText, i) => {
+    const btn = document.createElement("button");
+    btn.className = "option";
+    btn.textContent = `${String.fromCharCode(65 + i)}) ${optText}`;
+    btn.onclick = () => handleAnswer(i, btn);
+    optBox.appendChild(btn);
+  });
+
+  document.getElementById("quizFeedback").className = "feedback hidden";
+  document.getElementById("quizNextBtn").classList.add("hidden");
+
+  // Iniciar temporizador regressivo de 45 segundos
+  startTimer();
+}
+
+function startTimer() {
+  stopTimer();
+  state.timeLeft = 45;
+  const timerVal = document.getElementById("quizTimerVal");
+  const timerBox = document.getElementById("quizTimerBox");
+  timerVal.textContent = state.timeLeft;
+  timerBox.classList.remove("warning");
+
+  state.timerInterval = setInterval(() => {
+    state.timeLeft--;
+    timerVal.textContent = state.timeLeft;
+
+    if (state.timeLeft <= 10) {
+      timerBox.classList.add("warning");
+    }
+
+    if (state.timeLeft <= 0) {
+      stopTimer();
+      handleTimeExpired();
+    }
+  }, 1000);
+}
+
+function stopTimer() {
+  if (state.timerInterval) {
+    clearInterval(state.timerInterval);
+    state.timerInterval = null;
+  }
+}
+
+function handleTimeExpired() {
+  const currentQ = state.currentQuizList[state.quizIdx];
+  const allBtns = document.querySelectorAll(".option");
+  allBtns.forEach(b => b.disabled = true);
+
+  state.sessionLives -= 1;
+  const topicName = state.quizFase.title;
+  if (!state.stats[topicName]) {
+    state.stats[topicName] = { answered: 0, wrong: 0 };
+  }
+  state.stats[topicName].answered += 1;
+  state.stats[topicName].wrong += 1;
+
+  allBtns[currentQ.answer].classList.add("correct");
+
+  const fb = document.getElementById("quizFeedback");
+  fb.className = "feedback no";
+  fb.innerHTML = `<strong>Tempo Esgotado!</strong> Você não respondeu nos 45 segundos. Gabarito: ${currentQ.explanation}`;
+  fb.classList.remove("hidden");
+
+  saveDatabase();
+  document.getElementById("quizScore").textContent = state.sessionScore;
+  document.getElementById("quizLives").textContent = state.sessionLives;
+  document.getElementById("quizNextBtn").classList.remove("hidden");
+}
+
+function handleAnswer(choiceIdx, btnElem) {
+  stopTimer();
+  const currentQ = state.currentQuizList[state.quizIdx];
+  const allBtns = document.querySelectorAll(".option");
+  allBtns.forEach(b => b.disabled = true);
+
+  const topicName = state.quizFase.title;
+  if (!state.stats[topicName]) {
+    state.stats[topicName] = { answered: 0, wrong: 0 };
+  }
+  state.stats[topicName].answered += 1;
+
+  const fb = document.getElementById("quizFeedback");
+  fb.classList.remove("hidden");
+
+  if (choiceIdx === currentQ.answer) {
+    state.sessionScore += 10;
+    btnElem.classList.add("correct");
+    fb.className = "feedback ok";
+    fb.innerHTML = `<strong>Correto!</strong> ${currentQ.explanation}`;
+  } else {
+    state.sessionLives -= 1;
+    state.stats[topicName].wrong += 1;
+    btnElem.classList.add("wrong");
+    allBtns[currentQ.answer].classList.add("correct");
+    fb.className = "feedback no";
+    fb.innerHTML = `<strong>Atenção:</strong> ${currentQ.explanation}`;
+  }
+
+  saveDatabase();
+  document.getElementById("quizScore").textContent = state.sessionScore;
+  document.getElementById("quizLives").textContent = state.sessionLives;
+  document.getElementById("quizNextBtn").classList.remove("hidden");
+}
+
+function nextQuestion() {
+  if (state.sessionLives <= 0 || state.quizIdx >= state.currentQuizList.length - 1) {
+    finishQuizAndGoToPatient();
+    return;
+  }
+  state.quizIdx++;
+  renderCurrentQuestion();
+}
+
+function finishQuizAndGoToPatient() {
+  stopTimer();
+  alert(`Etapa de questões teóricas concluída! Pontos acumulados: ${state.sessionScore}.\n\nAgora você será direcionado para o atendimento clínico e para a análise das imagens radiográficas.`);
+  document.getElementById("quizScreen").classList.add("hidden");
+  openPatientIntake();
+}
+
+function exitQuiz() {
+  stopTimer();
+  document.getElementById("quizScreen").classList.add("hidden");
+  initStudentPanel();
+}
+
+/* =======================================================
+   ETAPA 2: ADMISSÃO E PRONTUÁRIO DO PACIENTE
+======================================================= */
+function openPatientIntake() {
+  const faseData = state.quizFase;
   const pt = faseData.patient || {
     name: "Paciente Padrão",
-    record: `PR-2026-${faseId}01`,
+    record: `PR-2026-${faseData.id}01`,
     age: "30 anos",
     sex: "M",
     region: faseData.title,
     request: `Avaliação de rotina radiográfica para a estrutura de ${faseData.title}.`,
-    images: [{ label: "Incidência Padrão", url: `Imagens/${faseData.title.toLowerCase()}.jpg` }]
+    images: [{ label: "Incidência Padrão", url: `imagens/${faseData.title.toLowerCase()}.jpg` }]
   };
 
-  document.getElementById("studentScreen").classList.add("hidden");
   document.getElementById("patientRegScreen").classList.remove("hidden");
-
   document.getElementById("regModTitle").textContent = `Aula ${faseData.id}ª - ${faseData.title}`;
   document.getElementById("regStudentName").textContent = state.currentUser.name;
 
@@ -1571,46 +1760,27 @@ function exitPatientScreen() {
   initStudentPanel();
 }
 
-function confirmPatientAndProceed() {
+function confirmPatientAndOpenStation() {
   const age = document.getElementById("patientAgeInput").value.trim();
   if(!age) return alert("Por favor, confirme a idade na ficha cadastral do paciente!");
 
   document.getElementById("patientRegScreen").classList.add("hidden");
-  openQuizStation();
+  openRadiologyStation();
 }
 
 /* =======================================================
-   ETAPA 2 & 3: ESTAÇÃO MULTI-IMAGEM E QUIZ
+   ETAPA 3: ESTAÇÃO RADIOLÓGICA (IMAGEM E LAUDO)
 ======================================================= */
-function openQuizStation() {
-  state.currentQuizList = ALL_QUESTIONS.filter(q => q.faseId === state.quizFase.id);
+function openRadiologyStation() {
+  document.getElementById("stationScreen").classList.remove("hidden");
+  document.getElementById("stationPlayer").textContent = state.currentUser.name;
+  document.getElementById("stationPatient").textContent = state.quizFase.patient ? state.quizFase.patient.name : "Paciente Padrão";
+  document.getElementById("stationFaseTitle").textContent = `Estudo Prático: ${state.quizFase.title} - Inspeção das Incidências Adquiridas`;
+  document.getElementById("stationReport").value = "";
 
-  if (state.currentQuizList.length === 0) {
-    state.currentQuizList = [{
-      faseId: state.quizFase.id,
-      q: `Análise técnica da imagem radiográfica: qual o direcionamento primário do feixe central no estudo de ${state.quizFase.title}?`,
-      options: [
-        "Raio central perpendicular incidindo no centro da estrutura de interesse.",
-        "Angulação caudal obrigatória de 45°.",
-        "Angulação cefálica de 35°.",
-        "Raio tangencial horizontal rasante."
-      ],
-      answer: 0,
-      explanation: "A rotina elementar de posicionamento mantém o feixe perpendicular ao centro anatômico estudado."
-    }];
-  }
-
-  state.quizIdx = 0;
   state.activeImageIndex = 0;
-  state.sessionScore = 0;
-  state.sessionLives = 3;
-
-  document.getElementById("quizScreen").classList.remove("hidden");
-  document.getElementById("quizPlayer").textContent = state.currentUser.name;
-  document.getElementById("quizPatientBadge").textContent = state.quizFase.patient ? state.quizFase.patient.name : "Paciente Padrão";
-
   renderIncidenceSelectorTabs();
-  renderCurrentQuestion();
+  loadImageInStation();
 }
 
 function renderIncidenceSelectorTabs() {
@@ -1643,45 +1813,24 @@ function loadImageInStation() {
   const imgElem = document.getElementById("radImage");
 
   if (!pt || !pt.images || pt.images.length === 0) {
-    imgElem.src = "Imagens/dedos.jpeg";
+    imgElem.src = "imagens/dedos.jpeg";
     return;
   }
 
   const selectedImage = pt.images[state.activeImageIndex] || pt.images[0];
 
+  // Tratamento de contingência para aceitar tanto pastas 'imagens/' quanto 'Imagens/'
   imgElem.onerror = function() {
     this.onerror = null;
-    if (selectedImage.fallback) {
-      this.src = selectedImage.fallback;
+    if (selectedImage.url.startsWith("imagens/")) {
+      this.src = selectedImage.url.replace("imagens/", "Imagens/");
+    } else if (selectedImage.url.startsWith("Imagens/")) {
+      this.src = selectedImage.url.replace("Imagens/", "imagens/");
     }
   };
+
   imgElem.src = selectedImage.url;
   resetViewer();
-}
-
-function renderCurrentQuestion() {
-  const currentQ = state.currentQuizList[state.quizIdx];
-
-  document.getElementById("quizFaseTitle").textContent = `Atendimento: ${state.quizFase.title} (Avaliação ${state.quizIdx + 1} de ${state.currentQuizList.length})`;
-  document.getElementById("quizQuestion").textContent = currentQ.q;
-  document.getElementById("quizScore").textContent = state.sessionScore;
-  document.getElementById("quizLives").textContent = state.sessionLives;
-
-  loadImageInStation();
-
-  const optBox = document.getElementById("quizOptions");
-  optBox.innerHTML = "";
-
-  currentQ.options.forEach((optText, i) => {
-    const btn = document.createElement("button");
-    btn.className = "option";
-    btn.textContent = `${String.fromCharCode(65 + i)}) ${optText}`;
-    btn.onclick = () => handleAnswer(i, btn);
-    optBox.appendChild(btn);
-  });
-
-  document.getElementById("quizFeedback").className = "feedback hidden";
-  document.getElementById("quizNextBtn").classList.add("hidden");
 }
 
 function applyViewerFilters() {
@@ -1721,51 +1870,9 @@ function updateImageTransform() {
   img.style.transform = `scale(${state.viewer.zoom}) rotate(${state.viewer.rotation}deg)`;
 }
 
-function handleAnswer(choiceIdx, btnElem) {
-  const currentQ = state.currentQuizList[state.quizIdx];
-  const allBtns = document.querySelectorAll(".option");
-  allBtns.forEach(b => b.disabled = true);
-
-  const topicName = state.quizFase.title;
-  if (!state.stats[topicName]) {
-    state.stats[topicName] = { answered: 0, wrong: 0 };
-  }
-  state.stats[topicName].answered += 1;
-
-  const fb = document.getElementById("quizFeedback");
-  fb.classList.remove("hidden");
-
-  if (choiceIdx === currentQ.answer) {
-    state.sessionScore += 10;
-    btnElem.classList.add("correct");
-    fb.className = "feedback ok";
-    fb.innerHTML = `<strong>Correto!</strong> ${currentQ.explanation}`;
-  } else {
-    state.sessionLives -= 1;
-    state.stats[topicName].wrong += 1;
-    btnElem.classList.add("wrong");
-    allBtns[currentQ.answer].classList.add("correct");
-    fb.className = "feedback no";
-    fb.innerHTML = `<strong>Atenção:</strong> ${currentQ.explanation}`;
-  }
-
-  saveDatabase();
-  document.getElementById("quizScore").textContent = state.sessionScore;
-  document.getElementById("quizLives").textContent = state.sessionLives;
-  document.getElementById("quizNextBtn").classList.remove("hidden");
-}
-
-function nextQuestion() {
-  if (state.sessionLives <= 0 || state.quizIdx >= state.currentQuizList.length - 1) {
-    finishQuizFase();
-    return;
-  }
-  state.quizIdx++;
-  renderCurrentQuestion();
-}
-
-function finishQuizFase() {
-  alert(`Atendimento e exame concluídos com sucesso! Pontuação obtida: ${state.sessionScore}`);
+function finishFullModule() {
+  alert(`Atendimento, exame prático e questões teóricas concluídos com êxito!\nPontuação final somada ao perfil: ${state.sessionScore} pts`);
+  
   const stIndex = state.students.findIndex(s => s.id === state.currentUser.id);
   if (stIndex !== -1) {
     if (!state.students[stIndex].completedFases.includes(state.quizFase.id)) {
@@ -1775,13 +1882,10 @@ function finishQuizFase() {
     state.currentUser = state.students[stIndex];
     saveDatabase();
   }
-  exitQuiz();
-}
 
-function exitQuiz() {
-  document.getElementById("quizScreen").classList.add("hidden");
+  document.getElementById("stationScreen").classList.add("hidden");
   initStudentPanel();
 }
 </script>
 </body>
-</html>D
+</html>
