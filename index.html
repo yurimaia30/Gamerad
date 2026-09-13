@@ -589,7 +589,7 @@
 /* =======================================================
    CRONOGRAMA COM AS SUAS IMAGENS LOCAIS E EXTENSÕES REAIS
 ======================================================= */
-const CURRENT_DB_VERSION = "v5.0_fix_syntax";
+const CURRENT_DB_VERSION = "v5.2_fix_casing";
 
 const DEFAULT_SCHEDULE = [
   { 
@@ -606,7 +606,7 @@ const DEFAULT_SCHEDULE = [
       region: "Quirodáctilos / Dedos da Mão Direita",
       request: "Trauma direto por impacto. Solicito radiografia de quirodáctilos para avaliação anatômica e exclusão de fratura articular na base.",
       images: [
-        { label: "Incidência 1: Dedos Geral", url: "imagens/dedos.jpeg" }
+        { label: "Incidência 1: Dedos Geral", url: "Imagens/dedos.jpeg" }
       ]
     }
   },
@@ -624,9 +624,9 @@ const DEFAULT_SCHEDULE = [
       region: "Mão Direita (PA, Oblíqua e Lateral)",
       request: "Estudo radiográfico da mão com rotina completa (PA, Oblíqua e Lateral) para análise de espaços articulares e centros de ossificação.",
       images: [
-        { label: "Incidência 1: Mão em PA", url: "imagens/mao_pa.png" },
-        { label: "Incidência 2: Mão em Oblíqua", url: "imagens/mao_obliquo.jpg" },
-        { label: "Incidência 3: Mão em Perfil / Lateral", url: "imagens/mao_lateral.jpeg" }
+        { label: "Incidência 1: Mão em PA", url: "Imagens/mao_pa.png" },
+        { label: "Incidência 2: Mão em Oblíqua", url: "Imagens/mao_obliquo.jpg" },
+        { label: "Incidência 3: Mão em Perfil / Lateral", url: "Imagens/mao_lateral.jpeg" }
       ]
     }
   },
@@ -644,9 +644,9 @@ const DEFAULT_SCHEDULE = [
       region: "Punho Esquerdo (PA, Perfil e Pesquisa de Fratura)",
       request: "Queda ao solo sobre a palma da mão espalmada. Dor aguda na tabaqueira anatômica; rotina para pesquisa de fratura carpal.",
       images: [
-        { label: "Incidência 1: Punho em PA", url: "imagens/punho_pa.jpg" },
-        { label: "Incidência 2: Punho em Perfil", url: "imagens/punho_perfil.jpeg" },
-        { label: "Incidência 3: Pesquisa de Fratura Carpal", url: "imagens/punho_fratura.jpg" }
+        { label: "Incidência 1: Punho em PA", url: "Imagens/punho_pa.jpg" },
+        { label: "Incidência 2: Punho em Perfil", url: "Imagens/punho_perfil.jpeg" },
+        { label: "Incidência 3: Pesquisa de Fratura Carpal", url: "Imagens/punho_fratura.jpg" }
       ]
     }
   },
@@ -664,8 +664,8 @@ const DEFAULT_SCHEDULE = [
       region: "Antebraço Direito (AP e Perfil)",
       request: "Avaliação do alinhamento cortical de rádio e ulna. Realizar AP em supinação anatômica e Perfil verdadeiro a 90°.",
       images: [
-        { label: "Incidência 1: Antebraço em AP", url: "imagens/antebraco_ap.png" },
-        { label: "Incidência 2: Antebraço em Perfil", url: "imagens/antebraco_perfil.png" }
+        { label: "Incidência 1: Antebraço em AP", url: "Imagens/antebraco_ap.png" },
+        { label: "Incidência 2: Antebraço em Perfil", url: "Imagens/antebraco_perfil.png" }
       ]
     }
   },
@@ -683,7 +683,7 @@ const DEFAULT_SCHEDULE = [
       region: "Cotovelo Direito (Perfil Verdadeiro)",
       request: "Perfil absoluto com flexão de 90 graus para avaliação dos coxins adiposos articulares e processo do olécrano.",
       images: [
-        { label: "Incidência 1: Cotovelo em Perfil", url: "imagens/cotovelo_perfil.png" }
+        { label: "Incidência 1: Cotovelo em Perfil", url: "Imagens/cotovelo_perfil.png" }
       ]
     }
   },
@@ -701,7 +701,7 @@ const DEFAULT_SCHEDULE = [
       region: "Úmero Esquerdo",
       request: "Investigação da diáfise umeral após trauma contuso direto.",
       images: [
-        { label: "Incidência 1: Estudo do Úmero", url: "imagens/umero.jpeg" }
+        { label: "Incidência 1: Estudo do Úmero", url: "Imagens/umero.jpeg" }
       ]
     }
   },
@@ -719,7 +719,7 @@ const DEFAULT_SCHEDULE = [
       region: "Ombro e Articulação Glenoumeral",
       request: "Dor escapular com limitação de abdução. Rotina de ombro para descarte de luxação.",
       images: [
-        { label: "Incidência 1: Ombro Rotina", url: "imagens/ombro.jpeg" }
+        { label: "Incidência 1: Ombro Rotina", url: "Imagens/ombro.jpeg" }
       ]
     }
   },
@@ -737,7 +737,7 @@ const DEFAULT_SCHEDULE = [
       region: "Escápula e Cintura Escapular Especial",
       request: "Suspeita de lesão da borda escapular e acrômio. Solicito incidência específica de escápula.",
       images: [
-        { label: "Incidência 1: Estudo da Escápula", url: "imagens/escapula.jpeg" }
+        { label: "Incidência 1: Estudo da Escápula", url: "Imagens/escapula.jpeg" }
       ]
     }
   },
@@ -755,7 +755,7 @@ const DEFAULT_SCHEDULE = [
       region: "Avaliação Geral de Qualidade",
       request: "Controle técnico e análise da formação geométrica da imagem radiográfica.",
       images: [
-        { label: "Incidência 1: Análise Geral de Qualidade", url: "imagens/mao_pa.png" }
+        { label: "Incidência 1: Análise Geral de Qualidade", url: "Imagens/mao_pa.png" }
       ]
     }
   },
@@ -773,8 +773,8 @@ const DEFAULT_SCHEDULE = [
       region: "Fêmur e Joelho Esquerdo",
       request: "Politraumatismo: avaliação urgente de diáfise femoral e perfil articular do joelho.",
       images: [
-        { label: "Incidência 1: Fêmur Fratura", url: "imagens/femur_fratura.jpg" },
-        { label: "Incidência 2: Joelho em Perfil", url: "imagens/joelho_perfil.jpg" }
+        { label: "Incidência 1: Fêmur Fratura", url: "Imagens/femur_fratura.jpg" },
+        { label: "Incidência 2: Joelho em Perfil", url: "Imagens/joelho_perfil.jpg" }
       ]
     }
   },
@@ -792,7 +792,7 @@ const DEFAULT_SCHEDULE = [
       region: "Joelho Esquerdo",
       request: "Avaliação do espaço femorotibial e patela.",
       images: [
-        { label: "Incidência 1: Joelho em Perfil Estrito", url: "imagens/joelho_perfil.jpg" }
+        { label: "Incidência 1: Joelho em Perfil Estrito", url: "Imagens/joelho_perfil.jpg" }
       ]
     }
   },
@@ -810,7 +810,7 @@ const DEFAULT_SCHEDULE = [
       region: "Perna (Tíbia e Fíbula)",
       request: "Trauma automobilístico: radiografia de perna incluindo as articulações proximal e distal.",
       images: [
-        { label: "Incidência 1: Perna (Tíbia e Fíbula)", url: "imagens/perna.webp" }
+        { label: "Incidência 1: Perna (Tíbia e Fíbula)", url: "Imagens/perna.webp" }
       ]
     }
   },
@@ -828,7 +828,7 @@ const DEFAULT_SCHEDULE = [
       region: "Calcâneo e Retropé",
       request: "Queda de nível com impacto no calcanhar. Avaliação da tuberosidade do calcâneo e sustentáculo do tálus.",
       images: [
-        { label: "Incidência 1: Estudo do Calcâneo", url: "imagens/calcaneo.webp" }
+        { label: "Incidência 1: Estudo do Calcâneo", url: "Imagens/calcaneo.webp" }
       ]
     }
   },
@@ -846,7 +846,7 @@ const DEFAULT_SCHEDULE = [
       region: "Pododáctilos / Artelhos",
       request: "Contusão direta no hálux. AP com angulação cefálica e oblíqua interna para abrir espaços interfalângicos.",
       images: [
-        { label: "Incidência 1: Radiografia de Artelhos", url: "imagens/artelhos.jpeg" }
+        { label: "Incidência 1: Radiografia de Artelhos", url: "Imagens/artelhos.jpeg" }
       ]
     }
   }
@@ -1548,7 +1548,7 @@ function openPatientIntake(faseId) {
     sex: "M",
     region: faseData.title,
     request: `Avaliação de rotina radiográfica para a estrutura de ${faseData.title}.`,
-    images: [{ label: "Incidência Padrão", url: `imagens/${faseData.title.toLowerCase()}.jpg` }]
+    images: [{ label: "Incidência Padrão", url: `Imagens/${faseData.title.toLowerCase()}.jpg` }]
   };
 
   document.getElementById("studentScreen").classList.add("hidden");
@@ -1643,7 +1643,7 @@ function loadImageInStation() {
   const imgElem = document.getElementById("radImage");
 
   if (!pt || !pt.images || pt.images.length === 0) {
-    imgElem.src = "imagens/dedos.jpeg";
+    imgElem.src = "Imagens/dedos.jpeg";
     return;
   }
 
